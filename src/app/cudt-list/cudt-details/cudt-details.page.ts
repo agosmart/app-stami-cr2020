@@ -38,6 +38,10 @@ export class CudtDetailsPage implements OnInit {
           statusDossier: 0,
           page: 'intervention',
           diagnostic: 'ST',
+          resultId: 1,
+          resultName: 'ST, Durrée du trajet au CR est > 120 min, Patient a pris du plavix 300'
+
+         
 
         },
         {
@@ -58,7 +62,10 @@ export class CudtDetailsPage implements OnInit {
           startAt: '10:44',
           statusDossier: 0,
           page: 'last-drug',
-          diagnostic: 'RAS'
+          diagnostic: 'RAS',
+          resultId: 1,
+          resultName: 'ST, Durrée du trajet au CR est > 120 min, Patient a pris du plavix 300'
+
         }
       ],
       envoyee: [
@@ -81,6 +88,9 @@ export class CudtDetailsPage implements OnInit {
           statusDossier: 0,
           page: 'intervention',
           diagnostic: 'ST',
+          resultId: 1,
+          resultName: 'ST, Durrée du trajet au CR est > 120 min, Patient a pris du plavix 300'
+
 
         },
         {
@@ -101,7 +111,10 @@ export class CudtDetailsPage implements OnInit {
           startAt: '10:44',
           statusDossier: 0,
           page: 'last-drug',
-          diagnostic: 'RAS'
+          diagnostic: 'RAS',
+          resultId: 1,
+          resultName: 'ST, Durrée du trajet au CR est > 120 min, Patient a pris du plavix 300'
+
         },
         {
           dossierId: 4,
@@ -122,6 +135,9 @@ export class CudtDetailsPage implements OnInit {
           statusDossier: 0,
           page: 'intervention',
           diagnostic: 'ST',
+          resultId: 1,
+          resultName: 'ST, Durrée du trajet au CR est > 120 min, Patient a pris du plavix 300'
+
 
         },
 

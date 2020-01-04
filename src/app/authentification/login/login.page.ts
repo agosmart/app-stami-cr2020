@@ -122,8 +122,10 @@ export class LoginPage implements OnInit {
         const params = {
           email: this.loginForm.value.username,
           password: this.loginForm.value.password,
-          uid: this.uid
+          uid: this.uid,
+          userType: 3,
         };
+
         console.log('params======>', params);
 
         const authObs: Observable<AuthResponseData> = this.srv.loginDoctor(

@@ -7,6 +7,10 @@
     .header-md::after {
       background-image: none;
     }
+    ion-segment{
+      padding-top: 32px;
+    }
+  
   
     /* Remove bottom border on ios */
     .header-ios ion-toolbar:last-child {
