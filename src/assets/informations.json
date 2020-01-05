@@ -1,0 +1,127 @@
+{
+    "items": [
+        {
+            "name": "Motif de consultation",
+            "children": [
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte  1",
+                    "information": "lorem iosorem 1 ",
+                    "price": "12"
+                },
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte  2",
+                    "information": "lorem iosorem 2",
+                    "price": "13"
+                },
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte  3",
+                    "information": "lorem iosorem 3",
+                    "price": "14"
+                }
+            ]
+        },
+        {
+            "name": "Facteurs de risque",
+            "children": [
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte 1",
+                    "information": "lorem iosorem 1 ",
+                    "price": "12"
+                },
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte 2",
+                    "information": "lorem iosorem 2",
+                    "price": "13"
+                },
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte 3",
+                    "information": "lorem iosorem 3",
+                    "price": "14"
+                }
+            ]
+        },
+        {
+            "name": "Enticedents cardiologique",
+            "children": [
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte 1",
+                    "information": "lorem iosorem 1 ",
+                    "price": "12"
+                },
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte 2",
+                    "information": "lorem iosorem 2",
+                    "price": "13"
+                },
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte 3",
+                    "information": "lorem iosorem 3",
+                    "price": "14"
+                }
+            ]
+        }
+        ,
+        {
+            "name": "Prémedicaments",
+            "children": [
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte 1",
+                    "information": "lorem iosorem 1 ",
+                    "price": "12"
+                },
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte 2",
+                    "information": "lorem iosorem 2",
+                    "price": "13"
+                },
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte 3",
+                    "information": "lorem iosorem 3",
+                    "price": "14"
+                }
+            ]
+        }
+        ,
+        {
+            "name": "Contre indications absoluts",
+            "children": [
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte ",
+                    "information": "lorem iosorem 1 ",
+                    "price": "12"
+                },
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte ",
+                    "information": "lorem iosorem 2",
+                    "price": "13"
+                },
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte ",
+                    "information": "lorem iosorem 3",
+                    "price": "14"
+                }
+            ]
+        }
+        ,
+        {
+            "name": "Contre indications relatives",
+            "children": [
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte 1",
+                    "information": "lorem iosorem 1 ",
+                    "price": "12"
+                },
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte 2",
+                    "information": "lorem iosorem 2",
+                    "price": "13"
+                },
+                {
+                    "name": "Le Lorem Ipsum est simplement du faux texte 3",
+                    "information": "lorem iosorem 3",
+                    "price": "14"
+                }
+            ]
+        }
+    ]
+}

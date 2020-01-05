@@ -14,6 +14,8 @@ import { ListeMedByCRResponseData } from "../models/listeMedByCr.response";
 import { DemandeAvisResponseData } from "../models/demandeAvis.response";
 import { ReponseAvisResponseData } from "../models/reponseAvis.response";
 import { PretreatmentResponseData } from '../models/pretreatment.response';
+import { DossiersCudtCrResponseData } from '../models/dossies.cudt.cr.response';
+import { EtabResponseData } from '../models/etab.response';
 
 interface ResponseEtab {
   code: number;
@@ -68,6 +70,42 @@ export class ServiceAppService {
       headers: myHeaders
     });
   }
+ // get list of CUDT related to the given CR 
+ getListCudtOfCr(crId: number, token: string): any {
+  console.log('SERVICE::::: CUDT LIST -> CR ::::');
+  const apiUrl = this.baseUrl + "/cudt/"+crId;
+  const myHeaders: HttpHeaders = new HttpHeaders({
+    Accept: "application/json",
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + token
+  });
+
+  return this.http.get<EtabResponseData>(apiUrl, {
+    headers: myHeaders
+  });
+}
+
+
+  // get pending list /  sending list of the given CR 
+  getDossiersCudtCr(crId: number, token: string): any {
+    console.log('SERVICE::::: waiting - Sending list ::::');
+    const apiUrl = this.baseUrl + "/dossiersCr/"+crId;
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+
+    return this.http.get<DossiersCudtCrResponseData>(apiUrl, {
+      headers: myHeaders
+    });
+  }
+// --------------------------------------------------------------------
+
+
+
+
+
 
   public getPatient(params: object, token: string): any {
     console.log("token service ===>", token);
@@ -132,6 +170,10 @@ export class ServiceAppService {
       headers: myHeaders
     });
   }
+
+
+
+
 
   reponseDemandeAvis(idAvis: number, token: string) {
     const apiUrl = this.baseUrl + "/demande/" + idAvis + "/reponse";

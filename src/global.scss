@@ -112,6 +112,7 @@ ion-button.btn {
 }
 // Helpers //
 .w100 {
+  display: block;
   width: 100%;
 }
 .pr-8{
@@ -368,13 +369,16 @@ h3.title-header {
   //   rgba(4, 230, 247, 0.3)
   // );
 
-  // background: #516bf0;
-  // background: linear-gradient(200deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
-  // background: #516bf0;
-  // background: linear-gradient(200deg, #6b36e4 0%, #3d96f1 60%, #00fcff);
-
+  background: #516bf0;
+  background: linear-gradient(200deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
+  background: #516bf0;
+  background: linear-gradient(200deg, #6b36e4 0%, #3d96f1 60%, #00fcff);
+/*
   background: #3853de;
   background: linear-gradient(500deg, #3853de 0%, #0d9bc3 60%, #32ca8d);
+*/
+  background: #982c69;
+  background: linear-gradient(500deg, #ff0001 0%, #982c69 50%, #00afff);
 }
 
 .bg-teal{

@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { EtabModel } from '../models/etab.model';
 import { Router } from '@angular/router';
+import { EtabResponseData } from '../models/etab.response';
+import { Observable } from 'rxjs';
+import { ServiceAppService } from '../services/service-app.service';
+import { LoadingController, AlertController } from '@ionic/angular';
+import { GlobalvarsService } from '../services/globalvars.service';
 
 @Component({
   selector: 'app-cudt-list',
@@ -12,64 +17,133 @@ export class CudtListPage implements OnInit {
 
 
   itemsCR: Array<EtabModel>;
+  idUser: number;
+  idEtab: number;
+  token: string;
+  lnCudtList = 0;
 
   constructor(
+    private srv: ServiceAppService,
+    private loadingCtrl: LoadingController,
+    private sglob: GlobalvarsService,
+    private alertCtrl: AlertController,
+    private router: Router) {
 
-    private router: Router
-  ) { }
+
+    this.idUser = this.sglob.getIdUser();
+    this.idEtab = this.sglob.getidEtab();
+    this.token = this.sglob.getToken();
+  }
+  ionViewDidEnter() {
+    //  this.showListCudtOfCr();
+  }
 
   ngOnInit() {
+    this.showListCudtOfCr();
 
-    this.itemsCR =
-      [
-        {
-          etabId: 1,
-          etabType: '1',
-          etabName: 'CUDT HAI EL BADRE',
-          longitude: '1.00000000',
-          latitude: '2.00000000'
-        },
-        {
-          etabId: 2,
-          etabType: '1',
-          etabName: 'CUDT H.DEY',
-          longitude: '1.20000000',
-          latitude: '1.50000000'
-        },
-        {
-          etabId: 7,
-          etabType: '1',
-          etabName: 'CUDT KOUBA',
-          longitude: '1.00000000',
-          latitude: '2.00000000'
-        },
-        {
-          etabId: 8,
-          etabType: '1',
-          etabName: 'CUDT PARNET',
-          longitude: '2.00000000',
-          latitude: '3.00000000'
-        },
-        {
-          etabId: 9,
-          etabType: '1',
-          etabName: 'CUDT CHEVALIER',
-          longitude: '1.50000000',
-          latitude: '1.80000000'
-        },
+    // this.itemsCR =
+    //   [
+    //     {
+    //       etabId: 5,
+    //       etabType: '1',
+    //       etabName: 'CUDT HAI EL-BADRE',
+    //       longitude: '1.00000000',
+    //       latitude: '2.00000000'
+    //     },
+    //     {
+    //       etabId: 1,
+    //       etabType: '1',
+    //       etabName: 'CUDT H.DEY',
+    //       longitude: '1.20000000',
+    //       latitude: '1.50000000'
+    //     },
+    //     {
+    //       etabId: 7,
+    //       etabType: '1',
+    //       etabName: 'CUDT KOUBA',
+    //       longitude: '1.00000000',
+    //       latitude: '2.00000000'
+    //     },
+    //     {
+    //       etabId: 8,
+    //       etabType: '1',
+    //       etabName: 'CUDT PARNET',
+    //       longitude: '2.00000000',
+    //       latitude: '3.00000000'
+    //     },
+    //     {
+    //       etabId: 9,
+    //       etabType: '1',
+    //       etabName: 'CUDT CHEVALIER',
+    //       longitude: '1.50000000',
+    //       latitude: '1.80000000'
+    //     },
 
-      ];
+    //   ];
 
 
   }
 
-  selectCudt(etabId) {
 
-    this.router.navigate(['cudt-details', etabId]);
+  showListCudtOfCr() {
+    console.log('showListCudtOfCr() ::::: waiting - Sending list ::::');
+    this.loadingCtrl
+      .create({ keyboardClose: true, message: 'Chargement en cours...' })
+      .then(loadingEl => {
+        loadingEl.present();
+        // ----------- END PARAMS  ---------------
+        const crId = this.idEtab;
+        // const authObs: Observable<any> = this.http.get<any>('assets/dossiers-cudt.json');
+        const authObs: Observable<EtabResponseData> = this.srv.getListCudtOfCr(crId, this.token);
 
+        authObs.subscribe(
+          res => {
+            if (+res.code === 200) {
+              loadingEl.dismiss();
+              this.itemsCR = res.data;
+              console.log('this.itemsCR : ', this.itemsCR);
+              this.lnCudtList = this.itemsCR.length;
+
+            } else {
+              console.log('Internal ERROR !');
+            }
+
+          },
+          errRes => {
+            console.log(errRes);
+            // ----- Hide loader ------
+            loadingEl.dismiss();
+
+            // --------- Show Alert --------
+            if (errRes.error.errors != null) {
+              this.showAlert(errRes.error.errors.email);
+            } else {
+              this.showAlert(
+                "Prblème d'accès au réseau, veillez vérifier votre connexion"
+              );
+            }
+
+          });
+      });
   }
 
 
+  selectCudt(cudtId) {
+    // # etabId ==== CUDT
+    this.router.navigate(['cudt-details', cudtId]);
+
+  }
+
+  private showAlert(message: string) {
+    this.alertCtrl
+      .create({
+        header: "Résultat d'authentication",
+        message: message,
+        cssClass: "alert-css",
+        buttons: ["Okay"]
+      })
+      .then(alertEl => alertEl.present());
+  }
   // -----------------------
 
 }

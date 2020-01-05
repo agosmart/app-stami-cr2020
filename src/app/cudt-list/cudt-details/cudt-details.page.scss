@@ -7,8 +7,13 @@
     .header-md::after {
       background-image: none;
     }
+    // ion-segment{
+    //   padding-top: 32px;
+    // }
     ion-segment{
-      padding-top: 32px;
+      padding-top: 0;
+      margin-top: 24px;
+      background: #fff;
     }
   
   
@@ -98,12 +103,14 @@
   
     ion-item {
       padding: 0;
+      &.item-empty{
+        height: 150px;
+      }
     }
   
     ion-item-divider {
-      height: 62px;
-      
-      margin-bottom: 14px;
+      height: 62px;      
+      margin-bottom: 5px;
      
       ion-label {
         margin: 10px 0px;

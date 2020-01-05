@@ -36,8 +36,8 @@
                   <b class="text-gray500 text10"> CR MUSTAPHA BACHA</b>
                 </ion-label>
               </ion-item-divider>
-              <ion-item>
-                <small class="cr-name">{{itemsCR.length}} CUDT(S)EN RELATION</small>
+              <ion-item [ngClass]="{ 'item-empty':lnCudtList=== 0 }">
+                <small class="cr-name"><b>{{lnCudtList}}</b> CUDT(S)EN RELATION</small>
               </ion-item>
 
               <ion-item detail lines="full" *ngFor="let item of itemsCR" tappable (click)="selectCudt(item.etabId)">

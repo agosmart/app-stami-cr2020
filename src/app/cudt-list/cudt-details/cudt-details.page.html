@@ -4,6 +4,16 @@
       <ion-back-button defaultHref="/cudt-list"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
+  <ion-toolbar>
+   <ion-segment  class="ion-padding-top ion-padding-top">
+    <ion-segment-button (ionSelect)="segmentButtonClicked('dEnCours')" checked="true" value=''>
+      <ion-label>Dossiers en cours</ion-label>
+    </ion-segment-button>
+    <ion-segment-button (ionSelect)="segmentButtonClicked('dEnvoyes')">
+      <ion-label>Dossiers envoyés</ion-label>
+    </ion-segment-button>
+  </ion-segment> 
+  </ion-toolbar>
 </ion-header>
 
 <ion-content _fullscreen class="cudt-info ion-no-padding">
@@ -22,14 +32,14 @@
   <!-- <ion-list-header></ion-list-header> -->
 
   <!-- Label only -->
-  <ion-segment class="ion-padding-top ion-padding-top">
+  <!-- <ion-segment  class="ion-padding-top ion-padding-top">
     <ion-segment-button (ionSelect)="segmentButtonClicked('dEnCours')" checked="true" value=''>
       <ion-label>Dossiers en cours</ion-label>
     </ion-segment-button>
     <ion-segment-button (ionSelect)="segmentButtonClicked('dEnvoyes')">
       <ion-label>Dossiers envoyés</ion-label>
     </ion-segment-button>
-  </ion-segment>
+  </ion-segment> -->
 
   <ng-container *ngIf="dossiersEnCours">
     <ion-grid  >
@@ -45,13 +55,16 @@
                     <b class="text-gray500 text10"> DOSSIERS EN COURS</b>
                   </ion-label>
                 </ion-item-divider>
-                <ion-item>
-                  <small class="cr-name"><b>{{dataDossiers['encours'].length}} </b>DOSSIERS EN COURS</small>
+
+                <ion-item  [ngClass]="{ 'item-empty':lnPending === 0 }" >
+                  <small class="cr-name"><b>{{lnPending}} </b>DOSSIERS EN COURS</small>
                 </ion-item>
 
 
-                <ion-item detail lines="full" *ngFor="let item of dataDossiers['envoyee']" tappable
-                  (click)="selectCudt(item.etabId)">
+
+                <ion-item detail lines="full" *ngFor="let item of dataDossiersPending" tappable
+                  (click)="getDossier(item.dossierId)">
+                  <!-- <p>item :::: {{item}}</p> -->
                   <ion-avatar slot="start"> <span class="icon-doss-patient text-dark  text15"></span></ion-avatar>
                   <ion-label class="ion-text-wrap">
                     <h2> {{item.lastName}} {{item.firstName}}</h2>
@@ -85,13 +98,13 @@
                     <b class="text-gray500 text10"> DOSSIERS ENVOYES</b>
                   </ion-label>
                 </ion-item-divider>
-                <ion-item>
-                  <small class="cr-name"><b>{{dataDossiers['envoyee'].length}}</b> DOSSIERS ENVOYÉS</small>
+                <ion-item [ngClass]="{ 'item-empty':lnSending === 0 }">
+                  <small class="cr-name"><b>{{lnSending}}</b> DOSSIERS ENVOYÉS</small>
                 </ion-item>
 
 
-                <ion-item detail lines="full" *ngFor="let item of dataDossiers['encours']" tappable
-                  (click)="selectCudt(item.etabId)">
+                <ion-item detail lines="full" *ngFor="let item of dataDossiersSending" tappable
+                  (click)="getDossier(item.dossierId)">
                   <ion-avatar slot="start"> <span class="icon-doss-patient text-dark  text15"></span></ion-avatar>
                   <ion-label class="ion-text-wrap">
                     <h2> {{item.lastName}}  {{item.firstName}}</h2>
