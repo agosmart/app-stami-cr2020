@@ -5,8 +5,8 @@
             "children": [
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte  1",
-                    "information": "lorem iosorem 1 ",
-                    "price": "12"
+                    "information": "lorem iosorem 1 "
+                    
                 },
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte  2",
@@ -15,8 +15,8 @@
                 },
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte  3",
-                    "information": "lorem iosorem 3",
-                    "price": "14"
+                    "information": "lorem iosorem 3"
+                   
                 }
             ]
         },
@@ -25,18 +25,18 @@
             "children": [
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte 1",
-                    "information": "lorem iosorem 1 ",
-                    "price": "12"
+                    "information": "lorem iosorem 1 "
+                
                 },
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte 2",
-                    "information": "lorem iosorem 2",
-                    "price": "13"
+                    "information": "lorem iosorem 2"
+                  
                 },
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte 3",
-                    "information": "lorem iosorem 3",
-                    "price": "14"
+                    "information": "lorem iosorem 3"
+                   
                 }
             ]
         },
@@ -45,18 +45,18 @@
             "children": [
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte 1",
-                    "information": "lorem iosorem 1 ",
-                    "price": "12"
+                    "information": "lorem iosorem 1 "
+                   
                 },
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte 2",
-                    "information": "lorem iosorem 2",
-                    "price": "13"
+                    "information": "lorem iosorem 2"
+                   
                 },
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte 3",
-                    "information": "lorem iosorem 3",
-                    "price": "14"
+                    "information": "lorem iosorem 3"
+                  
                 }
             ]
         }
@@ -66,18 +66,18 @@
             "children": [
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte 1",
-                    "information": "lorem iosorem 1 ",
-                    "price": "12"
+                    "information": "lorem iosorem 1 "
+                   
                 },
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte 2",
-                    "information": "lorem iosorem 2",
-                    "price": "13"
+                    "information": "lorem iosorem 2"
+                   
                 },
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte 3",
-                    "information": "lorem iosorem 3",
-                    "price": "14"
+                    "information": "lorem iosorem 3"
+                   
                 }
             ]
         }
@@ -87,18 +87,18 @@
             "children": [
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte ",
-                    "information": "lorem iosorem 1 ",
-                    "price": "12"
+                    "information": "lorem iosorem 1 "
+                   
                 },
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte ",
-                    "information": "lorem iosorem 2",
-                    "price": "13"
+                    "information": "lorem iosorem 2"
+                    
                 },
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte ",
-                    "information": "lorem iosorem 3",
-                    "price": "14"
+                    "information": "lorem iosorem 3"
+                   
                 }
             ]
         }
@@ -108,18 +108,18 @@
             "children": [
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte 1",
-                    "information": "lorem iosorem 1 ",
-                    "price": "12"
+                    "information": "lorem iosorem 1 "
+                    
                 },
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte 2",
-                    "information": "lorem iosorem 2",
-                    "price": "13"
+                    "information": "lorem iosorem 2"
+                   
                 },
                 {
                     "name": "Le Lorem Ipsum est simplement du faux texte 3",
-                    "information": "lorem iosorem 3",
-                    "price": "14"
+                    "information": "lorem iosorem 3"
+                   
                 }
             ]
         }

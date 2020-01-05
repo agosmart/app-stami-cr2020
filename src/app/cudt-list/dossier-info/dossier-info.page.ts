@@ -24,7 +24,7 @@ export class DossierInfoPage implements OnInit {
       , err => {
         console.log('error data', err);
       }
-    )
+    );
 
 
   }

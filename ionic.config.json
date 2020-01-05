@@ -1,5 +1,7 @@
 {
   "name": "app_stami_cr",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
