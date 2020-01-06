@@ -29,7 +29,12 @@ const routes: Routes = [
   {
     path: 'dossier-info/:idDossier',
     loadChildren: () => import('./cudt-list/dossier-info/dossier-info.module').then(m => m.DossierInfoPageModule)
+  },
+  {
+    path: 'dossiers',
+    loadChildren: () => import('./dossiers/dossiers.module').then( m => m.DossiersPageModule)
   }
+
 
 
 ];
