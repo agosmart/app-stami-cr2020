@@ -37,6 +37,19 @@
   font-display: block;
 }
 
+
+.swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  border-radius: 100%;
+  background: #8193af;
+  //opacity: 0.2;
+  }
+  .swiper-pagination-bullet-active {
+    background: #d84457!important;
+}
+
 //---- css class for alert compounent
 .alert-css {
   .alert-title.sc-ion-alert-md {

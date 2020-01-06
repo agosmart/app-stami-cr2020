@@ -18,7 +18,7 @@ export class GlobalvarsService {
     private webview: WebView
   ) { }
 
-  public updateInfoUser(idUser, token, idEtab, ) {
+  public updateInfoUser(idUser, token, idEtab ) {
     this.idUser = idUser;
     this.token = token;
     this.idEtab = idEtab;

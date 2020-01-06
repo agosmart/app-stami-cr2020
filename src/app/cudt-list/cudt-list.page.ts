@@ -84,7 +84,6 @@ export class CudtListPage implements OnInit {
 
   }
 
-
   showListCudtOfCr() {
     console.log('showListCudtOfCr() ::::: waiting - Sending list ::::');
     this.loadingCtrl
