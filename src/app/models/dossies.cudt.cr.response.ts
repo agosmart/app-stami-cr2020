@@ -8,7 +8,10 @@ export interface DossiersCudtCrResponseData {
 }
 
 export interface ResponseCudt {
-
+    totalPending: number;
+    totalSending: number;
     sending: Array<DossierModel>;
     pending: Array<DossierModel>;
+
+    
 }

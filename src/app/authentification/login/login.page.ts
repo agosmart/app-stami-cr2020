@@ -22,6 +22,7 @@ import { AuthResponseData } from 'src/app/models/auth.response';
 export class LoginPage implements OnInit {
   idUser = 0;
   idEtab = 0;
+  nameEtab: string ;
   mobile: string;
   uid: string;
   token: string;
@@ -147,6 +148,7 @@ export class LoginPage implements OnInit {
               this.mobile = dataResponse.mobile;
               this.token = dataResponse.apiToken;
               this.idEtab = dataResponse.etablissment[0].etabId;
+              this.nameEtab = dataResponse.etablissment[0].name;
               this.isSos = dataResponse.enFonction === '1' ? true : false;
               this.isActive = dataResponse.disponibleAvis === '1' ? true : false;
 
@@ -159,7 +161,7 @@ export class LoginPage implements OnInit {
               // ----- Set storage Data -----
               this.SetStorage();
               // -----  Update id Doctor value -----
-              this.sglob.updateInfoUser(this.idUser, this.token, this.idEtab);
+              this.sglob.updateInfoUser(this.idUser, this.token, this.idEtab, this.nameEtab);
               this.sglob.setIsActive(this.isActive);
               this.sglob.setIsSos(this.isSos);
               // ----- Retrive a value of uid -----

@@ -2,7 +2,7 @@ export interface DataListeEtab {
   id: number;
   etabId: number;
   type: number;
-  nom: string;
+  name: string;
   longitude: string;
   latitude: string;
 }

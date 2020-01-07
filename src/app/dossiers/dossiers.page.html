@@ -1,18 +1,26 @@
 <ion-header>
   <ion-toolbar color="dark">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/cudt-list"></ion-back-button>
+      <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar class=" ion-margin-top">
-   <ion-segment  class="ion-padding-top ion-padding-top">
-    <ion-segment-button (ionSelect)="segmentButtonClicked('dEnCours')" checked="true" value=''>
-      <ion-label>Dossiers en cours</ion-label>
-    </ion-segment-button>
-    <ion-segment-button (ionSelect)="segmentButtonClicked('dEnvoyes')">
-      <ion-label>Dossiers envoyés</ion-label>
-    </ion-segment-button>
-  </ion-segment> 
+
+
+
+    <ion-segment class="ion-padding-top ion-padding-top">
+      <ion-segment-button (ionSelect)="segmentButtonClicked('dEnvoyes')" checked="true" value=''>
+        <span class="icon-dos-sent _text-dark  text15 "></span>
+        <ion-label class="ion-text-wrap">Dossiers envoyés</ion-label>
+        <!-- <ion-icon name=""><span class="icon-doctor-sos-21 text18"></span></ion-icon> -->
+      </ion-segment-button>
+      <ion-segment-button (ionSelect)="segmentButtonClicked('dEnCours')">
+        <span class="icon-dos-pended _text-dark  text15 "></span>
+        <ion-label class="ion-text-wrap">Demandes d'avis</ion-label>
+        <!-- <ion-icon name=""><span class="icon-doctor-sos-21 text18"></span></ion-icon> -->
+      </ion-segment-button>
+
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
@@ -21,86 +29,37 @@
   <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
     <ion-row class="ion-no-padding ">
       <ion-col size="12" class="icon-header">
-        <span class="icon-cudt text-white text22"></span>
+        <span class="icon-cr text-white text22"></span>
       </ion-col>
-      <ion-col size="12" class="title-header ion-no-padding">CUDT MUSTAPHA BACHA</ion-col>
+      <ion-col size="12" class="title-header ion-no-padding">CR MUSTAPHA BACHA</ion-col>
     </ion-row>
   </ion-grid>
 
-
-
-
-  <ng-container *ngIf="dossiersEnCours">
-    <ion-grid  >
-      <ion-row>
-        <ion-col size="12">
-          <ion-card class="list-CR" color="light">
-            <ion-card-content class="text09 ion-no-padding ">
-              <ion-list class="ion-no-padding">
-
-                <ion-item-divider class="box-shadow divider-pended">
-                  <ion-label class="p-10-0">
-                    <span class="icon-dos-pended text-dark  text17 "></span>
-                    <b class="text-gray500 text10"> DOSSIERS EN COURS</b>
-                  </ion-label>
-                </ion-item-divider>
-
-                <ion-item  [ngClass]="{ 'item-empty':lnPending === 0 }" >
-                  <small class="cr-name"><b>{{lnPending}} </b>DOSSIERS EN COURS</small>
-                </ion-item>
-
-
-
-                <ion-item detail lines="full" *ngFor="let item of dataDossiersPending" tappable
-                  (click)="getDossier(item.dossierId)">
-                  <!-- <p>item :::: {{item}}</p> -->
-                  <ion-avatar slot="start"> <span class="icon-doss-patient text-dark  text15"></span></ion-avatar>
-                  <ion-label class="ion-text-wrap">
-                    <h2> {{item.lastName}} {{item.firstName}}</h2>
-                    <small> {{item.birthDayFr}} </small>
-                    <small> STATUS :<b>{{item.diagnostic}}</b> </small>
-
-                  </ion-label>
-                </ion-item>
-
-              </ion-list>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
-  </ng-container>
-
   <ng-container *ngIf="dossiersEnvoyes">
 
-    <ion-grid >
+    <ion-grid class="ion-no-padding">
       <ion-row>
-        <ion-col size="12">
-          <ion-card class="list-CR" color="light">
+        <ion-col size="12" class="ion-no-padding">
+          <ion-card class="list-CR">
             <ion-card-content class="text09 ion-no-padding ">
               <ion-list class="ion-no-padding">
 
-                <ion-item-divider class="box-shadow divider-sent" >
-                  <ion-label class="p-10-0">
-                    <span class="icon-dos-sent text-dark  text17 "></span>
-                    <b class="text-gray500 text10"> DOSSIERS ENVOYES</b>
-                  </ion-label>
-                </ion-item-divider>
                 <ion-item [ngClass]="{ 'item-empty':lnSending === 0 }">
-                  <small class="cr-name"><b>{{lnSending}}</b> DOSSIERS ENVOYÉS</small>
+                  <small class="cr-name"><b>{{totalSending}}</b> DOSSIERS ENVOYÉS</small>
                 </ion-item>
-
 
                 <ion-item detail lines="full" *ngFor="let item of dataDossiersSending" tappable
                   (click)="getDossier(item.dossierId)">
+
+
                   <ion-avatar slot="start"> <span class="icon-doss-patient text-dark  text15"></span></ion-avatar>
                   <ion-label class="ion-text-wrap">
-                    <h2> {{item.lastName}}  {{item.firstName}}</h2>
-                    <small> {{item.birthDayFr}} </small>
-                    <small>STATUS : <b>{{item.diagnostic}}</b> </small>
-
+                    <h2> {{item.lastName}} {{item.firstName}}</h2>
+                    <!-- <small>DOSSIER N°: <b>{{getRandomNumber()}}</b> </small> -->
+                    <small>AGE : {{item.age}} Ans | {{item.gender === '2'  ? 'Homme' : 'Femme'}}</small>
+                    <small>CUDT : <b> Hai El-badr</b> </small>                 
                   </ion-label>
+
                 </ion-item>
 
               </ion-list>
@@ -111,6 +70,52 @@
     </ion-grid>
 
   </ng-container>
+
+
+  <ng-container *ngIf="dossiersEnCours">
+
+    <ion-grid class="ion-no-padding">
+      <ion-row>
+        <ion-col size="12" class="ion-no-padding">
+          <ion-card class="list-CR">
+            <ion-card-content class="text09 ion-no-padding ">
+              <ion-list class="ion-no-padding">
+
+                <ion-item [ngClass]="{ 'item-empty':lnPending === 0 }">
+                  <small class="cr-name"><b>{{totalPending}} </b>DOSSIERS EN COURS</small>
+                </ion-item>
+
+                <ion-item detail lines="full" *ngFor="let item of dataDossiersPending" tappable
+                  (click)="getDossier(item.dossierId)">
+                  <ion-avatar slot="start"> <span class="icon-doss-patient text-dark  text15"></span></ion-avatar>
+                  <ion-label class="ion-text-wrap">
+                    <h2> {{item.lastName}} {{item.firstName}}</h2>
+                    <!-- <small>DOSSIER N°: <b>{{getRandomNumber()}}</b> </small> -->
+                    <small>AGE : {{item.age}} Ans | {{item.gender === '2'  ? 'Homme' : 'Femme'}}</small>
+                    <small>CUDT : <b> Hai El-badr</b> </small>                    
+                    <div>
+                      <ion-icon name="checkmark-circle" class="" ></ion-icon>
+                      <ion-icon name="checkmark-circle" class="" ></ion-icon>
+                      <ion-icon name="checkmark-circle" class="" ></ion-icon>
+                    </div>
+                  </ion-label>
+                  <ion-avatar slot="end" class="icon-avis">
+                    <span class="icon-doctor-sos-2 status-avis _text-dark _text22"></span>
+                 </ion-avatar>
+
+                </ion-item>
+
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+  </ng-container>
+
+
 
 
 </ion-content>

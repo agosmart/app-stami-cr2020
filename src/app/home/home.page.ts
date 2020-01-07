@@ -14,6 +14,7 @@ export class HomePage implements OnInit {
 
   isActive = false;
   isSos = false;
+  nameEtab:string;
   fullName: string;
   dataDoctor: UserModel;
   gender;
@@ -60,6 +61,7 @@ export class HomePage implements OnInit {
 
     this.isActive = this.sglob.getIsActive();
     this.isSos = this.sglob.getIsSos();
+    this.nameEtab = this.sglob.getNameEtab();
 
     console.log('isSos HOME===>', this.isSos);
     console.log('isActive HOME===>', this.isActive);
@@ -109,7 +111,8 @@ export class HomePage implements OnInit {
 
   submitform() {
 
-    this.router.navigate(['/cudt-list']);
+  //  this.router.navigate(['/cudt-list']);
+    this.router.navigate(['/dossiers']);
 
   }
 

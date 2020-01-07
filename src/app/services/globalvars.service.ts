@@ -8,6 +8,7 @@ export class GlobalvarsService {
   private idUser;
   private token;
   private idEtab;
+  private nameEtab;
   private isSos: boolean;
   private isActive: boolean;
   private urlEcg = "http://cooffa.shop/";
@@ -18,10 +19,11 @@ export class GlobalvarsService {
     private webview: WebView
   ) { }
 
-  public updateInfoUser(idUser, token, idEtab ) {
+  public updateInfoUser(idUser, token, idEtab, nameEtab) {
     this.idUser = idUser;
     this.token = token;
     this.idEtab = idEtab;
+    this.nameEtab = nameEtab;
   }
   public setIsActive(isActive) {
     this.isActive = isActive;
@@ -55,6 +57,9 @@ export class GlobalvarsService {
     return this.idEtab;
   }
 
+  public getNameEtab() {
+    return this.nameEtab;
+  }
   public getUrlEcg() {
     return this.urlEcg;
   }

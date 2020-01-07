@@ -1,6 +1,6 @@
-import { DiagModel } from "./diag.model";
 
-//import { EcgModel } from "./ecg.model";
+
+//import { EcgModel } from  ./ecg.model ;
 
 export interface DossierModel {
    dossierId: number;
@@ -16,9 +16,11 @@ export interface DossierModel {
    gender: string;
    qrCode: string;
    weight: number;
-   ecgImage: string;  
+   ecgImage: string;
    startAt: string;
    statusDossier: number;
+   stepId: number;
+
    // info dossier
    page: string;
    diagnostic: string;
@@ -32,34 +34,31 @@ export interface DossierModel {
    daignoDate?: string;
    angioCoran?: string;
    atlDate?: string;
-   stapeId?: number;
+
+   LastDemandeAvisId?: number;
+   lastMotifId?: number;
+   resultId?: number;
+   resultName?: string;
    demandeAvisId?: number;
- /*
-dossierId: number;
-   etabId: number;
-   patientId: number;
-   doctorId: number;
-   dThorasic: string;
-   weight: number;
-   ecgImage: string;
-   ecgAfficher: string;
-   startAt: string;
-   // info dossier
-   diabetes: number;
-   hta: number;
-   tobacco: number;
-   dyslip: string;
-   insCardiaque: number;
-   cardIscStable: number;
-   sca: string;
-   daignoDate: string;
-   angioCoran: string;
-   atlDate: string;
-   stapeId: number;
-   page: string;
-   demandeAvisId: number;
-   diagnostic: DiagModel;
-   */
-   
+   demandes: Array<DemandeAvisModel>;
+
+
+
 
 }
+
+export interface DemandeAvisModel {
+   demandeId: number;
+   motifId: number;
+   motifName: string;
+   reponses: Array<ResponseAvisModel>;
+}
+
+export interface ResponseAvisModel {
+   reponseId: number;
+   demandeId: number;
+   doctorId: number;
+   reponse: string;
+   doctor: string;
+}
+
