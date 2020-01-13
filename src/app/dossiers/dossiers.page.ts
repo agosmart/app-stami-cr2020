@@ -95,6 +95,10 @@ export class DossiersPage implements OnInit {
           res => {
             if (+res.code === 200) {
 
+              // ---------- Mesuring time of exection ----------
+              console.time('execution-time');
+              // --------------------------------------------
+
               // this.numDossier = Math.floor(100000 + Math.random() * 9000);
               this.dataDossiers = res.data;
               this.dataDossiersSending = res.data.sending;
@@ -102,6 +106,8 @@ export class DossiersPage implements OnInit {
 
               this.totalPending = this.dataDossiers.totalPending;
               this.totalSending = this.dataDossiers.totalSending;
+
+              console.log('dataDossiersPending::', this.dataDossiersPending);
 
 
               // var doctor = persons.filter(personObj => personObj.tags.indexOf("javascript") > -1);
@@ -145,15 +151,147 @@ export class DossiersPage implements OnInit {
 
               //console.log(this.dataDossiersPending);
 
-              const resultDemandes = this.dataDossiersPending.map( data => data.demandes);
-              const resultResponses = resultDemandes.map( (el => el.map( e => e.reponses. find(x => x.doctorId === 92))));
+
+
+              // const resultDemandes = [];
+
+
+              const obj = { dossierId: 0, demandes: [] };
+              //const resultDemandes = [];
+              /* const resultDemandes = this.dataDossiersPending.map(
+                 (data, index) => {
+                   console.log(data.dossierId)
+                   resp.dossierId = data.dossierId;
+                   // responseArr[index].rsp = data.demandes;
+                   return responseArr.push(resp);
+                 }
+               );*/
+
+
+
+              // const listOfDemandes = [...new Set(this.dataDossiersPending.map(it => {
+              //   return { id: it.dossierId, demandes: it.demandes };
+              // } ))];
+
+
+              const listOfResult = this.dataDossiersPending.map(data => {
+                return {
+                  id: data.dossierId,
+                  demandes: data.demandes
+                    .map((dem) => {
+                      // -------------------------
+                      const notif = dem.motifId;
+                      const motifName = dem.motifName
+                      // -------------------------
+                      return dem.reponses.find((resp) => {
+                        if (resp.doctorId === 92) {
+                          resp["notifId"] = notif;
+                          resp["motifName"] = motifName
+                          return resp;
+                        }
+                      })
+                    })
+                    .filter((fResp) => {
+                      if (fResp !== undefined) {
+                        return fResp;
+                      }
+                    })
+                };
+              })
+
+              const listOfDemandesWaitting = this.dataDossiersPending.map(data => {
+                return {
+                  dossierId: data.dossierId,
+                  motif: data.demandes.map((dem) => {
+                    const motif = dem.motifName;
+                    const lenResp = dem.reponses.length;
+                    const find = dem.reponses.find(
+                      (f) => {
+                        if (f.doctorId !== 92) {
+                          return true;
+                        }
+                      }
+                    )
+                    if (find || lenResp === 0) {
+                      return motif;
+                    }
+                  }).filter((fl) => {
+                    if (fl !== undefined) {
+                      return fl;
+                    }
+                  })
+                };
+
+                /* ======= RESULT of WAITTING NOTIFICATIONS for doctorId: 92 ========
+                      0:
+                        dossierId: 7
+                        motif:["SOS", "Thrombolyse"]
+                      1:
+                      dossierId: 15
+                      motif: ["SOS"]
+                =========================================== */
+              })
+
+              /* const listOfDemandesWaitting = this.dataDossiersPending.map(data => {
+                 return {
+                   id: data.dossierId,
+                   demandes: data.demandes
+                     .map(d => d.reponses
+                       .find(f => f.doctorId !== 92))
+                   // .filter((fl) => {
+                   //   if (fl !== undefined) {
+                   //     return fl;
+                   //   }
+                   // })
+                 };
+               })*/
+
+              const listOfDemandes = this.dataDossiersPending.map(data => {
+                return {
+                  id: data.dossierId,
+                  demandes: data.demandes
+                    .map(d => d.reponses
+                      .find(f => f.doctorId === 92))
+                    .filter((fl) => {
+                      if (fl !== undefined) {
+                        return fl;
+                      }
+                    })
+                };
+              })
+
+
+              const listOfResponses = listOfDemandes.filter(f => f.demandes.length > 0)
+
+
+
+
+              //const resultDemandes = this.dataDossiersPending.map( data => data.demandes)
+
+              // tslint:disable-next-line: max-line-length
+              // const resultResponses = resultDemandes
+              //   .map((el0 => el0
+              //     .map(el1 => el1.reponses.find(el2 => el2.doctorId === 92))
+              //     .filter((el3) => {
+              //       if (el3 !== undefined) {
+              //         return arr.push(el3);
+              //       }
+              //     })
+              //   ));
+
+
 
 
               //const data = resultDemandes.map(obj => obj.reponses.find(el => el.reponseId === 2 ));
 
-              console.log('resultDemandes :::', resultDemandes);
-              console.log('resultResponses::::', resultResponses);
 
+              console.log('listOfResult::::', listOfResult);
+              console.log('*****************************');
+              console.log('listOfDemandesWaitting::::', listOfDemandesWaitting);
+              console.log('*****************************');
+              // console.log('listOfDemandes :::', listOfDemandes);
+              console.log('*****************************');
+              //console.log('listOfResponses :::', listOfResponses);
 
               // console.log('this.dataDossiers : ', this.dataDossiers);
               // console.log('this.dataDossiers[encours] : ', this.dataDossiersSending);
@@ -161,7 +299,12 @@ export class DossiersPage implements OnInit {
 
               console.log('totalPending : ', this.totalPending, '/ totalSending', this.totalPending);
 
+
               loadingEl.dismiss();
+
+              // ---------- Mesuring time of exection ----------
+              console.timeEnd('execution-time');
+              // -------------------------------------
 
 
             } else {
