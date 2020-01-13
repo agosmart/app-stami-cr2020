@@ -199,7 +199,7 @@ export class DossiersPage implements OnInit {
                 };
               })
 
-              const listOfDemandesWaitting = this.dataDossiersPending.map(data => {
+              const listOfWaittingDemandes = this.dataDossiersPending.map(data => {
                 return {
                   dossierId: data.dossierId,
                   motif: data.demandes.map((dem) => {
@@ -287,7 +287,7 @@ export class DossiersPage implements OnInit {
 
               console.log('listOfResult::::', listOfResult);
               console.log('*****************************');
-              console.log('listOfDemandesWaitting::::', listOfDemandesWaitting);
+              console.log('list Of Waitting Demandes::::', listOfWaittingDemandes);
               console.log('*****************************');
               // console.log('listOfDemandes :::', listOfDemandes);
               console.log('*****************************');
