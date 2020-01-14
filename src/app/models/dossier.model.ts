@@ -40,7 +40,9 @@ export interface DossierModel {
    resultId?: number;
    resultName?: string;
    demandeAvisId?: number;
-   demandes: Array<DemandeAvisModel>;
+   demandes?: Array<DemandeAvisModel>;
+   // etabName?: string;
+   // motifName?: number;
 
 
 

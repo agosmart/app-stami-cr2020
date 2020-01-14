@@ -159,17 +159,20 @@
     }
   }
 
-  ion-icon{
-   color:#bfced0;
-      &.sos{
-        color:#f25454 !important;
-      };
-      &.thromb{
-        color:#02a1b3 !important;
-      };
-      &.send{
-        color:#516bf0 !important;
-      }
+  ion-icon {
+    color: #bfced0;
+    &.none {
+      color: #bfced0;
+    }
+    &.sos {
+      color: #f25454 !important;
+    }
+    &.thromb {
+      color: #02a1b3 !important;
+    }
+    &.send {
+      color: #516bf0 !important;
+    }
   }
 
   ion-item-divider {
@@ -203,5 +206,22 @@
     b {
       color: #0f98c4;
     }
+  }
+
+  .notif-none {
+    background-color: #bfdbdf !important;
+    color: #fff;
+  }
+  .notif-sos {
+    background-color: #f25454 !important;
+    color: #fff;
+  }
+  .notif-thrombolyse {
+    background-color: #02a1b3 !important;
+    color: #fff;
+  }
+  .notif-sendding {
+    background-color: #516bf0 !important;
+    color: #fff;
   }
 }

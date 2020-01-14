@@ -25,6 +25,9 @@ export class DossiersPage implements OnInit {
   dataDossiers: ResponseCudt;
   dataDossiersSending: Array<DossierModel>;
   dataDossiersPending: Array<DossierModel>;
+
+  listOfWaittingNotif: any;
+
   totalPending = 0;
   totalSending = 0;
 
@@ -85,8 +88,16 @@ export class DossiersPage implements OnInit {
         loadingEl.present();
         // ----------- END PARAMS  ---------------
         // const crId = this.idEtab;
+
+        /**********************************
+         * STATIC DATA*
+         * ******************************* */
+
         this.token = 's2LTdKGqPxwl4atfVql2bE2O3Mde1XmwgrrcqDQzlROTHF0tINhHeSKgdo5z';
         this.idEtab = 1;
+        this.idUser = 92;
+
+        /*********************************** */
 
         // const authObs: Observable<any> = this.http.get<any>('assets/dossiers-cudt.json');
         const authObs: Observable<DossiersCudtCrResponseData> = this.srv.getDossiersCudtCr(this.idEtab, this.token);
@@ -156,7 +167,7 @@ export class DossiersPage implements OnInit {
               // const resultDemandes = [];
 
 
-              const obj = { dossierId: 0, demandes: [] };
+              // const obj = { dossierId: 0, demandes: [] };
               //const resultDemandes = [];
               /* const resultDemandes = this.dataDossiersPending.map(
                  (data, index) => {
@@ -174,61 +185,104 @@ export class DossiersPage implements OnInit {
               // } ))];
 
 
-              const listOfResult = this.dataDossiersPending.map(data => {
-                return {
-                  id: data.dossierId,
-                  demandes: data.demandes
-                    .map((dem) => {
-                      // -------------------------
-                      const notif = dem.motifId;
-                      const motifName = dem.motifName
-                      // -------------------------
-                      return dem.reponses.find((resp) => {
-                        if (resp.doctorId === 92) {
-                          resp["notifId"] = notif;
-                          resp["motifName"] = motifName
-                          return resp;
-                        }
-                      })
-                    })
-                    .filter((fResp) => {
-                      if (fResp !== undefined) {
-                        return fResp;
-                      }
-                    })
-                };
-              })
+              /* const listOfResult = this.dataDossiersPending.map(data => {
+                 return {
+                   id: data.dossierId,
+                   demandes: data.demandes
+                     .map((dem) => {
+                       // -------------------------
+                       const notif = dem.motifId;
+                       const motifName = dem.motifName
+                       // -------------------------
+                       return dem.reponses.find((resp) => {
+                         if (resp.doctorId === 92) {
+                           resp["notifId"] = notif;
+                           resp["motifName"] = motifName
+                           return resp;
+                         }
+                       })
+                     })
+                     .filter((fResp) => {
+                       if (fResp !== undefined) {
+                         return fResp;
+                       }
+                     })
+                 };
+               })*/
 
-              const listOfWaittingDemandes = this.dataDossiersPending.map(data => {
+              this.listOfWaittingNotif = this.dataDossiersPending.map(data => {
                 return {
                   dossierId: data.dossierId,
-                  motif: data.demandes.map((dem) => {
-                    const motif = dem.motifName;
+                  lastName: data.lastName,
+                  firstName: data.firstName,
+                  age: data.age,
+                  diagnostic: data.diagnostic,
+                  gender: data.gender,
+                  etabName: 'HAI EL-BADRE 1',
+                  // ----------NEW DATA-----------------
+                  // motifId: [0, 1, 2, 3]
+                  motifId: data.demandes.map((dem) => {
+                    const motifId = dem.motifId;
                     const lenResp = dem.reponses.length;
-                    const find = dem.reponses.find(
-                      (f) => {
-                        if (f.doctorId !== 92) {
-                          return true;
-                        }
-                      }
+                    const find = dem.reponses.every(
+                      f => f.doctorId !== this.idUser // doctorId
                     )
                     if (find || lenResp === 0) {
-                      return motif;
-                    }
-                  }).filter((fl) => {
-                    if (fl !== undefined) {
-                      return fl;
+                      return motifId;
+                    } else {
+                      return 0;
                     }
                   })
+                    .filter((fl) => {
+                      if (fl !== undefined) {
+                        return fl;
+                      }
+                    }),
+
+                  ///-------------------------------------- 
+                  lastNotif: data.demandes.map((dem) => {
+
+                    const motifId = dem.motifId;
+                    let reponse = null;
+                    const lenResp = dem.reponses.length;
+                    // -----------------------------------
+                    const find = dem.reponses.map(m => m)
+                      .find(
+                        (f) => {
+                          reponse = f.reponse;
+                          return f.doctorId === this.idUser;
+                        }
+
+                      )
+
+
+                    if (find && lenResp !== 0) {
+                      return { motifId: motifId, reponse: reponse, doctorId: this.idUser }
+                    } else {
+                      return { motifId: null, reponse: null, doctorId: this.idUser }
+                    }
+                    // doctorId
+
+
+
+
+
+                  })
+                  // .filter((fl) => {
+                  //   if (fl !== undefined) {
+                  //     return fl;
+                  //   }
+                  // }),
+
                 };
 
-                /* ======= RESULT of WAITTING NOTIFICATIONS for doctorId: 92 ========
+                /* ======= RESULT : of WAITTING NOTIFICATIONS for doctorId: 92 ========
                       0:
                         dossierId: 7
-                        motif:["SOS", "Thrombolyse"]
+                        motif:[ 1 ="SOS", 2="Thrombolyse"]
                       1:
                       dossierId: 15
-                      motif: ["SOS"]
+                      motif: [ 1="SOS"]
                 =========================================== */
               })
 
@@ -261,7 +315,7 @@ export class DossiersPage implements OnInit {
               })
 
 
-              const listOfResponses = listOfDemandes.filter(f => f.demandes.length > 0)
+              //  const listOfResponses = listOfDemandes.filter(f => f.demandes.length > 0)
 
 
 
@@ -285,11 +339,11 @@ export class DossiersPage implements OnInit {
               //const data = resultDemandes.map(obj => obj.reponses.find(el => el.reponseId === 2 ));
 
 
-              console.log('listOfResult::::', listOfResult);
+              //console.log('listOfResult::::', listOfResult);
               console.log('*****************************');
-              console.log('list Of Waitting Demandes::::', listOfWaittingDemandes);
+              console.log('list Of Waitting Notifications::::', this.listOfWaittingNotif);
               console.log('*****************************');
-              // console.log('listOfDemandes :::', listOfDemandes);
+              console.log('listOfDemandes :::', listOfDemandes);
               console.log('*****************************');
               //console.log('listOfResponses :::', listOfResponses);
 
