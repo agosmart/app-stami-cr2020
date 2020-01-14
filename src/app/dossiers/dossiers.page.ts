@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ServiceAppService } from '../services/service-app.service';
 import { GlobalvarsService } from '../services/globalvars.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { LoadingController, AlertController, ActionSheetController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { DossiersCudtCrResponseData, ResponseCudt } from '../models/dossies.cudt.cr.response';
 import { DossierModel } from '../models/dossier.model';
+import { ReponseAvisResponseData } from '../models/reponseAvis.response';
 
 @Component({
   selector: 'app-dossiers',
@@ -26,10 +27,15 @@ export class DossiersPage implements OnInit {
   dataDossiersSending: Array<DossierModel>;
   dataDossiersPending: Array<DossierModel>;
 
+  responseAvis: ReponseAvisResponseData;
+
   listOfWaittingNotif: any;
+  listOfWaittingNotifFinal: any;
 
   totalPending = 0;
   totalSending = 0;
+
+  //motifIdArray=[];
 
   constructor(
 
@@ -38,11 +44,15 @@ export class DossiersPage implements OnInit {
     //private activatedroute: ActivatedRoute,
     private router: Router,
     private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private actionSheetController: ActionSheetController
   ) {
     this.idUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
     this.token = this.sglob.getToken();
+
+
+
     console.log('constructor => getidEtab', this.idEtab);
   }
 
@@ -210,6 +220,8 @@ export class DossiersPage implements OnInit {
                  };
                })*/
 
+
+
               this.listOfWaittingNotif = this.dataDossiersPending.map(data => {
                 return {
                   dossierId: data.dossierId,
@@ -218,10 +230,34 @@ export class DossiersPage implements OnInit {
                   age: data.age,
                   diagnostic: data.diagnostic,
                   gender: data.gender,
-                  etabName: 'HAI EL-BADRE 1',
+                  etabName: data.etabName,
                   // ----------NEW DATA-----------------
-                  // motifId: [0, 1, 2, 3]
-                  motifId: data.demandes.map((dem) => {
+
+                  /*
+                  // ---- Get a sending array of demande ----
+                   demandeIdArray: data.demandes.map(m => m.demandeId),
+
+                   // ---- Get a sending array of notif ID ----
+                   motifIdArray: data.demandes.map((dem) => {
+                     const motifId = dem.motifId;
+                     const lenResp = dem.reponses.length;
+                     const find = dem.reponses.every(
+                       f => f.doctorId !== this.idUser // doctorId
+                     )
+                     if (find || lenResp === 0) {
+                       return motifId;
+                     } else {
+                       return 0;
+                     }
+                   }).filter((fl) => {
+                       if (fl !== undefined) {
+                         return fl;
+                       }
+                   }),
+                  */
+                  lastDemandeId: data.demandes.map(m => m.demandeId).pop(),
+
+                  lastMotifId: data.demandes.map((dem) => {
                     const motifId = dem.motifId;
                     const lenResp = dem.reponses.length;
                     const find = dem.reponses.every(
@@ -237,12 +273,13 @@ export class DossiersPage implements OnInit {
                       if (fl !== undefined) {
                         return fl;
                       }
-                    }),
+                    }).pop(),
 
                   ///-------------------------------------- 
-                  lastNotif: data.demandes.map((dem) => {
+                  prevNotif: data.demandes.map((dem) => {
 
                     const motifId = dem.motifId;
+
                     let reponse = null;
                     const lenResp = dem.reponses.length;
                     // -----------------------------------
@@ -252,98 +289,25 @@ export class DossiersPage implements OnInit {
                           reponse = f.reponse;
                           return f.doctorId === this.idUser;
                         }
-
                       )
-
-
                     if (find && lenResp !== 0) {
                       return { motifId: motifId, reponse: reponse, doctorId: this.idUser }
                     } else {
                       return { motifId: null, reponse: null, doctorId: this.idUser }
                     }
-                    // doctorId
-
-
-
-
-
                   })
-                  // .filter((fl) => {
-                  //   if (fl !== undefined) {
-                  //     return fl;
-                  //   }
-                  // }),
-
-                };
-
-                /* ======= RESULT : of WAITTING NOTIFICATIONS for doctorId: 92 ========
-                      0:
-                        dossierId: 7
-                        motif:[ 1 ="SOS", 2="Thrombolyse"]
-                      1:
-                      dossierId: 15
-                      motif: [ 1="SOS"]
-                =========================================== */
-              })
-
-              /* const listOfDemandesWaitting = this.dataDossiersPending.map(data => {
-                 return {
-                   id: data.dossierId,
-                   demandes: data.demandes
-                     .map(d => d.reponses
-                       .find(f => f.doctorId !== 92))
-                   // .filter((fl) => {
-                   //   if (fl !== undefined) {
-                   //     return fl;
-                   //   }
-                   // })
-                 };
-               })*/
-
-              const listOfDemandes = this.dataDossiersPending.map(data => {
-                return {
-                  id: data.dossierId,
-                  demandes: data.demandes
-                    .map(d => d.reponses
-                      .find(f => f.doctorId === 92))
-                    .filter((fl) => {
-                      if (fl !== undefined) {
-                        return fl;
-                      }
-                    })
                 };
               })
 
 
-              //  const listOfResponses = listOfDemandes.filter(f => f.demandes.length > 0)
-
-
-
-
-              //const resultDemandes = this.dataDossiersPending.map( data => data.demandes)
-
-              // tslint:disable-next-line: max-line-length
-              // const resultResponses = resultDemandes
-              //   .map((el0 => el0
-              //     .map(el1 => el1.reponses.find(el2 => el2.doctorId === 92))
-              //     .filter((el3) => {
-              //       if (el3 !== undefined) {
-              //         return arr.push(el3);
-              //       }
-              //     })
-              //   ));
-
-
-
-
-              //const data = resultDemandes.map(obj => obj.reponses.find(el => el.reponseId === 2 ));
 
 
               //console.log('listOfResult::::', listOfResult);
               console.log('*****************************');
               console.log('list Of Waitting Notifications::::', this.listOfWaittingNotif);
+              // console.log(' demandeId ::::', demandeId);
               console.log('*****************************');
-              console.log('listOfDemandes :::', listOfDemandes);
+              // console.log('listOfDemandes :::', listOfDemandes);
               console.log('*****************************');
               //console.log('listOfResponses :::', listOfResponses);
 
@@ -352,15 +316,10 @@ export class DossiersPage implements OnInit {
               // console.log('this.dataDossiers[envoyee] : ', this.dataDossiersPending);
 
               console.log('totalPending : ', this.totalPending, '/ totalSending', this.totalPending);
-
-
               loadingEl.dismiss();
-
               // ---------- Mesuring time of exection ----------
               console.timeEnd('execution-time');
               // -------------------------------------
-
-
             } else {
               console.log('Internal ERROR !');
             }
@@ -385,9 +344,216 @@ export class DossiersPage implements OnInit {
   }
   getDossier(dossierId) {
     console.log('get Dossier : dossierId ==== >', dossierId);
-    this.router.navigate(['dossier-info', dossierId]);
+    this.router.navigate(['dossier-infos', dossierId]);
 
   }
+
+
+
+  async actionSheetSetDoctorReview(lastDemandeId: number, lastMotifId: number) {
+
+    console.group(' ---- Action Sheet Set Doctor review ----')
+    console.log('- lastDemandeId ::::>', lastDemandeId);
+    console.log('- lastMotifId ::::> ', lastMotifId);
+    console.groupEnd();
+
+    if (lastMotifId === 1) {
+      //# 1 == Demande d'avis ST (RAS/ST)
+      await this.actionSheetIsSt(lastDemandeId);
+
+    } else if (lastMotifId === 2) {
+      //# 2 == Demande d'avis THROMBOLYSE (oui/non)
+      await this.actionSheetIsThrombolyse(lastDemandeId);
+
+    } else {
+      //# 3 == Demande de validation d'envoie du patient au CR (oui/non)
+      await this.actionSheetIsSending(lastDemandeId);
+    }
+
+
+
+  }
+
+  /* ============= PATIENT ST-RAS ==============*/
+  async actionSheetIsSt(lastDemandeId: number) {
+    const actionSheet = await this.actionSheetController.create({
+      cssClass: 'action-sheet',
+      header: 'Demande d\'avis diagnostique',
+      subHeader: 'Vous avez recu une demande d\'avis concernant le patient Mouallem Mohamed, merci de partager votre constat avec vos collègues',
+      buttons: [{
+        cssClass: "icon-heart-checked actionSheet_withIcomoon ras",
+        text: 'Rien à signaler',
+        //icon: 'icon-heart-checked',
+        handler: () => {
+          console.log('RAS clicked');
+          /* ======================================*/
+          this.onResponseToNotifReview(lastDemandeId, 'RAS')
+          /* ======================================*/
+
+        }
+      }, {
+        text: 'Patient ST',
+        cssClass: "icon-heart-st actionSheet_withIcomoon st",
+        //icon: 'share',
+        handler: () => {
+          console.log('ST clicked');
+          /* ======================================*/
+          this.onResponseToNotifReview(lastDemandeId, 'ST')
+          /* ======================================*/
+        }
+      },
+      {
+        text: 'Annuler',
+        cssClass: "icon-remove-outline actionSheet_withIcomoon cancel ",
+        // icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+
+  }
+
+  /* ============= THRMBOLYSE ==============*/
+  async actionSheetIsThrombolyse(lastDemandeId: number) {
+
+    const actionSheet = await this.actionSheetController.create({
+      cssClass: 'action-sheet',
+      header: 'Demande d\'avis Thrombolyse',
+      subHeader: 'Vous avez recu une demande d\'avis concernant le patient Mouallem Mohamed, merci de partager votre constat avec vos collègues',
+      buttons: [{
+        cssClass: "icon-user-delete actionSheet_withIcomoon non",
+        text: 'Ne pas Appliquer',
+        // role: 'destructive',
+        //icon: 'icon-heart-checked',
+        handler: () => {
+          console.log('Thrombolyse Rejcted clicked');
+          /* ======================================*/
+          this.onResponseToNotifReview(lastDemandeId, 'NON')
+          /* ======================================*/
+
+        }
+      }, {
+
+        cssClass: "icon-int-thromb actionSheet_withIcomoon oui",
+        text: 'Appliquer le thrombolyse',
+        //icon: 'share',
+        handler: () => {
+          console.log('Thrombolyse Accepted clicked');
+          /* ======================================*/
+          this.onResponseToNotifReview(lastDemandeId, 'OUI')
+          /* ======================================*/
+        }
+      },
+      {
+        text: 'Annuler',
+        cssClass: "icon-remove-outline actionSheet_withIcomoon cancel ",
+        // icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+
+  }
+  /* ============= SEND PATIENT ==============*/
+  async actionSheetIsSending(lastDemandeId: number) {
+
+    const actionSheet = await this.actionSheetController.create({
+      cssClass: 'action-sheet',
+      header: 'Notification de reception',
+      subHeader: 'Nous vous informons que le patient sera envoyé sera envoyé  à votre établissement avec votre accord dans les plus brefs délais',
+      buttons: [{
+        cssClass: "icon-user-delete actionSheet_withIcomoon non",
+        text: ' Je n\'accorde pas',
+        // role: 'destructive',
+        //icon: 'icon-heart-checked',
+        handler: () => {
+          console.log('Sending rejected clicked');
+          /* ======================================*/
+          this.onResponseToNotifReview(lastDemandeId, 'NON')
+          /* ======================================*/
+        }
+      }, {
+
+        cssClass: "icon-user-checked actionSheet_withIcomoon oui",
+        text: 'J\'accord',
+        //icon: 'share',
+        handler: () => {
+          console.log('Sending accepted clicked');
+          /* ======================================*/
+          this.onResponseToNotifReview(lastDemandeId, 'OUI')
+          /* ======================================*/
+        }
+      },
+      {
+        text: 'Annuler',
+        cssClass: "icon-remove-outline actionSheet_withIcomoon cancel ",
+        // icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+
+  }
+
+  // -------------- SEND YOUR REVIEW  -----------------------------------
+
+  private onResponseToNotifReview(lastDemandeId: number, responseReview: string) {
+    console.log(' onResponseNotifReview ::::: demandeId Notif to set - ::::', lastDemandeId);
+    this.loadingCtrl
+      .create({ keyboardClose: true, message: 'Envoie en cours...' })
+      .then(loadingEl => {
+        loadingEl.present();
+        // ----------- END PARAMS  --------------- 
+        const params = {
+          demandeId: lastDemandeId,
+          doctorId: this.idUser,
+          response: responseReview,
+        };
+
+        console.log('params======>', params);
+        // const authObs: Observable<any> = this.http.get<any>('assets/dossiers-cudt.json');
+        const authObs: Observable<ReponseAvisResponseData> = this.srv.reponseDemandeAvis(params, this.token);
+
+
+        authObs.subscribe(
+          res => {
+            if (+res.code === 201) {
+              loadingEl.dismiss();
+              console.log('this.response : ', res.message);
+              this.showAlert(res.message);
+
+            } else {
+              console.log('Erreur interne !');
+            }
+
+          },
+          errRes => {
+            console.log(errRes);
+            // ----- Hide loader ------
+            loadingEl.dismiss();
+
+            // --------- Show Alert --------
+            if (errRes.error.errors != null) {
+              this.showAlert(errRes.error.errors.email);
+            } else {
+              this.showAlert(
+                "Prblème d'accès au réseau, veillez vérifier votre connexion"
+              );
+            }
+
+          });
+      });
+  }
+
 
 
   private showAlert(message: string) {

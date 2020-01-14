@@ -26,13 +26,18 @@ const routes: Routes = [
     loadChildren: () => import('./cudt-list/cudt-details/cudt-details.module').then(m => m.CudtDetailsPageModule)
   },
 
+  // {
+  //   path: 'dossier-info/:idDossier',
+  //   loadChildren: () => import('./cudt-list/dossier-info/dossier-info.module').then(m => m.DossierInfoPageModule)
+  // },
+
   {
-    path: 'dossier-info/:idDossier',
-    loadChildren: () => import('./cudt-list/dossier-info/dossier-info.module').then(m => m.DossierInfoPageModule)
+    path: 'dossier-infos/:idDossier',
+    loadChildren: () => import('./dossiers/dossier-info/dossier-info.module').then(m => m.DossierInfoPageModule)
   },
   {
     path: 'dossiers',
-    loadChildren: () => import('./dossiers/dossiers.module').then( m => m.DossiersPageModule)
+    loadChildren: () => import('./dossiers/dossiers.module').then(m => m.DossiersPageModule)
   }
 
 

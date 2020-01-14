@@ -30,8 +30,8 @@ export class ServiceAppService {
   //baseUrl ='http://41.110.24.164/cooffa/sante/';
   baseUrl = "http://cardio.cooffa.shop/api";
 
-  private apiKey =
-    "b5e584c61-**--d@060357f33036@6412d16b30d1?cf47828f7f07fd6015a60d7";
+  // private apiKey =
+  //   "b5e584c61-**--d@060357f33036@6412d16b30d1?cf47828f7f07fd6015a60d7";
 
   extras: any;
   public setExtras(data) {
@@ -44,7 +44,7 @@ export class ServiceAppService {
 
   //********************************** */
 
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) { }
 
   loginDoctor(params: object) {
     const apiUrl = this.baseUrl + "/login";
@@ -70,26 +70,27 @@ export class ServiceAppService {
       headers: myHeaders
     });
   }
- // get list of CUDT related to the given CR 
- getListCudtOfCr(crId: number, token: string): any {
-  console.log('SERVICE::::: CUDT LIST -> CR ::::');
-  const apiUrl = this.baseUrl + "/cudt/"+crId;
-  const myHeaders: HttpHeaders = new HttpHeaders({
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + token
-  });
-
-  return this.http.get<EtabResponseData>(apiUrl, {
-    headers: myHeaders
-  });
-}
-
+  // get list of CUDT related to the given CR 
+  /*
+   getListCudtOfCr(crId: number, token: string): any {
+     console.log('SERVICE::::: CUDT LIST -> CR ::::');
+     const apiUrl = this.baseUrl + "/cudt/" + crId;
+     const myHeaders: HttpHeaders = new HttpHeaders({
+       Accept: "application/json",
+       "Content-Type": "application/json",
+       Authorization: "Bearer " + token
+     });
+ 
+     return this.http.get<EtabResponseData>(apiUrl, {
+       headers: myHeaders
+     });
+   }
+ */
 
   // get pending list /  sending list of the given CR 
   getDossiersCudtCr(crId: number, token: string): any {
     console.log('SERVICE::::: waiting - Sending list ::::');
-    const apiUrl = this.baseUrl + "/dossiersCr/"+crId;
+    const apiUrl = this.baseUrl + "/dossiersCr/" + crId;
     const myHeaders: HttpHeaders = new HttpHeaders({
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -100,7 +101,7 @@ export class ServiceAppService {
       headers: myHeaders
     });
   }
-// --------------------------------------------------------------------
+  // --------------------------------------------------------------------
 
 
 
@@ -141,7 +142,7 @@ export class ServiceAppService {
   }
 
   diagDossier(params: object, token: string) {
-     
+
     const apiUrl = this.baseUrl + "/diagnostic";
     const myHeaders: HttpHeaders = new HttpHeaders({
       Accept: "application/json",
@@ -155,6 +156,8 @@ export class ServiceAppService {
       headers: myHeaders
     });
   }
+
+  //----------------------------------------------
 
   demandeAvis(params: object, token: string) {
     const apiUrl = this.baseUrl + "/demande";
@@ -171,21 +174,27 @@ export class ServiceAppService {
     });
   }
 
+  reponseDemandeAvis(params: object, token: string) {
+    const apiUrl = this.baseUrl + "/demande/" + params['demandeId'] + "/reponse";
 
+    console.log('params ==== ', params)
+    console.log('token ==== ', token)
+    // return null;
 
-
-
-  reponseDemandeAvis(idAvis: number, token: string) {
-    const apiUrl = this.baseUrl + "/demande/" + idAvis + "/reponse";
     const myHeaders: HttpHeaders = new HttpHeaders({
       Accept: "application/json",
       "Content-Type": "application/json",
       Authorization: "Bearer " + token
     });
-    return this.http.get<ReponseAvisResponseData>(apiUrl, {
+    const myBody: object = params;
+
+    return this.http.post<ReponseAvisResponseData>(apiUrl, myBody, {
       headers: myHeaders
     });
   }
+
+
+  //------------------------------------------------------
 
   listeMedByCr(idCr: number, token: string) {
     const apiUrl = this.baseUrl + "/etablissements/" + idCr + "/medecins";
@@ -229,50 +238,50 @@ export class ServiceAppService {
     });
   }
 
-  addPretreatment( params: object , token: string){
-    const apiUrl = this.baseUrl + "/pretraitement";
-    const myHeaders: HttpHeaders = new HttpHeaders({
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token
-    });
-    const myBody: object = params;
-    console.log("PARAMS addPretreatment :::", myBody, " / URL ::::", apiUrl);
-    return this.http.post<PretreatmentResponseData>(apiUrl, myBody, {
-      headers: myHeaders
-    });
-  }
+  // addPretreatment( params: object , token: string){
+  //   const apiUrl = this.baseUrl + "/pretraitement";
+  //   const myHeaders: HttpHeaders = new HttpHeaders({
+  //     Accept: "application/json",
+  //     "Content-Type": "application/json",
+  //     Authorization: "Bearer " + token
+  //   });
+  //   const myBody: object = params;
+  //   console.log("PARAMS addPretreatment :::", myBody, " / URL ::::", apiUrl);
+  //   return this.http.post<PretreatmentResponseData>(apiUrl, myBody, {
+  //     headers: myHeaders
+  //   });
+  // }
 
-  public getPretreatment(params: object, token: string): any {
-   // console.log("token service ===>", token);
-    const apiUrl = this.baseUrl + "/search";
-    const myHeaders: HttpHeaders = new HttpHeaders({
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token
-    });
-   // console.log("myHeaders service ===>", myHeaders);
-    const myBody: any = params; // nom / genre datenaissance
-    return this.http.post<PretreatmentResponseData>(apiUrl, myBody, {
-      headers: myHeaders
-    });
-  }
+  // public getPretreatment(params: object, token: string): any {
+  //  // console.log("token service ===>", token);
+  //   const apiUrl = this.baseUrl + "/search";
+  //   const myHeaders: HttpHeaders = new HttpHeaders({
+  //     Accept: "application/json",
+  //     "Content-Type": "application/json",
+  //     Authorization: "Bearer " + token
+  //   });
+  //  // console.log("myHeaders service ===>", myHeaders);
+  //   const myBody: any = params; // nom / genre datenaissance
+  //   return this.http.post<PretreatmentResponseData>(apiUrl, myBody, {
+  //     headers: myHeaders
+  //   });
+  // }
 
 
 
-  addContreIndiAbs( params: object , token: string){
-    const apiUrl = this.baseUrl + "/contre_indication";
-    const myHeaders: HttpHeaders = new HttpHeaders({
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token
-    });
-    const myBody: object = params;
-    console.log("PARAMS addContreIndiAbs :::", myBody, " / URL ::::", apiUrl);
-    return this.http.post<PretreatmentResponseData>(apiUrl, myBody, {
-      headers: myHeaders
-    });
-  }
+  // addContreIndiAbs( params: object , token: string){
+  //   const apiUrl = this.baseUrl + "/contre_indication";
+  //   const myHeaders: HttpHeaders = new HttpHeaders({
+  //     Accept: "application/json",
+  //     "Content-Type": "application/json",
+  //     Authorization: "Bearer " + token
+  //   });
+  //   const myBody: object = params;
+  //   console.log("PARAMS addContreIndiAbs :::", myBody, " / URL ::::", apiUrl);
+  //   return this.http.post<PretreatmentResponseData>(apiUrl, myBody, {
+  //     headers: myHeaders
+  //   });
+  // }
 
   /*************************************** */
   // public login(form): any {
@@ -310,7 +319,7 @@ export class ServiceAppService {
   //     .catch(error => console.log("Une erreur est survenue" + error));
   // }
 
-  addToken(token, idUser, mobile) {}
+  //addToken(token, idUser, mobile) {}
 
   getListeCR(params: number) {
     const apiUrl = this.baseUrl + "/etablissements/" + params;

@@ -5,6 +5,7 @@
 export interface DossierModel {
    dossierId: number;
    etabId: number;
+   etabName: string;
    patientId: number;
    doctorId: number;
    dThorasic: string;

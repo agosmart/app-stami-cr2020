@@ -52,12 +52,17 @@
                   (click)="getDossier(item.dossierId)">
 
 
-                  <ion-avatar slot="start"> <span class="icon-doss-patient text-dark  text15"></span></ion-avatar>
+                  <ion-avatar slot="start">
+                    <ion-icon name="checkmark-circle"></ion-icon>
+                    <span class="icon-doss-patient text-dark  text15">
+
+                    </span>
+                  </ion-avatar>
                   <ion-label class="ion-text-wrap">
                     <h2> {{item.lastName}} {{item.firstName}}</h2>
                     <!-- <small>DOSSIER N°: <b>{{getRandomNumber()}}</b> </small> -->
                     <small>AGE : {{item.age}} Ans | {{item.gender === '2'  ? 'Homme' : 'Femme'}}</small>
-                    <small>CUDT : <b> Hai El-badr</b> </small>
+                    <small>CUDT : <b>{{item.etabName}}</b> </small>
                   </ion-label>
 
                 </ion-item>
@@ -86,8 +91,8 @@
                 </ion-item>
 
 
-                <ion-item detail lines="full" *ngFor="let item of listOfWaittingNotif" tappable
-                  (click)="getDossier(item.dossierId)">
+                <ion-item _detail lines="full" *ngFor="let item of listOfWaittingNotif" tappable>
+
                   <!-- <ion-item detail lines="full" *ngFor="let item of dataDossiersPending" tappable
                     (click)="getDossier(item.dossierId)"> -->
 
@@ -99,29 +104,36 @@
                     <small>CUDT : <b>{{item.etabName}}</b> </small>
                     <div>
                       <ion-icon name="checkmark-circle"
-                        [style.color]="item['lastNotif'][0] !== undefined && item['lastNotif'][0]['motifId'] === 1 ? '#f25454': '#bfced0'">
+                        [style.color]="item['prevNotif'][0] !== undefined && item['prevNotif'][0]['motifId'] === 1 ? '#f25454': '#bfced0'">
                       </ion-icon>
 
                       <ion-icon name="checkmark-circle"
-                        [style.color]="item['lastNotif'][1] !== undefined && item['lastNotif'][1]['motifId'] === 2 ? '#02a1b3': '#bfced0'">
+                        [style.color]="item['prevNotif'][1] !== undefined && item['prevNotif'][1]['motifId'] === 2 ? '#02a1b3': '#bfced0'">
 
                       </ion-icon>
                       <ion-icon name="checkmark-circle"
-                        [style.color]="item['lastNotif'][2] !== undefined && item['lastNotif'][2]['motifId'] === 3 ? '#516bf0': '#bfced0'">
-
+                        [style.color]="item['prevNotif'][2] !== undefined && item['prevNotif'][2]['motifId'] === 3 ? '#516bf0': '#bfced0'">
                       </ion-icon>
 
                     </div>
                   </ion-label>
-                  <ion-avatar slot="end" class="icon-avis">
+                  <!-- <p>{{item['motifId'].length}}</p> -->
+                  <!-- Boutton Avis doctor  -->
+                  <ion-button Fill='clear' shape='round' slot="end" class="icon-avis" tappable
+                    (click)="actionSheetSetDoctorReview(item['lastDemandeId'] ,  item['lastMotifId'])" type="button"
+                    disabled="{{item['lastMotifId'] === 0 ? true : false }}">
                     <span class="icon-doctor-sos-2 status-avis" [ngClass]="{ 
-                    'notif-none':item['motifId'][item['motifId'].length-1]=== 0,
-                    'notif-sos':item['motifId'][item['motifId'].length-1]=== 1,
-                    'notif-thrombolyse':item['motifId'][item['motifId'].length-1] === 2,
-                    'notif-sendding':item['motifId'][item['motifId'].length-1] === 3 
-                  }"></span>
+                    'notif-none':item['lastMotifId'] === 0,
+                    'notif-sos':item['lastMotifId']=== 1,
+                    'notif-thrombolyse':item['lastMotifId'] === 2,
+                    'notif-sendding':item['lastMotifId'] === 3 }" tappable></span>
+                  </ion-button>
 
-                  </ion-avatar>
+
+                  <!-- Boutton détails dossier   -->
+                  <ion-icon name="arrow-forward" mode='ios' slot="end" (click)="getDossier(item.dossierId)"></ion-icon>
+                  <!--  /////////////////  -->
+
                 </ion-item>
 
               </ion-list>

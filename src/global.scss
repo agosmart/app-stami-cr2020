@@ -37,7 +37,6 @@
   font-display: block;
 }
 
-
 .swiper-pagination-bullet {
   width: 12px;
   height: 12px;
@@ -45,15 +44,15 @@
   border-radius: 100%;
   background: #8193af;
   //opacity: 0.2;
-  }
-  .swiper-pagination-bullet-active {
-    background: #d84457!important;
+}
+.swiper-pagination-bullet-active {
+  background: #d84457 !important;
 }
 
 //---- css class for alert compounent
 .alert-css {
+  .alert-title.sc-ion-alert-ios,
   .alert-title.sc-ion-alert-md {
-    font-size: 20px;
     color: #fd5f60;
     font-weight: 500;
     font-size: 1.3em;
@@ -72,6 +71,63 @@
 //     --ion-text-color    : white !important;
 //     --ion-color-step-550: white !important;
 // }
+//---------------------------------------
+// Ionic Action Sheets
+
+.action-sheet {
+  .action-sheet-title.sc-ion-action-sheet-md,
+  .action-sheet-title.sc-ion-action-sheet-ios {
+    color: #fd5f60;
+    font-weight: 500;
+    font-size: 1em;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    text-transform: uppercase;
+    height: auto;
+  }
+  .action-sheet-sub-title.sc-ion-action-sheet-md,
+  .action-sheet-sub-title.sc-ion-action-sheet-ios {
+    color: #2b2f36;
+    font-size: 0.8rem;
+    text-transform: none;
+  }
+
+  // display the icon at the right size
+  .actionSheet_withIcomoon {
+    font-size: 1.6rem !important;
+    font-weight: 500;
+    border-bottom: 1px solid #e7e8ea;
+    /* height: 62px; */
+  }
+  .non,
+  .st {
+    color: #d33939;
+  }
+  .oui,
+  .ras {
+    color: #0f7e34;
+  }
+  .thromb {
+    color: #0f98c4;
+  }
+  .send {
+    color: #516bf0;
+  }
+  .cancel {
+    background-color: #ffe8e8;
+  }
+
+  span.action-sheet-button-inner.sc-ion-action-sheet-ios,
+  span.action-sheet-button-inner.sc-ion-action-sheet-md {
+    margin-left: 24px;
+    font-family: "Roboto", "Helvetica Neue", sans-serif;
+    font-size: 1rem !important;
+    line-height: initial;
+    display: inline;
+  }
+}
+
+//---------------------------------------
 
 .logo-header {
   // width: 40%;
@@ -124,17 +180,20 @@ ion-button.btn {
   background-image: linear-gradient(-135deg, var(--ion-color-medium), var(--ion-color-light));
 }
 // Helpers //
+.no-margin {
+  margin: 0;
+}
 .w100 {
   display: block;
   width: 100%;
 }
-.p-8-0{
+.p-8-0 {
   padding: 8px 0;
 }
-.pr-8{
+.pr-8 {
   padding-right: 8px;
 }
-.pr-16{
+.pr-16 {
   padding-right: 16px;
 }
 .p-2 {
@@ -196,10 +255,9 @@ ion-button.btn {
   font-size: 1.8em !important;
 }
 
-.fsize-18rem{
+.fsize-18rem {
   font-size: 1.8rem !important;
 }
-
 
 .fsize-20em {
   font-size: 2em !important;
@@ -389,7 +447,7 @@ h3.title-header {
   background: linear-gradient(200deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
   background: #516bf0;
   background: linear-gradient(200deg, #6b36e4 0%, #3d96f1 60%, #00fcff);
-/*
+  /*
   background: #3853de;
   background: linear-gradient(500deg, #3853de 0%, #0d9bc3 60%, #32ca8d);
 */
@@ -397,7 +455,7 @@ h3.title-header {
   background: linear-gradient(500deg, #ff0001 0%, #982c69 50%, #00afff);
 }
 
-.bg-teal{
+.bg-teal {
   background-color: #0f98c4;
 }
 
@@ -415,7 +473,7 @@ h3.title-header {
   font-size: 0.9em;
   height: auto;
 }
-.error-message-inverse{
+.error-message-inverse {
   background: #f32051; //white;
   color: #fff; // #f32051;
   border-radius: 8px;
