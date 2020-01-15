@@ -18,6 +18,7 @@ export class DossiersPage implements OnInit {
   idUser: number;
   idEtab: number;
   token: string;
+  nameEtab: string;
   numDossier: number;
   //cudtId: number; 
   dossiersEnCours = false;
@@ -34,6 +35,8 @@ export class DossiersPage implements OnInit {
 
   totalPending = 0;
   totalSending = 0;
+  isRefresh = false;
+  checkmarkColors = ['#f25454', '#02a1b3', '#516bf0']
 
   //motifIdArray=[];
 
@@ -50,6 +53,7 @@ export class DossiersPage implements OnInit {
     this.idUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
     this.token = this.sglob.getToken();
+    this.nameEtab = this.sglob.getNameEtab()
 
 
 
@@ -58,11 +62,22 @@ export class DossiersPage implements OnInit {
 
   ionViewDidEnter() {
     console.log('ionViewDidEnter => getidEtab', this.idEtab);
-    this.initWaitingSendingDossiers();
+    this.initWaitingSendingDossiers(event);
   }
 
 
   ngOnInit() {
+  }
+
+
+  doRefresh(event) {
+    console.log('Begin async operation');
+    this.isRefresh = true;
+    this.initWaitingSendingDossiers(event);
+    // setTimeout(() => {
+    //   console.log('Async operation has ended');
+    //   event.target.complete();
+    // }, 2000);
   }
 
 
@@ -88,14 +103,15 @@ export class DossiersPage implements OnInit {
     return this.numDossier = Math.floor(100000 + Math.random() * 9000);
 
   }
-  data: any;
 
-  initWaitingSendingDossiers() {
+
+  initWaitingSendingDossiers(event) {
     console.log('initWaitingSendingDossiers() ::::: waiting - Sending list ::::');
     this.loadingCtrl
       .create({ keyboardClose: true, message: 'Chargement en cours...' })
       .then(loadingEl => {
-        loadingEl.present();
+
+        if (!this.isRefresh) loadingEl.present();
         // ----------- END PARAMS  ---------------
         // const crId = this.idEtab;
 
@@ -115,6 +131,8 @@ export class DossiersPage implements OnInit {
         authObs.subscribe(
           res => {
             if (+res.code === 200) {
+
+
 
               // ---------- Mesuring time of exection ----------
               console.time('execution-time');
@@ -235,26 +253,27 @@ export class DossiersPage implements OnInit {
 
                   /*
                   // ---- Get a sending array of demande ----
-                   demandeIdArray: data.demandes.map(m => m.demandeId),
+                  demandeIdArray: data.demandes.map(m => m.demandeId),
 
-                   // ---- Get a sending array of notif ID ----
-                   motifIdArray: data.demandes.map((dem) => {
-                     const motifId = dem.motifId;
-                     const lenResp = dem.reponses.length;
-                     const find = dem.reponses.every(
-                       f => f.doctorId !== this.idUser // doctorId
-                     )
-                     if (find || lenResp === 0) {
-                       return motifId;
-                     } else {
-                       return 0;
-                     }
-                   }).filter((fl) => {
-                       if (fl !== undefined) {
-                         return fl;
-                       }
-                   }),
-                  */
+                  // ---- Get a sending array of notif ID ----
+                  motifIdArray: data.demandes.map((dem) => {
+                    const motifId = dem.motifId;
+                    const lenResp = dem.reponses.length;
+                    const find = dem.reponses.every(
+                      f => f.doctorId !== this.idUser // doctorId
+                    )
+
+                    if (find || lenResp === 0) {
+                      return motifId;
+                    } else {
+                      return 0;
+                    }
+                  }).filter((fl) => {
+                    if (fl !== undefined) {
+                      return fl;
+                    }
+                  }),*/
+
                   lastDemandeId: data.demandes.map(m => m.demandeId).pop(),
 
                   lastMotifId: data.demandes.map((dem) => {
@@ -263,27 +282,62 @@ export class DossiersPage implements OnInit {
                     const find = dem.reponses.every(
                       f => f.doctorId !== this.idUser // doctorId
                     )
+
+                    // if (find) {
+                    //   if (lenResp === 0) {
+                    //     return motifId;
+                    //   } else {
+                    //     return 'salim'
+                    //   }
+                    // } else {
+                    //   return 0;
+                    // }
+
                     if (find || lenResp === 0) {
+                      //console.log("1111 :::", motifId);
                       return motifId;
                     } else {
+                      // console.log("0000 :::", motifId);
                       return 0;
                     }
                   })
-                    .filter((fl) => {
+                    /*.filter((fl) => {
+  
+  
+  
                       if (fl !== undefined) {
+                        console.log("FFFF:::", fl);
+                        return 'moch'
+                      } else {
+                        console.log("MMMM:::", fl);
                         return fl;
                       }
-                    }).pop(),
+  
+                    })*/
+                    .pop()
+                  // .reduce(function (a, b) {
+                  //   console.log('moh', a, ':', b);
+                  //   return b;
+                  // }, 0)
+                  ,
 
                   ///-------------------------------------- 
                   prevNotif: data.demandes.map((dem) => {
 
                     const motifId = dem.motifId;
-
                     let reponse = null;
                     const lenResp = dem.reponses.length;
+
+                    /*const ObjPrevNotif = [
+                      { motifId: null, reponse: null, doctorId: this.idUser },
+                      { motifId: null, reponse: null, doctorId: this.idUser },
+                      { motifId: null, reponse: null, doctorId: this.idUser },
+
+                    ];*/
                     // -----------------------------------
-                    const find = dem.reponses.map(m => m)
+
+                    const find = dem.reponses
+                      .map(m => m)
                       .find(
                         (f) => {
                           reponse = f.reponse;
@@ -291,10 +345,15 @@ export class DossiersPage implements OnInit {
                         }
                       )
                     if (find && lenResp !== 0) {
+
                       return { motifId: motifId, reponse: reponse, doctorId: this.idUser }
+                      //return ObjPrevNotif;
                     } else {
-                      return { motifId: null, reponse: null, doctorId: this.idUser }
+                      return { motifId: null, reponse: null, doctorId: null }
+                      // return ObjPrevNotif;
                     }
+
+                    // return ObjPrevNotif;
                   })
                 };
               })
@@ -330,6 +389,7 @@ export class DossiersPage implements OnInit {
             // ----- Hide loader ------
             loadingEl.dismiss();
 
+
             // --------- Show Alert --------
             if (errRes.error.errors != null) {
               this.showAlert(errRes.error.errors.email);
@@ -340,8 +400,21 @@ export class DossiersPage implements OnInit {
             }
 
           });
-      });
+      }).then(
+        () => {
+          console.log('isRefresh::::>', this.isRefresh);
+          if (this.isRefresh) {
+            event.target.complete();
+            this.isRefresh = !this.isRefresh;
+          }
+
+        }
+      );
   }
+
+
+
+
   getDossier(dossierId) {
     console.log('get Dossier : dossierId ==== >', dossierId);
     this.router.navigate(['dossier-infos', dossierId]);
@@ -530,6 +603,7 @@ export class DossiersPage implements OnInit {
               loadingEl.dismiss();
               console.log('this.response : ', res.message);
               this.showAlert(res.message);
+              this.initWaitingSendingDossiers(event);
 
             } else {
               console.log('Erreur interne !');
@@ -540,6 +614,7 @@ export class DossiersPage implements OnInit {
             console.log(errRes);
             // ----- Hide loader ------
             loadingEl.dismiss();
+
 
             // --------- Show Alert --------
             if (errRes.error.errors != null) {

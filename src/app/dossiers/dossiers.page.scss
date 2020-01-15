@@ -20,6 +20,7 @@
       --margin-top: 0px !important;
       --padding-top: 16px !important;
       --background-checked: #f2f6ff;
+      max-width: 100%;
       font-size: 0.8rem;
       // --indicator-color:#fd5f60;
       --indicator-color: #eaecf1;
@@ -28,6 +29,7 @@
       }
       ion-label {
         line-height: 1.2 !important;
+        padding: 5px 0;
       }
       button {
         ion-label,
@@ -195,7 +197,8 @@
   ion-icon {
     color: #bfced0;
     &.none {
-      color: #bfced0;
+      //color: #bfced0;
+      color: #b5cbce;
     }
     &.sos {
       color: #f25454 !important;

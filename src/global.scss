@@ -75,6 +75,12 @@
 // Ionic Action Sheets
 
 .action-sheet {
+  .action-sheet-button.sc-ion-action-sheet-ios,
+  .action-sheet-button.sc-ion-action-sheet-md {
+    display: flex;
+    flex-direction: row;
+    text-align: initial;
+  }
   .action-sheet-title.sc-ion-action-sheet-md,
   .action-sheet-title.sc-ion-action-sheet-ios {
     color: #fd5f60;
