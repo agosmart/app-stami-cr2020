@@ -311,70 +311,46 @@ export class DossiersPage implements OnInit {
                     // ..............................
                     if (find && lenResp !== 0) {
                       return { pos: myMotifId, motifId: myMotifId, reponse: myReponse, doctorId: this.idUser };
-                    } else {
-                      return { pos: null, motifId: null, reponse: null, doctorId: null };
-                      // return this.objPrevNotif;
+                    }
+                    else {
+                      return { pos: myMotifId, motifId: null, reponse: null, doctorId: null };
+
                     }
                     // return ObjPrevNotif;
-                  }).sort((a: any, b: any) => a.pos - b.pos)
+                  })
                   // -------------------------------------
                 };
 
-              });
+              })
 
 
 
 
 
               // =============== FILL and STORE => prevMotif [Array values] ===================================
+
               this.listOfWaittingNotif.map(
-                (item) => {
-                  item.prevNotif.forEach(
-                    (e) => {
-
-                      for (let i = 1; i <= 3; i++) {
-                        // console.log(e.pos, ' / ', i === e.pos, ' - ', i);
-
-                        if (i !== e.pos) {
-                          item.prevNotif.push({ pos: i, motifId: null, reponse: null, doctorId: null });
-                        } else {
-                          item.prevNotif[i - 1]['pos'] = 1;
-                        }
-                      }
-                      console.log('---------------')
-                      return item.prevNotif.sort((a: any, b: any) => a.motifId - b.motifId);
-
-
-                    });
-                }
-              );
-
-              /*this.listOfWaittingNotif.map(
                 (item: any) => {
-                  for (let i = 0; i < 3; i++) {
-                    
-                  }
- 
- 
-                  const ln = item.prevNotif.length;
-                  for (let i = 0; i < 3; i++) {
- 
-                    if (i <= ln - 1) {
-                      console.log('ln : ', ln, ' / i :', i, ' pos :', item.prevNotif[i]['pos']);
+                  const poseArr = [];
+                  //  const not = item.prevNotif
+                  item.prevNotif.map(
+                    (p) => {
+                      const pos = p.pos;
+                      poseArr.push(pos);
+                      //console.log(pos, ' - ', poseArr);
+                    })
+                  //console.log(' poseArr ', poseArr);
+                  for (let i = 1; i <= 3; i++) {
+                    console.log(poseArr.includes(i))
+                    if (!poseArr.includes(i)) {
+                      item.prevNotif.push({ pos: i, motifId: null, reponse: null, doctorId: null });
                     }
- 
-                    // if (item.prevNotif[i]['pos'] !== i + 1) {
-                    //   item.prevNotif.push({ pos: i, motifId: null, reponse: null, doctorId: null });
-                    // }
-                    //else {
-                    //   item.prevNotif[i]['pos'] = i+1;
-                    // }
                   }
-                  // return item.prevNotif.sort((a: any, b: any) => a.motifId - b.motifId);
-                  // console.log('moh', item.prevNotif);
-                }
-              );*/
+                })
 
+              this.listOfWaittingNotif.filter(item => item.prevNotif.sort((a: any, b: any) => a.pos - b.pos))
+
+              //-------------------------------------------------------------------------------------------
 
 
               loadingEl.dismiss();
