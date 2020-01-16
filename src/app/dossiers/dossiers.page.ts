@@ -20,7 +20,7 @@ export class DossiersPage implements OnInit {
   token: string;
   nameEtab: string;
   numDossier: number;
-  //cudtId: number; 
+  // cudtId: number;
   dossiersEnCours = false;
   dossiersEnvoyes = true;
 
@@ -36,15 +36,13 @@ export class DossiersPage implements OnInit {
   totalPending = 0;
   totalSending = 0;
   isRefresh = false;
-  checkmarkColors = ['#f25454', '#02a1b3', '#516bf0']
-
-  //motifIdArray=[];
+  checkmarkColors = ['#f25454', '#02a1b3', '#516bf0'];
 
   constructor(
 
     private srv: ServiceAppService,
     private sglob: GlobalvarsService,
-    //private activatedroute: ActivatedRoute,
+    // private activatedroute: ActivatedRoute,
     private router: Router,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
@@ -53,7 +51,7 @@ export class DossiersPage implements OnInit {
     this.idUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
     this.token = this.sglob.getToken();
-    this.nameEtab = this.sglob.getNameEtab()
+    this.nameEtab = this.sglob.getNameEtab();
 
 
 
@@ -82,7 +80,7 @@ export class DossiersPage implements OnInit {
 
 
   segmentButtonClicked(value) {
-    //console.log('Segment button clicked', value);
+    // console.log('Segment button clicked', value);
     if (value === 'dEnCours') {
       this.dossiersEnCours = true;
       this.dossiersEnvoyes = false;
@@ -99,6 +97,12 @@ export class DossiersPage implements OnInit {
 
   }
 
+  getDossier(dossierId) {
+    console.log('get Dossier : dossierId ==== >', dossierId);
+    this.router.navigate(['dossier-infos', dossierId]);
+
+  }
+
   getRandomNumber() {
     return this.numDossier = Math.floor(100000 + Math.random() * 9000);
 
@@ -111,7 +115,7 @@ export class DossiersPage implements OnInit {
       .create({ keyboardClose: true, message: 'Chargement en cours...' })
       .then(loadingEl => {
 
-        if (!this.isRefresh) loadingEl.present();
+        if (!this.isRefresh) { loadingEl.present(); }
         // ----------- END PARAMS  ---------------
         // const crId = this.idEtab;
 
@@ -135,6 +139,7 @@ export class DossiersPage implements OnInit {
 
 
               // ---------- Mesuring time of exection ----------
+              // tslint:disable-next-line: no-console
               console.time('execution-time');
               // --------------------------------------------
 
@@ -188,7 +193,7 @@ export class DossiersPage implements OnInit {
               //   }
               // ];
 
-              //console.log(this.dataDossiersPending);
+              // console.log(this.dataDossiersPending);
 
 
 
@@ -196,7 +201,7 @@ export class DossiersPage implements OnInit {
 
 
               // const obj = { dossierId: 0, demandes: [] };
-              //const resultDemandes = [];
+              // const resultDemandes = [];
               /* const resultDemandes = this.dataDossiersPending.map(
                  (data, index) => {
                    console.log(data.dossierId)
@@ -239,7 +244,6 @@ export class DossiersPage implements OnInit {
                })*/
 
 
-
               this.listOfWaittingNotif = this.dataDossiersPending.map(data => {
                 return {
                   dossierId: data.dossierId,
@@ -276,107 +280,123 @@ export class DossiersPage implements OnInit {
 
                   lastDemandeId: data.demandes.map(m => m.demandeId).pop(),
 
+                  // -------------------------------------
                   lastMotifId: data.demandes.map((dem) => {
                     const motifId = dem.motifId;
                     const lenResp = dem.reponses.length;
                     const find = dem.reponses.every(
                       f => f.doctorId !== this.idUser // doctorId
-                    )
-
-                    // if (find) {
-                    //   if (lenResp === 0) {
-                    //     return motifId;
-                    //   } else {
-                    //     return 'salim'
-                    //   }
-                    // } else {
-                    //   return 0;
-                    // }
-
+                    );
                     if (find || lenResp === 0) {
-                      //console.log("1111 :::", motifId);
+                      // console.log("1111 :::", motifId);
                       return motifId;
                     } else {
                       // console.log("0000 :::", motifId);
                       return 0;
                     }
-                  })
-                    /*.filter((fl) => {
-  
-  
-  
-                      if (fl !== undefined) {
-                        console.log("FFFF:::", fl);
-                        return 'moch'
-                      } else {
-                        console.log("MMMM:::", fl);
-                        return fl;
-                      }
-  
-                    })*/
-                    .pop()
-                  // .reduce(function (a, b) {
-                  //   console.log('moh', a, ':', b);
-                  //   return b;
-                  // }, 0)
-                  ,
+                  }).pop(),
 
-                  ///-------------------------------------- 
-                  prevNotif: data.demandes.map((dem) => {
-
-                    const motifId = dem.motifId;
-                    let reponse = null;
+                  // -------------------------------------
+                  prevNotif: data.demandes.map((dem, index) => {
+                    const myMotifId = dem.motifId;
+                    let myReponse = null;
                     const lenResp = dem.reponses.length;
-
-                    /*const ObjPrevNotif = [
-                      { motifId: null, reponse: null, doctorId: this.idUser },
-                      { motifId: null, reponse: null, doctorId: this.idUser },
-                      { motifId: null, reponse: null, doctorId: this.idUser },
-
-                    ];*/
-                    // -----------------------------------
-
-                    const find = dem.reponses
-                      .map(m => m)
-                      .find(
-                        (f) => {
-                          reponse = f.reponse;
-                          return f.doctorId === this.idUser;
-                        }
-                      )
+                    // ............................
+                    const find = dem.reponses.find(
+                      (f) => {
+                        myReponse = f.reponse;
+                        return f.doctorId === this.idUser;
+                      }
+                    );
+                    // ..............................
                     if (find && lenResp !== 0) {
-
-                      return { motifId: motifId, reponse: reponse, doctorId: this.idUser }
-                      //return ObjPrevNotif;
+                      return { pos: myMotifId, motifId: myMotifId, reponse: myReponse, doctorId: this.idUser };
                     } else {
-                      return { motifId: null, reponse: null, doctorId: null }
-                      // return ObjPrevNotif;
+                      return { pos: null, motifId: null, reponse: null, doctorId: null };
+                      // return this.objPrevNotif;
                     }
-
                     // return ObjPrevNotif;
-                  })
+                  }).sort((a: any, b: any) => a.pos - b.pos)
+                  // -------------------------------------
                 };
-              })
+
+              });
 
 
 
 
-              //console.log('listOfResult::::', listOfResult);
+
+              // =============== FILL and STORE => prevMotif [Array values] ===================================
+              this.listOfWaittingNotif.map(
+                (item) => {
+                  item.prevNotif.forEach(
+                    (e) => {
+
+                      for (let i = 1; i <= 3; i++) {
+                        // console.log(e.pos, ' / ', i === e.pos, ' - ', i);
+
+                        if (i !== e.pos) {
+                          item.prevNotif.push({ pos: i, motifId: null, reponse: null, doctorId: null });
+                        } else {
+                          item.prevNotif[i - 1]['pos'] = 1;
+                        }
+                      }
+                      console.log('---------------')
+                      return item.prevNotif.sort((a: any, b: any) => a.motifId - b.motifId);
+
+
+                    });
+                }
+              );
+
+              /*this.listOfWaittingNotif.map(
+                (item: any) => {
+                  for (let i = 0; i < 3; i++) {
+                    
+                  }
+ 
+ 
+                  const ln = item.prevNotif.length;
+                  for (let i = 0; i < 3; i++) {
+ 
+                    if (i <= ln - 1) {
+                      console.log('ln : ', ln, ' / i :', i, ' pos :', item.prevNotif[i]['pos']);
+                    }
+ 
+                    // if (item.prevNotif[i]['pos'] !== i + 1) {
+                    //   item.prevNotif.push({ pos: i, motifId: null, reponse: null, doctorId: null });
+                    // }
+                    //else {
+                    //   item.prevNotif[i]['pos'] = i+1;
+                    // }
+                  }
+                  // return item.prevNotif.sort((a: any, b: any) => a.motifId - b.motifId);
+                  // console.log('moh', item.prevNotif);
+                }
+              );*/
+
+
+
+              loadingEl.dismiss();
+
+
+              // console.log('listOfResult::::', listOfResult);
               console.log('*****************************');
               console.log('list Of Waitting Notifications::::', this.listOfWaittingNotif);
               // console.log(' demandeId ::::', demandeId);
               console.log('*****************************');
               // console.log('listOfDemandes :::', listOfDemandes);
               console.log('*****************************');
-              //console.log('listOfResponses :::', listOfResponses);
+              // console.log('listOfResponses :::', listOfResponses);
 
               // console.log('this.dataDossiers : ', this.dataDossiers);
               // console.log('this.dataDossiers[encours] : ', this.dataDossiersSending);
               // console.log('this.dataDossiers[envoyee] : ', this.dataDossiersPending);
 
               console.log('totalPending : ', this.totalPending, '/ totalSending', this.totalPending);
-              loadingEl.dismiss();
+
               // ---------- Mesuring time of exection ----------
+              // tslint:disable-next-line: no-console
               console.timeEnd('execution-time');
               // -------------------------------------
             } else {
@@ -415,31 +435,25 @@ export class DossiersPage implements OnInit {
 
 
 
-  getDossier(dossierId) {
-    console.log('get Dossier : dossierId ==== >', dossierId);
-    this.router.navigate(['dossier-infos', dossierId]);
-
-  }
-
 
 
   async actionSheetSetDoctorReview(lastDemandeId: number, lastMotifId: number) {
 
-    console.group(' ---- Action Sheet Set Doctor review ----')
+    console.group(' ---- Action Sheet Set Doctor review ----');
     console.log('- lastDemandeId ::::>', lastDemandeId);
     console.log('- lastMotifId ::::> ', lastMotifId);
     console.groupEnd();
 
     if (lastMotifId === 1) {
-      //# 1 == Demande d'avis ST (RAS/ST)
+      // # 1 == Demande d'avis ST (RAS/ST)
       await this.actionSheetIsSt(lastDemandeId);
 
     } else if (lastMotifId === 2) {
-      //# 2 == Demande d'avis THROMBOLYSE (oui/non)
+      // # 2 == Demande d'avis THROMBOLYSE (oui/non)
       await this.actionSheetIsThrombolyse(lastDemandeId);
 
     } else {
-      //# 3 == Demande de validation d'envoie du patient au CR (oui/non)
+      // # 3 == Demande de validation d'envoie du patient au CR (oui/non)
       await this.actionSheetIsSending(lastDemandeId);
     }
 
@@ -452,32 +466,33 @@ export class DossiersPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       cssClass: 'action-sheet',
       header: 'Demande d\'avis diagnostique',
+      // tslint:disable-next-line: max-line-length
       subHeader: 'Vous avez recu une demande d\'avis concernant le patient Mouallem Mohamed, merci de partager votre constat avec vos collègues',
       buttons: [{
-        cssClass: "icon-heart-checked actionSheet_withIcomoon ras",
+        cssClass: 'icon-heart-checked actionSheet_withIcomoon ras',
         text: 'Rien à signaler',
-        //icon: 'icon-heart-checked',
+        // icon: 'icon-heart-checked',
         handler: () => {
           console.log('RAS clicked');
           /* ======================================*/
-          this.onResponseToNotifReview(lastDemandeId, 'RAS')
+          this.onResponseToNotifReview(lastDemandeId, 'RAS');
           /* ======================================*/
 
         }
       }, {
         text: 'Patient ST',
-        cssClass: "icon-heart-st actionSheet_withIcomoon st",
-        //icon: 'share',
+        cssClass: 'icon-heart-st actionSheet_withIcomoon st',
+        // icon: 'share',
         handler: () => {
           console.log('ST clicked');
           /* ======================================*/
-          this.onResponseToNotifReview(lastDemandeId, 'ST')
+          this.onResponseToNotifReview(lastDemandeId, 'ST');
           /* ======================================*/
         }
       },
       {
         text: 'Annuler',
-        cssClass: "icon-remove-outline actionSheet_withIcomoon cancel ",
+        cssClass: 'icon-remove-outline actionSheet_withIcomoon cancel ',
         // icon: 'close',
         role: 'cancel',
         handler: () => {
@@ -495,34 +510,35 @@ export class DossiersPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       cssClass: 'action-sheet',
       header: 'Demande d\'avis Thrombolyse',
+      // tslint:disable-next-line: max-line-length
       subHeader: 'Vous avez recu une demande d\'avis concernant le patient Mouallem Mohamed, merci de partager votre constat avec vos collègues',
       buttons: [{
-        cssClass: "icon-user-delete actionSheet_withIcomoon non",
+        cssClass: 'icon-user-delete actionSheet_withIcomoon non',
         text: 'Ne pas Appliquer',
         // role: 'destructive',
-        //icon: 'icon-heart-checked',
+        // icon: 'icon-heart-checked',
         handler: () => {
           console.log('Thrombolyse Rejcted clicked');
           /* ======================================*/
-          this.onResponseToNotifReview(lastDemandeId, 'NON')
+          this.onResponseToNotifReview(lastDemandeId, 'NON');
           /* ======================================*/
 
         }
       }, {
 
-        cssClass: "icon-int-thromb actionSheet_withIcomoon oui",
+        cssClass: 'icon-int-thromb actionSheet_withIcomoon oui',
         text: 'Appliquer le thrombolyse',
-        //icon: 'share',
+        // icon: 'share',
         handler: () => {
           console.log('Thrombolyse Accepted clicked');
           /* ======================================*/
-          this.onResponseToNotifReview(lastDemandeId, 'OUI')
+          this.onResponseToNotifReview(lastDemandeId, 'OUI');
           /* ======================================*/
         }
       },
       {
         text: 'Annuler',
-        cssClass: "icon-remove-outline actionSheet_withIcomoon cancel ",
+        cssClass: 'icon-remove-outline actionSheet_withIcomoon cancel ',
         // icon: 'close',
         role: 'cancel',
         handler: () => {
@@ -539,33 +555,34 @@ export class DossiersPage implements OnInit {
     const actionSheet = await this.actionSheetController.create({
       cssClass: 'action-sheet',
       header: 'Notification de reception',
+      // tslint:disable-next-line: max-line-length
       subHeader: 'Nous vous informons que le patient sera envoyé sera envoyé  à votre établissement avec votre accord dans les plus brefs délais',
       buttons: [{
-        cssClass: "icon-user-delete actionSheet_withIcomoon non",
+        cssClass: 'icon-user-delete actionSheet_withIcomoon non',
         text: ' Je n\'accorde pas',
         // role: 'destructive',
-        //icon: 'icon-heart-checked',
+        // icon: 'icon-heart-checked',
         handler: () => {
           console.log('Sending rejected clicked');
           /* ======================================*/
-          this.onResponseToNotifReview(lastDemandeId, 'NON')
+          this.onResponseToNotifReview(lastDemandeId, 'NON');
           /* ======================================*/
         }
       }, {
 
-        cssClass: "icon-user-checked actionSheet_withIcomoon oui",
+        cssClass: 'icon-user-checked actionSheet_withIcomoon oui',
         text: 'J\'accord',
-        //icon: 'share',
+        // icon: 'share',
         handler: () => {
           console.log('Sending accepted clicked');
           /* ======================================*/
-          this.onResponseToNotifReview(lastDemandeId, 'OUI')
+          this.onResponseToNotifReview(lastDemandeId, 'OUI');
           /* ======================================*/
         }
       },
       {
         text: 'Annuler',
-        cssClass: "icon-remove-outline actionSheet_withIcomoon cancel ",
+        cssClass: 'icon-remove-outline actionSheet_withIcomoon cancel ',
         // icon: 'close',
         role: 'cancel',
         handler: () => {
@@ -585,7 +602,7 @@ export class DossiersPage implements OnInit {
       .create({ keyboardClose: true, message: 'Envoie en cours...' })
       .then(loadingEl => {
         loadingEl.present();
-        // ----------- END PARAMS  --------------- 
+        // ----------- END PARAMS  ---------------
         const params = {
           demandeId: lastDemandeId,
           doctorId: this.idUser,
@@ -603,6 +620,7 @@ export class DossiersPage implements OnInit {
               loadingEl.dismiss();
               console.log('this.response : ', res.message);
               this.showAlert(res.message);
+              // tslint:disable-next-line: deprecation
               this.initWaitingSendingDossiers(event);
 
             } else {
@@ -621,7 +639,7 @@ export class DossiersPage implements OnInit {
               this.showAlert(errRes.error.errors.email);
             } else {
               this.showAlert(
-                "Prblème d'accès au réseau, veillez vérifier votre connexion"
+                'Prblème d\'accès au réseau, veillez vérifier votre connexion'
               );
             }
 
@@ -631,11 +649,11 @@ export class DossiersPage implements OnInit {
 
 
 
-  private showAlert(message: string) {
+  private showAlert(mesg: string) {
     this.alertCtrl
       .create({
         header: 'RÉSULTAT',
-        message: message,
+        message: mesg,
         cssClass: 'alert-css',
         buttons: ['Okay']
       })

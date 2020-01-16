@@ -121,12 +121,30 @@
                     <!-- <small>DOSSIER N°: <b>{{getRandomNumber()}}</b> </small> -->
                     <small>AGE : {{item.age}} Ans | {{item.gender === '2'  ? 'Homme' : 'Femme'}}</small>
                     <small>CUDT : <b>{{item.etabName}}</b> </small>
-                    <div>
-                      <!-- <span>{{item['prevNotif'][0]['motifId'] === undefined ? 0 : item['prevNotif'][0]['motifId'] }}</span>
-                      <span>{{item['prevNotif'][1]['motifId'] === undefined ? 0 : item['prevNotif'][0]['motifId']}}</span>
-                      <span>{{item['prevNotif'][2]['motifId'] === undefined ? 0 : item['prevNotif'][0]['motifId']}}</span>  -->
-
+                    <div>   
+                      
                       <div *ngFor=" let item of item['prevNotif']; let i = index; let l = count">
+                        <!-- i : {{ i }} - count :{{ l }} -->
+
+                        <div *ngIf="item.motifId !== null ">
+                          <div *ngIf="item.motifId === 1 ">
+                            <ion-icon name="checkmark-circle" [style.color]="'#f25454'"></ion-icon> 
+                          </div>
+                          <div *ngIf="item.motifId === 2 ">
+                            <ion-icon name="checkmark-circle" [style.color]="'#02a1b3'"></ion-icon> 
+                          </div>
+                          <div *ngIf="item.motifId === 3 ">
+                            <ion-icon name="checkmark-circle" [style.color]="'#516bf0'"></ion-icon> 
+                          </div>
+                        </div>
+                        
+                        <div *ngIf="item.motifId === null ">
+                          <ion-icon name="checkmark-circle" [style.color]="'#bfced0'"></ion-icon>
+                        </div> 
+
+                      </div>
+
+                      <!-- <div *ngFor=" let item of item['prevNotif']; let i = index; let l = count">
                         i : {{ i }} - count :{{ l }}
 
                         <div *ngIf="item?.motifId ">
@@ -146,43 +164,17 @@
                             </div>
                           </div>
                         </div>
+                        
                         <div *ngIf="item.motifId === null ">
                           <ion-icon name="checkmark-circle" [style.color]="'#bfced0'"></ion-icon>
                         </div>
 
+                      </div> -->
 
 
 
 
-                        <!-- {{i}} / {{(item?.motifId)-1}}
-                        {{(item?.motifId)-1 === i}} -->
 
-
-
-                        <!-- <div *ngIf="{{item?.motifId === i+1}}">
-                          <ion-icon name="checkmark-circle" [style.color]='#f25454'></ion-icon>
-                        </div> -->
-                        <!-- <div *ngIf="{{item['motifId'] === undefined }}">
-                          <ion-icon name="checkmark-circle" [style.color]='#bfced0'>
-                          </ion-icon>
-                        </div> -->
-                        <!-- <div *ngIf="{{!item['prevNotif'][index]['motifId']}}">
-                          <ion-icon name="checkmark-circle" [style.color]="#bfced0">
-                          </ion-icon>
-                        </div> -->
-
-
-                      </div>
-
-                      <div *ngFor="let it of [1,2,3]; let i = index; ">
-
-                        <!-- <div *ngFor="let it of item.prevNotif; let j=index">
-                          <div *ngIf="it?.motifId">
-                            {{it.motifId }} - {{j }}                           
-                          </div>
-                        </div> -->
-
-                      </div>
 
                       <!-- checkmarkColors[i] -->
 

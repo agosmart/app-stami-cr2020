@@ -78,7 +78,7 @@ export class DossierInfoPage implements OnInit {
 
   }
 
-  toogleSelection(index) {
+  toggleSelection(index) {
     this.informations[index].open = !this.informations[index].open;
     if (this.automaticClose && this.informations[index].open) {
       this.informations

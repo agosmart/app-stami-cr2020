@@ -16,21 +16,24 @@ const routes: Routes = [
   { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomePageModule) },
   { path: 'login', loadChildren: () => import('./authentification/login/login.module').then(m => m.LoginPageModule) },
   { path: 'register', loadChildren: () => import('./authentification/register/register.module').then(m => m.RegisterPageModule) },
-  {
-    path: 'cudt-list',
-    loadChildren: () => import('./cudt-list/cudt-list.module').then(m => m.CudtListPageModule)
-  },
+  // {
+  //   path: 'cudt-list',
+  //   loadChildren: () => import('./cudt-list/cudt-list.module').then(m => m.CudtListPageModule)
+  // },
 
-  {
-    path: 'cudt-details/:etabId',
-    loadChildren: () => import('./cudt-list/cudt-details/cudt-details.module').then(m => m.CudtDetailsPageModule)
-  },
+  // {
+  //   path: 'cudt-details/:etabId',
+  //   loadChildren: () => import('./cudt-list/cudt-details/cudt-details.module').then(m => m.CudtDetailsPageModule)
+  // },
 
   // {
   //   path: 'dossier-info/:idDossier',
   //   loadChildren: () => import('./cudt-list/dossier-info/dossier-info.module').then(m => m.DossierInfoPageModule)
   // },
-
+ {
+    path: 'cudt-details/:etabId',
+    loadChildren: () => import('./dossiers/cudt-details/cudt-details.module').then(m => m.CudtDetailsPageModule)
+  },
   {
     path: 'dossier-infos/:idDossier',
     loadChildren: () => import('./dossiers/dossier-info/dossier-info.module').then(m => m.DossierInfoPageModule)
