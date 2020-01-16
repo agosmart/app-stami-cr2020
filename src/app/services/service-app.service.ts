@@ -71,21 +71,21 @@ export class ServiceAppService {
     });
   }
   // get list of CUDT related to the given CR 
-  /*
-   getListCudtOfCr(crId: number, token: string): any {
-     console.log('SERVICE::::: CUDT LIST -> CR ::::');
-     const apiUrl = this.baseUrl + "/cudt/" + crId;
-     const myHeaders: HttpHeaders = new HttpHeaders({
-       Accept: "application/json",
-       "Content-Type": "application/json",
-       Authorization: "Bearer " + token
-     });
- 
-     return this.http.get<EtabResponseData>(apiUrl, {
-       headers: myHeaders
-     });
-   }
- */
+
+  getListCudtOfCr(crId: number, token: string): any {
+    console.log('SERVICE::::: CUDT LIST -> CR ::::');
+    const apiUrl = this.baseUrl + "/cudt/" + crId;
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+
+    return this.http.get<EtabResponseData>(apiUrl, {
+      headers: myHeaders
+    });
+  }
+
 
   // get pending list /  sending list of the given CR 
   getDossiersCudtCr(crId: number, token: string): any {
