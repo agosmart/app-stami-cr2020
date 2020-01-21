@@ -123,9 +123,9 @@ export class DossiersPage implements OnInit {
          * STATIC DATA*
          * ******************************* */
 
-        this.token = 's2LTdKGqPxwl4atfVql2bE2O3Mde1XmwgrrcqDQzlROTHF0tINhHeSKgdo5z';
-        this.idEtab = 1;
-        this.idUser = 92;
+        // this.token = 's2LTdKGqPxwl4atfVql2bE2O3Mde1XmwgrrcqDQzlROTHF0tINhHeSKgdo5z';
+        // this.idEtab = 1;
+        // this.idUser = 92;
 
         /*********************************** */
 
@@ -153,96 +153,7 @@ export class DossiersPage implements OnInit {
 
               console.log('dataDossiersPending::', this.dataDossiersPending);
 
-
-              // var doctor = persons.filter(personObj => personObj.tags.indexOf("javascript") > -1);
-
-              // const doctor = this.dataDossiersPending.forEach(
-              //   item => item.demandes.filter(obj => obj.reponses.find( el => el.doctorId === 92)));
-              // console.log('::::Sending list ::::');
-              //   this.data = this.dataDossiersPending.forEach(
-              //     item => item  );
-
-              //     console.log(this.data);
-
-              // console.log('::::END /Sending list ::::');
-              //  console.log("PENDING :", this.dataDossiersPending);
-
-
-
-              // let demandes = [
-              //   {
-              //     demandeId: 2,
-              //     motifId: 1,
-              //     motifName: 'SOS',
-              //     reponses: [
-              //       {
-              //         reponseId: 1,
-              //         demandeId: 2,
-              //         doctorId: 33,
-              //         reponse: 'ST',
-              //         doctor: 'Bago, Toto'
-              //       },
-              //       {
-              //         reponseId: 2,
-              //         demandeId: 2,
-              //         doctorId: 92,
-              //         reponse: 'RAS',
-              //         doctor: 'Merrakchi, Elaamri'
-              //       }
-              //     ]
-              //   }
-              // ];
-
-              // console.log(this.dataDossiersPending);
-
-
-
-              // const resultDemandes = [];
-
-
-              // const obj = { dossierId: 0, demandes: [] };
-              // const resultDemandes = [];
-              /* const resultDemandes = this.dataDossiersPending.map(
-                 (data, index) => {
-                   console.log(data.dossierId)
-                   resp.dossierId = data.dossierId;
-                   // responseArr[index].rsp = data.demandes;
-                   return responseArr.push(resp);
-                 }
-               );*/
-
-
-
-              // const listOfDemandes = [...new Set(this.dataDossiersPending.map(it => {
-              //   return { id: it.dossierId, demandes: it.demandes };
-              // } ))];
-
-
-              /* const listOfResult = this.dataDossiersPending.map(data => {
-                 return {
-                   id: data.dossierId,
-                   demandes: data.demandes
-                     .map((dem) => {
-                       // -------------------------
-                       const notif = dem.motifId;
-                       const motifName = dem.motifName
-                       // -------------------------
-                       return dem.reponses.find((resp) => {
-                         if (resp.doctorId === 92) {
-                           resp["notifId"] = notif;
-                           resp["motifName"] = motifName
-                           return resp;
-                         }
-                       })
-                     })
-                     .filter((fResp) => {
-                       if (fResp !== undefined) {
-                         return fResp;
-                       }
-                     })
-                 };
-               })*/
-
+              // =============== CREATE  A NEW DTAT OF WAITTING LIST===================================
 
               this.listOfWaittingNotif = this.dataDossiersPending.map(data => {
                 return {
@@ -254,29 +165,6 @@ export class DossiersPage implements OnInit {
                   gender: data.gender,
                   etabName: data.etabName,
                   // ----------NEW DATA-----------------
-
-                  /*
-                  // ---- Get a sending array of demande ----
-                  demandeIdArray: data.demandes.map(m => m.demandeId),
-
-                  // ---- Get a sending array of notif ID ----
-                  motifIdArray: data.demandes.map((dem) => {
-                    const motifId = dem.motifId;
-                    const lenResp = dem.reponses.length;
-                    const find = dem.reponses.every(
-                      f => f.doctorId !== this.idUser // doctorId
-                    )
-
-                    if (find || lenResp === 0) {
-                      return motifId;
-                    } else {
-                      return 0;
-                    }
-                  }).filter((fl) => {
-                    if (fl !== undefined) {
-                      return fl;
-                    }
-                  }),*/
 
                   lastDemandeId: data.demandes.map(m => m.demandeId).pop(),
 
@@ -295,7 +183,6 @@ export class DossiersPage implements OnInit {
                       return 0;
                     }
                   }).pop(),
-
                   // -------------------------------------
                   prevNotif: data.demandes.map((dem, index) => {
                     const myMotifId = dem.motifId;
@@ -314,18 +201,11 @@ export class DossiersPage implements OnInit {
                     }
                     else {
                       return { pos: myMotifId, motifId: null, reponse: null, doctorId: null };
-
                     }
-                    // return ObjPrevNotif;
                   })
                   // -------------------------------------
                 };
-
               })
-
-
-
-
 
               // =============== FILL and STORE => prevMotif [Array values] ===================================
 
