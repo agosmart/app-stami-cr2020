@@ -61,7 +61,7 @@ export class OnboardPage implements OnInit {
 
   goToHome(data: any) {
     console.log(":::::::: Go Home ::::::::");
-    this.sglob.updateInfoUser(data.idUser, data.token, data.idEtab, data.nameEtab );
+    this.sglob.updateInfoUser(data.idUser, data.token, data.idEtab, data.nameEtab);
     this.router.navigate(["/home"]);
   }
 

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'onboard', pathMatch: 'full' },
   /**********************************************
                 - INTRO APP
 ************************************************/
@@ -30,7 +30,7 @@ const routes: Routes = [
   //   path: 'dossier-info/:idDossier',
   //   loadChildren: () => import('./cudt-list/dossier-info/dossier-info.module').then(m => m.DossierInfoPageModule)
   // },
- {
+  {
     path: 'cudt-details/:etabId',
     loadChildren: () => import('./dossiers/cudt-details/cudt-details.module').then(m => m.CudtDetailsPageModule)
   },

@@ -22,7 +22,7 @@ import { AuthResponseData } from 'src/app/models/auth.response';
 export class LoginPage implements OnInit {
   idUser = 0;
   idEtab = 0;
-  nameEtab: string ;
+  nameEtab: string;
   mobile: string;
   uid: string;
   token: string;
@@ -112,8 +112,8 @@ export class LoginPage implements OnInit {
 
   // ------ Api service login ---------------
   submitLogin() {
-    this.getUidFcm();
-    this.uid = '111111111111111111111111';
+
+    this.getUidFcm() == null ? this.uid = '111111111111111111111111' : this.getUidFcm();
     this.isLoading = true;
     this.loadingCtrl
       .create({ keyboardClose: true, message: 'Connexion en cours...' })
@@ -165,7 +165,7 @@ export class LoginPage implements OnInit {
               this.sglob.setIsActive(this.isActive);
               this.sglob.setIsSos(this.isSos);
               // ----- Retrive a value of uid -----
-              // this.getuidFcm();
+
               // ----- Toast ------------
               // this.sglob.presentToast(resData.message);
               // ----- Redirection to Home page ------------
