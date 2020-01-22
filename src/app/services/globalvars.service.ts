@@ -17,9 +17,10 @@ export class GlobalvarsService {
     private toastController: ToastController,
     private alertCtrl: AlertController,
     private webview: WebView
-  ) { }
+  ) {}
 
   public updateInfoUser(idUser, token, idEtab, nameEtab) {
+    console.log(":::::::: Go Home data  service idEtab ::::::::", idEtab);
     this.idUser = idUser;
     this.token = token;
     this.idEtab = idEtab;
@@ -63,12 +64,6 @@ export class GlobalvarsService {
   public getUrlEcg() {
     return this.urlEcg;
   }
-
-
-
-
-
-
 
   async presentToast(text) {
     const toast = await this.toastController.create({

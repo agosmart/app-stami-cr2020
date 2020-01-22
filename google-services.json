@@ -1,63 +1,34 @@
 {
   "project_info": {
-    "project_number": "328465234770",
-    "firebase_url": "https://webcom-8f2c6.firebaseio.com",
-    "project_id": "webcom-8f2c6",
-    "storage_bucket": "webcom-8f2c6.appspot.com"
+    "project_number": "133083360425",
+    "firebase_url": "https://cardio-cr.firebaseio.com",
+    "project_id": "cardio-cr",
+    "storage_bucket": "cardio-cr.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:328465234770:android:277efff93090ab06c0988b",
+        "mobilesdk_app_id": "1:133083360425:android:b83e79a98c9b4bdc308db8",
         "android_client_info": {
           "package_name": "com.cardio.cr"
         }
       },
       "oauth_client": [
         {
-          "client_id": "328465234770-68jj3c5ojf7esr82ugk5icr7b3708d8l.apps.googleusercontent.com",
+          "client_id": "133083360425-32fshu2f544ei02eaa0jvgc08e5k4i6l.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBE9BZ5I8vvKh2gdT2xAzWrPm-iNCj-mFo"
+          "current_key": "AIzaSyC8p0rvCDjDOeHopnLyDa6Xg6rmMQ3LukI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "328465234770-68jj3c5ojf7esr82ugk5icr7b3708d8l.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:328465234770:android:b29e45e8edb8678bc0988b",
-        "android_client_info": {
-          "package_name": "com.webcom.sante"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "328465234770-68jj3c5ojf7esr82ugk5icr7b3708d8l.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBE9BZ5I8vvKh2gdT2xAzWrPm-iNCj-mFo"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "328465234770-68jj3c5ojf7esr82ugk5icr7b3708d8l.apps.googleusercontent.com",
+              "client_id": "133083360425-32fshu2f544ei02eaa0jvgc08e5k4i6l.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

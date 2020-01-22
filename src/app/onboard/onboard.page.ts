@@ -3,7 +3,7 @@ import { NativeStorage } from "@ionic-native/native-storage/ngx";
 import { Platform, NavController } from "@ionic/angular";
 import { GlobalvarsService } from "../services/globalvars.service";
 import { Router } from "@angular/router";
-import { IonSlides } from '@ionic/angular';
+import { IonSlides } from "@ionic/angular";
 
 @Component({
   selector: "app-onboard",
@@ -11,18 +11,12 @@ import { IonSlides } from '@ionic/angular';
   styleUrls: ["./onboard.page.scss"]
 })
 export class OnboardPage implements OnInit {
-
-
-
   slideOpts = {
     initialSlide: 1,
-    speed: 400,
-
+    speed: 400
   };
 
   affichePub: boolean;
-
-
 
   constructor(
     public navcrtl: NavController,
@@ -38,18 +32,12 @@ export class OnboardPage implements OnInit {
     });
   }
 
+  ngOnInit() {}
 
-  ngOnInit() {
-
-
-  }
-
-
-
-  public skiping() { }
+  public skiping() {}
 
   getItems() {
-    this.nativeStorage.getItem("cardio").then(
+    this.nativeStorage.getItem("cardio-cr").then(
       data => this.goToHome(data),
       error => (this.affichePub = true)
     );
@@ -60,12 +48,24 @@ export class OnboardPage implements OnInit {
   }
 
   goToHome(data: any) {
-    console.log(":::::::: Go Home ::::::::");
-    this.sglob.updateInfoUser(data.idUser, data.token, data.idEtab, data.nameEtab);
-    this.router.navigate(["/home"]);
+    const dataDoctorObj = data.dataDoctorObj;
+    console.log(
+      ":::::::: get item Go Home data etabId   ::::::::",
+      dataDoctorObj.etablissment[0]["etabId"]
+    );
+
+    this.sglob.setIsActive(dataDoctorObj.enFonction);
+    this.sglob.setIsSos(dataDoctorObj.disponibleAvis);
+    this.sglob.updateInfoUser(
+      dataDoctorObj.id,
+      dataDoctorObj.apiToken,
+      dataDoctorObj.etablissment[0]["etabId"],
+      dataDoctorObj.etablissment[0]["name"]
+    );
+    this.router.navigate(["/home", JSON.stringify(data.dataDoctorObj)]);
   }
 
   deleteStore() {
-    this.nativeStorage.remove("cardio");
+    this.nativeStorage.remove("cardio-cr");
   }
 }
