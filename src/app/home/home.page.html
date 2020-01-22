@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
     <ion-title class="ion-text-center">
       <div class="logo-header">
         <ion-img type="image/svg+xml" src="../../../assets/images/logo-color.svg"></ion-img>
@@ -27,9 +30,9 @@
       </ion-col>
       <ion-col size="12" >
         <!-- <small class="welcom">BIENVENUE DOCTEUR </small> -->
-        <small class="fullname box-shadow">Dr. {{fullName}}</small>
+        <small class="fullname box-shadow"  >Dr. {{fullName}}</small>
         </ion-col>
-      <ion-col size="12" class="title-header ion-no-padding">CENTRE :{{nameEtab}}</ion-col>
+      <ion-col size="12" class="title-header _ion-no-padding">{{nameEtab}}</ion-col>
     </ion-row>
   </ion-grid>
 

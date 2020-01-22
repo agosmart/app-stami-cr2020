@@ -1,0 +1,46 @@
+:host {
+    ion-content {
+        //--background: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
+
+       // --background: #982c69;
+        --background: linear-gradient(500deg, #ff0001 0%, #982c69 50%, #00afff);
+  
+    }
+
+    ion-list {
+        &.list-md {
+            padding: 0;
+        }
+    }
+
+    // menu //
+  // Menu user profile
+  ion-toolbar.user-profile {
+  
+    .user-avatar {
+      width: 68px;
+      height: 68px;
+    }
+    .item-inner {
+      border-width: 0;
+    }
+  }
+
+  // Custom Menu styles (overriding Shadow DOM)
+  ion-menu {
+    ion-header {
+      ion-toolbar {
+        &.ion-color-dark {
+            --background: linear-gradient(135deg, #ff0001 0%, #982c69 50%, #00afff);
+        }
+      }
+    }
+  }
+  
+  .mto {
+    margin-top: 12px;
+    ion-icon {
+      margin-bottom: -2px;
+    }
+  }
+}

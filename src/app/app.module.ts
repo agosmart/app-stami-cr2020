@@ -6,6 +6,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { ReactiveFormsModule } from '@angular/forms';
+
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -24,7 +25,7 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule, 
+    AppRoutingModule,
     HttpModule,
     HttpClientModule,
     ReactiveFormsModule],

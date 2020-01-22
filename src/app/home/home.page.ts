@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Router, RouterModule, NavigationExtras, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { NavController, LoadingController } from '@ionic/angular';
+import { Component, OnInit, } from '@angular/core';
+import { FormBuilder, } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { NavController, LoadingController, MenuController, Events } from '@ionic/angular';
 import { UserModel } from '../models/user.model';
 import { GlobalvarsService } from '../services/globalvars.service';
 @Component({
@@ -14,24 +13,21 @@ export class HomePage implements OnInit {
 
   isActive = false;
   isSos = false;
-  nameEtab:string;
+  nameEtab: string;
   fullName: string;
   dataDoctor: UserModel;
-  gender;
+  gender: number;
 
 
   constructor(
     private sglob: GlobalvarsService,
-    // public loading: LoadingService,
-    // private srv: ServiceAppService,
+    public menuCtrl: MenuController,
     private formBuilder: FormBuilder,
     public navcrtl: NavController,
     private router: Router,
     private activatedroute: ActivatedRoute,
-    private loadingCtrl: LoadingController,
-    // private alertCtrl: AlertController
+    public events: Events
   ) { }
-
 
   get activity() {
     return this.formDoctor.get('activity');
@@ -47,6 +43,11 @@ export class HomePage implements OnInit {
     sos: ['', ''],
   });
 
+
+  // --------------------------------------------
+
+
+
   // ----------------------------------------------
 
   // ionViewDidEnter() {
@@ -56,8 +57,13 @@ export class HomePage implements OnInit {
   //   console.log('isSos HOME===>', this.isSos);
   //   console.log('isActive HOME===>', this.isActive);
   // }
+  ionViewWillEnter() {
+    // Enable side-menu
+    this.menuCtrl.enable(true);
 
+  }
   ngOnInit() {
+
 
     this.isActive = this.sglob.getIsActive();
     this.isSos = this.sglob.getIsSos();
@@ -79,6 +85,9 @@ export class HomePage implements OnInit {
         this.gender = this.dataDoctor.gender;
         this.fullName = this.dataDoctor.lastName + ' ' + this.dataDoctor.firstName;
 
+        // # Parsse Doctor full name to componentApp to ezt it in Menu-side
+        this.createUser(this.fullName);
+
         // this.isActive = false;
         // this.isSos = true;
       }
@@ -86,7 +95,10 @@ export class HomePage implements OnInit {
 
   }
 
-
+  createUser(user) {
+    console.log('User created!');
+    this.events.publish('user:created', user);
+  }
 
 
   onActiveStateChange(isActive: boolean) {
@@ -111,10 +123,10 @@ export class HomePage implements OnInit {
 
   submitform() {
 
-  //  this.router.navigate(['/cudt-list']);
     this.router.navigate(['/dossiers']);
 
   }
+
 
 
 

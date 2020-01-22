@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { LoadingController, AlertController, MenuController, Events } from '@ionic/angular';
 import { ServiceAppService } from 'src/app/services/service-app.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
@@ -33,8 +33,14 @@ export class LoginPage implements OnInit {
   isLoading = false;
   isLogin = true;
   dataDoctorObj: UserModel;
+
+
+
+
+
   // ------------- CONSTRUCTOR ----------------------------
   constructor(
+    public menuCtrl: MenuController,
     public loading: LoadingService,
     public loadingController: LoadingController,
     private formBuilder: FormBuilder,
@@ -44,8 +50,10 @@ export class LoginPage implements OnInit {
     private sglob: GlobalvarsService,
     private fcm: FCM,
     private alertCtrl: AlertController,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+   
   ) { }
+
   // --------------------------------------------
   get username() {
     return this.loginForm.get('username');
@@ -78,6 +86,16 @@ export class LoginPage implements OnInit {
       }
     ]
   };
+
+
+
+ 
+
+  ionViewWillEnter() {
+    // disable side-menu
+   this.menuCtrl.enable(false);
+  }
+
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -175,6 +193,8 @@ export class LoginPage implements OnInit {
               // --------- Show Alert --------
               this.showAlert(resData.message);
             }
+
+
           },
 
           // ::::::::::::  ON ERROR ::::::::::::
@@ -217,6 +237,48 @@ export class LoginPage implements OnInit {
       //   this.ReturnLogin = newsFetched;
       // });
     });
+  }
+
+
+  async forgotPass() {
+    const alert = await this.alertCtrl.create({
+      header: ' Mot de passe oublié ?',
+      message: 'Entrez votre adresse e-mail pour récupérer votre mot de passe.',
+      cssClass: 'alert-css',
+      inputs: [
+        {
+          name: 'Email',
+          type: 'email',
+          placeholder: 'Email'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Confirmer',
+          handler: async () => {
+            const loader = await this.loadingCtrl.create({
+              duration: 2000
+            });
+
+            loader.present();
+            loader.onWillDismiss().then(async l => {
+              await this.sglob.presentToast('Un email vous a été envoyé avec votre nouveau mot de passe.');
+
+
+            });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   private showAlert(message: string) {

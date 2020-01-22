@@ -2,34 +2,42 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'onboard', pathMatch: 'full' },
+  // { 
+  //   path: '',
+  //   redirectTo: 'onboard',
+  //   pathMatch: 'full' 
+  // },
   /**********************************************
                 - INTRO APP
 ************************************************/
   {
-    path: 'onboard',
-    loadChildren: () =>
-      import('./onboard/onboard.module').then(m => m.OnboardPageModule)
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./authentification/login/login.module').then(m => m.LoginPageModule)
   },
 
-  { path: 'home/:dataDoctorObj', loadChildren: () => import('./home/home.module').then(m => m.HomePageModule) },
-  { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomePageModule) },
-  { path: 'login', loadChildren: () => import('./authentification/login/login.module').then(m => m.LoginPageModule) },
-  { path: 'register', loadChildren: () => import('./authentification/register/register.module').then(m => m.RegisterPageModule) },
-  // {
-  //   path: 'cudt-list',
-  //   loadChildren: () => import('./cudt-list/cudt-list.module').then(m => m.CudtListPageModule)
-  // },
+  {
+    path: 'onboard',
+    loadChildren: () => import('./onboard/onboard.module').then(m => m.OnboardPageModule)
+  },
 
-  // {
-  //   path: 'cudt-details/:etabId',
-  //   loadChildren: () => import('./cudt-list/cudt-details/cudt-details.module').then(m => m.CudtDetailsPageModule)
-  // },
-
-  // {
-  //   path: 'dossier-info/:idDossier',
-  //   loadChildren: () => import('./cudt-list/dossier-info/dossier-info.module').then(m => m.DossierInfoPageModule)
-  // },
+  {
+    path: 'home/:dataDoctorObj',
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+  },
+  
+  {
+    path: 'register',
+    loadChildren: () => import('./authentification/register/register.module').then(m => m.RegisterPageModule)
+  }, 
   {
     path: 'cudt-details/:etabId',
     loadChildren: () => import('./dossiers/cudt-details/cudt-details.module').then(m => m.CudtDetailsPageModule)

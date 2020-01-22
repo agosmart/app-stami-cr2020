@@ -63,6 +63,11 @@
   div#alert-2-msg {
     font-size: 1.2em;
   }
+ 
+}
+
+ion-menu-button{
+  color: #fff;
 }
 
 // ion-alert
@@ -411,17 +416,18 @@ ion-button.btn {
   color: #fff;
 }
 .title-header {
-  // color: #ffffff;
-  // font-weight: 700;
-  // font-size: 0.8em;
-  // letter-spacing: 0.1em;
-  // text-align: center;
   color: #ffffff;
   font-weight: 700;
-  font-size: 1em;
-  letter-spacing: 0.15rem;
-  padding-top: 3px;
+  font-size: 0.85em;
+  letter-spacing: 0.1em;
   text-align: center;
+  text-transform: uppercase;
+  // color: #ffffff;
+  // font-weight: 700;
+  // font-size: 1em;
+  // letter-spacing: 0.15rem;
+  // padding-top: 3px;
+  // text-align: center;
 }
 h3.title-header {
   padding: 0;

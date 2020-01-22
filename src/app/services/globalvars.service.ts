@@ -72,6 +72,7 @@ export class GlobalvarsService {
 
   async presentToast(text) {
     const toast = await this.toastController.create({
+      showCloseButton: true,
       message: text,
       position: "bottom",
       duration: 3000
