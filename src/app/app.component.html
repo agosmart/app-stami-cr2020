@@ -3,54 +3,78 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-header>
-        <ion-toolbar color="dark" class="user-profile">
 
-          <ion-item class="ion-margin-button ">
-            <ion-avatar slot="start" class="user-avatar">
-              <img src=" assets/images/{{ avatar}} ">
-            </ion-avatar>
-            <ion-label >
-              <ion-text color="medium" >
+        <ion-toolbar class="user-profile">
 
-                <h3 ><strong >Dr.</strong> {{doctorName}}</h3>
-               
-              </ion-text>
-              <ion-text >
-                <h3>
-                   Alger, Algérie
-                </h3>
-              </ion-text>
-              
-              <!-- <ion-menu-toggle class="mto" auto-hide="false">
-                <a class="text08" tappable (click)="goToEditProfile()">
+          <ion-item lines="none" class="ion-margin-button ">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12">
+                  <ion-avatar slot="" class="user-avatar">
+                    <img src=" assets/images/{{ avatar}} ">
+                  </ion-avatar>
+                </ion-col>
+                <ion-col size="12">
                   <ion-text color="medium">
-                    <ion-icon name="contact"></ion-icon>
-                    <strong>edit profile</strong>
+                    <h6><strong>Dr.</strong> {{doctorName}}</h6>
                   </ion-text>
-                </a> <ion-text color="secondary"> | </ion-text> 
-                <a class="text08" tappable (click)="logout()">
-                  <ion-text color="medium">
-                    <ion-icon name="log-out"></ion-icon>
-                    <strong>logout</strong>
-                  </ion-text>
-                </a>
-              </ion-menu-toggle> -->
-              
-            </ion-label>
+                  <ion-note>
+                    Alger, Algérie
+                  </ion-note>
+                </ion-col>
+
+                <ion-col size="12" class="ion-no-padding ">
+
+                  <ion-menu-toggle auto-hide="false">
+                    <ion-button tappable (click)="logout()" fill="clear" class="text07  text-teal">
+                      <span class="icon-user-checked fsize-16rem no-margin"></span>
+                      Deconnexion
+                    </ion-button>
+                  </ion-menu-toggle>
+
+                </ion-col>
+              </ion-row>
+            </ion-grid>
           </ion-item>
+
+
+
+          <!-- <ion-grid>
+            <ion-row class="btn-groupe">
+              <ion-menu-toggle auto-hide="false">
+
+                <ion-col size="6" class="ion-no-padding">
+                  <ion-button tappable (click)="goToEditProfile()" fill="clear" class="text07  text-teal">
+                    <span class="icon-user-checked fsize-16rem no-margin"></span>
+                    Editer profil
+                  </ion-button>
+                </ion-col>
+
+                <ion-col size="6" class="ion-no-padding bar-h">
+                  <ion-button tappable (click)="logout()" fill="clear" class="text07  text-teal">
+                    <span class="icon-user-checked fsize-16rem no-margin"></span>
+                    Deconnexion
+                  </ion-button>
+                </ion-col>
+              </ion-menu-toggle>
+            </ion-row>
+          </ion-grid> -->
+
 
         </ion-toolbar>
       </ion-header>
+
+
       <ion-content class="bg-profile">
         <ion-list>
-          <ion-list-header color="dark">
-            <ion-label>Menu</ion-label>
+          <ion-list-header color="transparent" class="ion-text-center">
+            <h6 class="w100">Menu</h6>
           </ion-list-header>
-        
+
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerLink]="[p.url]" _color="primary">              
+            <ion-item [routerLink]="[p.url]" _color="primary">
               <ion-icon slot="start" [name]="p.icon" color="light"></ion-icon>
-              <ion-label>
+              <ion-label class='ion-no-padding'>
                 {{p.title}}
               </ion-label>
             </ion-item>
@@ -62,4 +86,4 @@
 
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
-</ion-app> 
+</ion-app>
