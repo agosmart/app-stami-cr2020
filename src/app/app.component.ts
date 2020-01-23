@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, enableProdMode } from '@angular/core';
 
 import { Platform, Events } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-
-
 import { Router } from '@angular/router';
+
+//enableProdMode();
 
 @Component({
   selector: 'app-root',
@@ -49,38 +49,42 @@ export class AppComponent {
   ];
 
 
-  // myName = '1000';
-  // countChange(event) {
-  //   this.myName = event;
-  //   console.log('this.myName  app ===>', this.myName);
-  // }
+  // -------------------------------------
   doctorName = '';
+  gender = 0;
+  avatar = 'men.png';
+  // -------------------------------------
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private router: Router,
-    public events: Events
+    public events: Events,
 
   ) {
     this.initializeApp();
-    //this.createUser(this.doctorName);
+
+    this.updateMenuUserFullName();
+    /*
+    this.events.subscribe('user:created', (user) => {
+      // user and time are the same arguments passed in `events.publish(user, time)`
+      console.log('AppComponent :: Welcome Dr::::::', user);
+      this.doctorName = user;
+    });
+    */
+  }
+
+  updateMenuUserFullName() {
 
     this.events.subscribe('user:created', (user) => {
       // user and time are the same arguments passed in `events.publish(user, time)`
-      console.log('Welcome::::::::::::::::::::::::', user);
-      this.doctorName = user;
+      console.log('AppComponent :::::::', user);
+      this.doctorName = user.fullName;
+      this.gender = user.gender;
+      +this.gender === 2 ? this.avatar = 'men.png' : this.avatar ='women.png' ;
     });
   }
-
-
-  // createUser(user:any) {
-  //   this.events.subscribe('user:created', (user) => {
-  //     // user and time are the same arguments passed in `events.publish(user, time)`
-  //     console.log('Welcome::::::::::::::::::::::::', user);
-  //     this.doctorName = user;
-  //   });
-  // }
 
   initializeApp() {
     this.platform.ready().then(() => {
@@ -102,7 +106,8 @@ export class AppComponent {
 
 
   logout() {
-    this.router.navigate(['/']);
+
+    this.router.navigate(['/login']);
   }
 
 

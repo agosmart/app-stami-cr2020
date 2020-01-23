@@ -32,7 +32,7 @@
         <!-- <small class="welcom">BIENVENUE DOCTEUR </small> -->
         <small class="fullname box-shadow"  >Dr. {{fullName}}</small>
         </ion-col>
-      <ion-col size="12" class="title-header _ion-no-padding">{{nameEtab}}</ion-col>
+      <ion-col size="12" class="title-header ">{{nameEtab}}</ion-col>
     </ion-row>
   </ion-grid>
 
@@ -41,7 +41,7 @@
     <ion-grid class=" ion-no-padding">
       <ion-row>
 
-        <ion-col size="12">
+        <!-- <ion-col size="12">
           <ion-item lines="full">
             <ion-text>Je suis en activité</ion-text>
             <ion-toggle slot="end" checked='{{isActive}}' formControlName="activity" tappable (ionChange)='onActiveStateChange(isActive)'></ion-toggle>
@@ -53,6 +53,30 @@
             <ion-text>Je suis disponible pour recevoir des demandes</ion-text>
             <ion-toggle slot="end" checked='{{isSos}}' formControlName="sos"   value="" (ionChange)='onSosStateChange(isSos)'  ></ion-toggle>
           </ion-item>
+        </ion-col> -->
+
+
+      
+
+        <ion-col size="12">
+          <ion-item lines="full">
+            <ion-text>Je suis en activité</ion-text>
+            <ion-toggle slot="end" [(ngModel)]='isActive'  formControlName="activity" tappable (click)='onActiveStateChange(isActive,$event)'></ion-toggle>
+          </ion-item>
+        </ion-col>
+        
+        <!-- <ion-col size="12">
+          <ion-item lines="full">
+            <ion-text>Je suis en activité</ion-text>
+            <ion-toggle slot="end"  formControlName="activity" [ngModel]="isActive" (click)="changeFuncWorking($event)"></ion-toggle>           
+          </ion-item>
+        </ion-col> -->
+
+        <ion-col size="12">
+          <ion-item lines="full">
+            <ion-text>Je suis disponible pour recevoir des demandes</ion-text>
+            <ion-toggle slot="end" [(ngModel)]='isSos' [disabled]="isActive"  formControlName="sos"  tappable   (click)='onSosStateChange(isSos ,$event)'  ></ion-toggle>
+          </ion-item>
         </ion-col>
 
       </ion-row>
@@ -60,7 +84,7 @@
       <ion-row>
         <ion-col size="12">
           <div class="ion-padding">
-            <ion-button [disabled]="!formDoctor.valid" type="submit" expand="block"
+            <ion-button  type="submit" expand="block"
               class="ion-margin-top btn">
               Valider <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
             </ion-button>

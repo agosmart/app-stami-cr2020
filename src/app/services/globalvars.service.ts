@@ -1,26 +1,31 @@
-import { Injectable } from "@angular/core";
-import { ToastController, AlertController } from "@ionic/angular";
-import { WebView } from "@ionic-native/ionic-webview/ngx";
+import { Injectable } from '@angular/core';
+import { ToastController, AlertController } from '@ionic/angular';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class GlobalvarsService {
-  private idUser;
-  private token;
-  private idEtab;
-  private nameEtab;
+  private idUser: number;
+  private token: string;
+  private idEtab: number;
+  private nameEtab: string;
   private isSos: boolean;
   private isActive: boolean;
-  private urlEcg = "http://cooffa.shop/";
+  private urlEcg = 'http://cooffa.shop/';
   private initFetch = false;
+
+
+
   constructor(
     private toastController: ToastController,
     private alertCtrl: AlertController,
-    private webview: WebView
-  ) {}
+    private webview: WebView,
+    private nativeStorage: NativeStorage,
+  ) { }
 
   public updateInfoUser(idUser, token, idEtab, nameEtab) {
-    console.log(":::::::: Go Home data  service idEtab ::::::::", idEtab);
+    console.log(':::::::: Go Home data  service idEtab ::::::::', idEtab);
     this.idUser = idUser;
     this.token = token;
     this.idEtab = idEtab;
@@ -37,6 +42,20 @@ export class GlobalvarsService {
   }
   public getIsSos() {
     return this.isSos;
+  }
+
+  public SetStorage(dataResponseVal: any) {
+    console.log('Stored item login !', dataResponseVal),
+
+      this.nativeStorage.setItem('cardio-cr', {
+        dataDoctorObj: dataResponseVal
+      }).then(
+        () => console.log('Stored item!', this.idUser),
+        error => console.error('Error storing item', error)
+      );
+  }
+  public deleteStorage() {
+    this.nativeStorage.remove('cardio-cr');
   }
 
   // public updateInitFetchHome(initFetch) {
@@ -69,19 +88,19 @@ export class GlobalvarsService {
     const toast = await this.toastController.create({
       showCloseButton: true,
       message: text,
-      position: "bottom",
+      position: 'bottom',
       duration: 3000
     });
     toast.present();
   }
 
-  pathForImage(img: any) {
-    console.log("img", img);
+  public pathForImage(img: any) {
+    console.log('img', img);
     if (img === null) {
-      return "";
+      return '';
     } else {
       const converted = this.webview.convertFileSrc(img);
-      console.log("converted", converted);
+      console.log('converted', converted);
       return converted;
     }
   }
@@ -91,16 +110,16 @@ export class GlobalvarsService {
       .create({
         header: headerAlert,
         message: messageAlert,
-        cssClass: "alert-css",
-        buttons: ["Ok"]
+        cssClass: 'alert-css',
+        buttons: ['Ok']
       })
       .then(alertEl => alertEl.present());
   }
 
-  createFileName() {
+  public createFileName() {
     const d = new Date(),
       n = d.getTime(),
-      newFileName = n + ".jpg";
+      newFileName = n + '.jpg';
     return newFileName;
   }
 }

@@ -1,24 +1,25 @@
-import { Component, OnInit } from "@angular/core";
-import { ServiceAppService } from "../services/service-app.service";
-import { GlobalvarsService } from "../services/globalvars.service";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { ServiceAppService } from '../services/service-app.service';
+import { GlobalvarsService } from '../services/globalvars.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   LoadingController,
   AlertController,
-  ActionSheetController
-} from "@ionic/angular";
-import { Observable } from "rxjs";
+  ActionSheetController,
+  MenuController
+} from '@ionic/angular';
+import { Observable } from 'rxjs';
 import {
   DossiersCudtCrResponseData,
   ResponseCudt
-} from "../models/dossies.cudt.cr.response";
-import { DossierModel } from "../models/dossier.model";
-import { ReponseAvisResponseData } from "../models/reponseAvis.response";
+} from '../models/dossies.cudt.cr.response';
+import { DossierModel } from '../models/dossier.model';
+import { ReponseAvisResponseData } from '../models/reponseAvis.response';
 
 @Component({
-  selector: "app-dossiers",
-  templateUrl: "./dossiers.page.html",
-  styleUrls: ["./dossiers.page.scss"]
+  selector: 'app-dossiers',
+  templateUrl: './dossiers.page.html',
+  styleUrls: ['./dossiers.page.scss']
 })
 export class DossiersPage implements OnInit {
   idUser: number;
@@ -42,34 +43,40 @@ export class DossiersPage implements OnInit {
   totalPending = 0;
   totalSending = 0;
   isRefresh = false;
-  checkmarkColors = ["#f25454", "#02a1b3", "#516bf0"];
+  checkmarkColors = ['#f25454', '#02a1b3', '#516bf0'];
 
   constructor(
     private srv: ServiceAppService,
     private sglob: GlobalvarsService,
     // private activatedroute: ActivatedRoute,
+    public menuCtrl: MenuController,
     private router: Router,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private actionSheetController: ActionSheetController
   ) {
+    // ++++++++++++++++++ GET STORED DTATA ++++++++++++++++++++++++
     this.idUser = this.sglob.getIdUser();
     this.idEtab = this.sglob.getidEtab();
     this.token = this.sglob.getToken();
     this.nameEtab = this.sglob.getNameEtab();
 
-    console.log("token => dossier ", this.token);
+    console.log('token => dossier ', this.token);
   }
 
   ionViewDidEnter() {
-    console.log("ionViewDidEnter => getidEtab", this.idEtab);
+    console.log('ionViewDidEnter => get idEtab :::', this.idEtab);
     this.initWaitingSendingDossiers(event);
   }
 
-  ngOnInit() {}
+  ionViewWillEnter() {
+    // disable side-menu
+    this.menuCtrl.enable(false);
+  }
+  ngOnInit() { }
 
-  doRefresh(event) {
-    console.log("Begin async operation");
+  doRefresh(event: any) {
+    console.log('Begin async operation');
     this.isRefresh = true;
     this.initWaitingSendingDossiers(event);
     // setTimeout(() => {
@@ -78,9 +85,9 @@ export class DossiersPage implements OnInit {
     // }, 2000);
   }
 
-  segmentButtonClicked(value) {
+  segmentButtonClicked(value: string) {
     // console.log('Segment button clicked', value);
-    if (value === "dEnCours") {
+    if (value === 'dEnCours') {
       this.dossiersEnCours = true;
       this.dossiersEnvoyes = false;
 
@@ -95,21 +102,21 @@ export class DossiersPage implements OnInit {
     }
   }
 
-  getDossier(dossierId) {
-    console.log("get Dossier : dossierId ==== >", dossierId);
-    this.router.navigate(["dossier-infos", dossierId]);
+  getDossier(dossierId: number) {
+    console.log('get Dossier : dossierId ==== >', dossierId);
+    this.router.navigate(['/dossier-infos', dossierId]);
   }
 
   getRandomNumber() {
     return (this.numDossier = Math.floor(100000 + Math.random() * 9000));
   }
 
-  initWaitingSendingDossiers(event) {
+  initWaitingSendingDossiers(event: any) {
     console.log(
-      "initWaitingSendingDossiers() ::::: waiting - Sending list ::::"
+      'initWaitingSendingDossiers() ::::: waiting - Sending list ::::'
     );
     this.loadingCtrl
-      .create({ keyboardClose: true, message: "Chargement en cours..." })
+      .create({ keyboardClose: true, message: 'Chargement en cours...' })
       .then(loadingEl => {
         if (!this.isRefresh) {
           loadingEl.present();
@@ -134,22 +141,22 @@ export class DossiersPage implements OnInit {
         );
 
         authObs.subscribe(
-          res => {
-            if (+res.code === 200) {
+          resData => {
+            if (+resData.code === 200) {
               // ---------- Mesuring time of exection ----------
               // tslint:disable-next-line: no-console
-              console.time("execution-time");
+              console.time('execution-time');
               // --------------------------------------------
 
               // this.numDossier = Math.floor(100000 + Math.random() * 9000);
-              this.dataDossiers = res.data;
-              this.dataDossiersSending = res.data.sending;
-              this.dataDossiersPending = res.data.pending;
+              this.dataDossiers = resData.data;
+              this.dataDossiersSending = resData.data.sending;
+              this.dataDossiersPending = resData.data.pending;
 
               this.totalPending = this.dataDossiers.totalPending;
               this.totalSending = this.dataDossiers.totalSending;
 
-              console.log("dataDossiersPending::", this.dataDossiersPending);
+              console.log('dataDossiersPending::', this.dataDossiersPending);
 
               // =============== CREATE  A NEW DTAT OF WAITTING LIST===================================
 
@@ -222,9 +229,9 @@ export class DossiersPage implements OnInit {
                 item.prevNotif.map(p => {
                   const pos = p.pos;
                   poseArr.push(pos);
-                  //console.log(pos, ' - ', poseArr);
+                  // console.log(pos, ' - ', poseArr);
                 });
-                //console.log(' poseArr ', poseArr);
+                // console.log(' poseArr ', poseArr);
                 for (let i = 1; i <= 3; i++) {
                   console.log(poseArr.includes(i));
                   if (!poseArr.includes(i)) {
@@ -242,59 +249,56 @@ export class DossiersPage implements OnInit {
                 item.prevNotif.sort((a: any, b: any) => a.pos - b.pos)
               );
 
-              //-------------------------------------------------------------------------------------------
+              // -------------------------------------------------------------------------------------------
 
               loadingEl.dismiss();
 
               // console.log('listOfResult::::', listOfResult);
-              console.log("*****************************");
+              console.log('*****************************');
               console.log(
-                "list Of Waitting Notifications::::",
+                'list Of Waitting Notifications::::',
                 this.listOfWaittingNotif
               );
               // console.log(' demandeId ::::', demandeId);
-              console.log("*****************************");
+              console.log('*****************************');
               // console.log('listOfDemandes :::', listOfDemandes);
-              console.log("*****************************");
+              console.log('*****************************');
               // console.log('listOfResponses :::', listOfResponses);
 
               // console.log('this.dataDossiers : ', this.dataDossiers);
               // console.log('this.dataDossiers[encours] : ', this.dataDossiersSending);
               // console.log('this.dataDossiers[envoyee] : ', this.dataDossiersPending);
 
-              console.log(
-                "totalPending : ",
-                this.totalPending,
-                "/ totalSending",
-                this.totalPending
-              );
+              console.log('totalPending : ', this.totalPending, '/ totalSending', this.totalPending);
 
               // ---------- Mesuring time of exection ----------
               // tslint:disable-next-line: no-console
-              console.timeEnd("execution-time");
+              console.timeEnd('execution-time');
               // -------------------------------------
             } else {
-              console.log("Internal ERROR !");
+              // ----- Hide loader ------
+              loadingEl.dismiss();
+              // --------- Show Alert --------
+              this.sglob.showAlert('Erreur!', resData.message);
             }
           },
-          errRes => {
-            console.log(errRes);
+          errData => {
+            console.log(errData);
             // ----- Hide loader ------
             loadingEl.dismiss();
 
             // --------- Show Alert --------
-            if (errRes.error.errors != null) {
-              this.showAlert(errRes.error.errors.email);
+            if (errData.error.errors != null) {
+              this.sglob.showAlert('Erreur!', errData.error.errors.email);
             } else {
-              this.showAlert(
-                "Problème d'accès au réseau, veillez vérifier votre connexion"
+              this.sglob.showAlert('Erreur!', 'Problème d\'accès au réseau, veillez vérifier votre connexion'
               );
             }
           }
         );
       })
       .then(() => {
-        console.log("isRefresh::::>", this.isRefresh);
+        console.log('isRefresh::::>', this.isRefresh);
         if (this.isRefresh) {
           event.target.complete();
           this.isRefresh = !this.isRefresh;
@@ -303,9 +307,9 @@ export class DossiersPage implements OnInit {
   }
 
   async actionSheetSetDoctorReview(lastDemandeId: number, lastMotifId: number) {
-    console.group(" ---- Action Sheet Set Doctor review ----");
-    console.log("- lastDemandeId ::::>", lastDemandeId);
-    console.log("- lastMotifId ::::> ", lastMotifId);
+    console.group(' ---- Action Sheet Set Doctor review ----');
+    console.log('- lastDemandeId ::::>', lastDemandeId);
+    console.log('- lastMotifId ::::> ', lastMotifId);
     console.groupEnd();
 
     if (lastMotifId === 1) {
@@ -323,41 +327,41 @@ export class DossiersPage implements OnInit {
   /* ============= PATIENT ST-RAS ==============*/
   async actionSheetIsSt(lastDemandeId: number) {
     const actionSheet = await this.actionSheetController.create({
-      cssClass: "action-sheet",
-      header: "Demande d'avis diagnostique",
+      cssClass: 'action-sheet',
+      header: 'Demande d\'avis diagnostique',
       // tslint:disable-next-line: max-line-length
       subHeader:
-        "Vous avez recu une demande d'avis concernant le patient Mouallem Mohamed, merci de partager votre constat avec vos collègues",
+        'Vous avez recu une demande d\'avis concernant le patient Mouallem Mohamed, merci de partager votre constat avec vos collègues',
       buttons: [
         {
-          cssClass: "icon-heart-checked actionSheet_withIcomoon ras",
-          text: "Rien à signaler",
+          cssClass: 'icon-heart-checked actionSheet_withIcomoon ras',
+          text: 'Rien à signaler',
           // icon: 'icon-heart-checked',
           handler: () => {
-            console.log("RAS clicked");
+            console.log('RAS clicked');
             /* ======================================*/
-            this.onResponseToNotifReview(lastDemandeId, "RAS");
+            this.onResponseToNotifReview(lastDemandeId, 'RAS');
             /* ======================================*/
           }
         },
         {
-          text: "Patient ST",
-          cssClass: "icon-heart-st actionSheet_withIcomoon st",
+          text: 'Patient ST',
+          cssClass: 'icon-heart-st actionSheet_withIcomoon st',
           // icon: 'share',
           handler: () => {
-            console.log("ST clicked");
+            console.log('ST clicked');
             /* ======================================*/
-            this.onResponseToNotifReview(lastDemandeId, "ST");
+            this.onResponseToNotifReview(lastDemandeId, 'ST');
             /* ======================================*/
           }
         },
         {
-          text: "Annuler",
-          cssClass: "icon-remove-outline actionSheet_withIcomoon cancel ",
+          text: 'Annuler',
+          cssClass: 'icon-remove-outline actionSheet_withIcomoon cancel ',
           // icon: 'close',
-          role: "cancel",
+          role: 'cancel',
           handler: () => {
-            console.log("Cancel clicked");
+            console.log('Cancel clicked');
           }
         }
       ]
@@ -368,42 +372,42 @@ export class DossiersPage implements OnInit {
   /* ============= THRMBOLYSE ==============*/
   async actionSheetIsThrombolyse(lastDemandeId: number) {
     const actionSheet = await this.actionSheetController.create({
-      cssClass: "action-sheet",
-      header: "Demande d'avis Thrombolyse",
+      cssClass: 'action-sheet',
+      header: 'Demande d\'avis Thrombolyse',
       // tslint:disable-next-line: max-line-length
       subHeader:
-        "Vous avez recu une demande d'avis concernant le patient Mouallem Mohamed, merci de partager votre constat avec vos collègues",
+        'Vous avez recu une demande d\'avis concernant le patient Mouallem Mohamed, merci de partager votre constat avec vos collègues',
       buttons: [
         {
-          cssClass: "icon-user-delete actionSheet_withIcomoon non",
-          text: "Ne pas Appliquer",
+          cssClass: 'icon-user-delete actionSheet_withIcomoon non',
+          text: 'Ne pas Appliquer',
           // role: 'destructive',
           // icon: 'icon-heart-checked',
           handler: () => {
-            console.log("Thrombolyse Rejcted clicked");
+            console.log('Thrombolyse Rejcted clicked');
             /* ======================================*/
-            this.onResponseToNotifReview(lastDemandeId, "NON");
+            this.onResponseToNotifReview(lastDemandeId, 'NON');
             /* ======================================*/
           }
         },
         {
-          cssClass: "icon-int-thromb actionSheet_withIcomoon oui",
-          text: "Appliquer le thrombolyse",
+          cssClass: 'icon-int-thromb actionSheet_withIcomoon oui',
+          text: 'Appliquer le thrombolyse',
           // icon: 'share',
           handler: () => {
-            console.log("Thrombolyse Accepted clicked");
+            console.log('Thrombolyse Accepted clicked');
             /* ======================================*/
-            this.onResponseToNotifReview(lastDemandeId, "OUI");
+            this.onResponseToNotifReview(lastDemandeId, 'OUI');
             /* ======================================*/
           }
         },
         {
-          text: "Annuler",
-          cssClass: "icon-remove-outline actionSheet_withIcomoon cancel ",
+          text: 'Annuler',
+          cssClass: 'icon-remove-outline actionSheet_withIcomoon cancel ',
           // icon: 'close',
-          role: "cancel",
+          role: 'cancel',
           handler: () => {
-            console.log("Cancel clicked");
+            console.log('Cancel clicked');
           }
         }
       ]
@@ -413,42 +417,42 @@ export class DossiersPage implements OnInit {
   /* ============= SEND PATIENT ==============*/
   async actionSheetIsSending(lastDemandeId: number) {
     const actionSheet = await this.actionSheetController.create({
-      cssClass: "action-sheet",
-      header: "Notification de reception",
+      cssClass: 'action-sheet',
+      header: 'Notification de reception',
       // tslint:disable-next-line: max-line-length
       subHeader:
-        "Nous vous informons que le patient sera envoyé sera envoyé  à votre établissement avec votre accord dans les plus brefs délais",
+        'Nous vous informons que le patient sera envoyé sera envoyé  à votre établissement avec votre accord dans les plus brefs délais',
       buttons: [
         {
-          cssClass: "icon-user-delete actionSheet_withIcomoon non",
-          text: " Je n'accorde pas",
+          cssClass: 'icon-user-delete actionSheet_withIcomoon non',
+          text: ' Je n\'accorde pas',
           // role: 'destructive',
           // icon: 'icon-heart-checked',
           handler: () => {
-            console.log("Sending rejected clicked");
+            console.log('Sending rejected clicked');
             /* ======================================*/
-            this.onResponseToNotifReview(lastDemandeId, "NON");
+            this.onResponseToNotifReview(lastDemandeId, 'NON');
             /* ======================================*/
           }
         },
         {
-          cssClass: "icon-user-checked actionSheet_withIcomoon oui",
-          text: "J'accord",
+          cssClass: 'icon-user-checked actionSheet_withIcomoon oui',
+          text: 'J\'accord',
           // icon: 'share',
           handler: () => {
-            console.log("Sending accepted clicked");
+            console.log('Sending accepted clicked');
             /* ======================================*/
-            this.onResponseToNotifReview(lastDemandeId, "OUI");
+            this.onResponseToNotifReview(lastDemandeId, 'OUI');
             /* ======================================*/
           }
         },
         {
-          text: "Annuler",
-          cssClass: "icon-remove-outline actionSheet_withIcomoon cancel ",
+          text: 'Annuler',
+          cssClass: 'icon-remove-outline actionSheet_withIcomoon cancel ',
           // icon: 'close',
-          role: "cancel",
+          role: 'cancel',
           handler: () => {
-            console.log("Cancel clicked");
+            console.log('Cancel clicked');
           }
         }
       ]
@@ -463,11 +467,11 @@ export class DossiersPage implements OnInit {
     responseReview: string
   ) {
     console.log(
-      " onResponseNotifReview ::::: demandeId Notif to set - ::::",
+      ' onResponseNotifReview ::::: demandeId Notif to set - ::::',
       lastDemandeId
     );
     this.loadingCtrl
-      .create({ keyboardClose: true, message: "Envoie en cours..." })
+      .create({ keyboardClose: true, message: 'Envoie en cours...' })
       .then(loadingEl => {
         loadingEl.present();
         // ----------- END PARAMS  ---------------
@@ -477,7 +481,7 @@ export class DossiersPage implements OnInit {
           response: responseReview
         };
 
-        console.log("params======>", params);
+        console.log('params======>', params);
         // const authObs: Observable<any> = this.http.get<any>('assets/dossiers-cudt.json');
         const authObs: Observable<ReponseAvisResponseData> = this.srv.reponseDemandeAvis(
           params,
@@ -488,12 +492,12 @@ export class DossiersPage implements OnInit {
           res => {
             if (+res.code === 201) {
               loadingEl.dismiss();
-              console.log("this.response : ", res.message);
+              console.log('this.response : ', res.message);
               this.showAlert(res.message);
               // tslint:disable-next-line: deprecation
               this.initWaitingSendingDossiers(event);
             } else {
-              console.log("Erreur interne !");
+              console.log('Erreur interne !');
             }
           },
           errRes => {
@@ -506,7 +510,7 @@ export class DossiersPage implements OnInit {
               this.showAlert(errRes.error.errors.email);
             } else {
               this.showAlert(
-                "Prblème d'accès au réseau, veillez vérifier votre connexion"
+                'Prblème d\'accès au réseau, veillez vérifier votre connexion'
               );
             }
           }
@@ -517,10 +521,10 @@ export class DossiersPage implements OnInit {
   private showAlert(mesg: string) {
     this.alertCtrl
       .create({
-        header: "RÉSULTAT",
+        header: 'RÉSULTAT',
         message: mesg,
-        cssClass: "alert-css",
-        buttons: ["Okay"]
+        cssClass: 'alert-css',
+        buttons: ['Okay']
       })
       .then(alertEl => alertEl.present());
   }
