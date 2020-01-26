@@ -33,6 +33,10 @@ export class HomePage implements OnInit {
   dataDoctor: UserModel;
   gender: number;
 
+
+  // intr: any;
+  // notif = 0;
+
   constructor(
 
     private srv: ServiceAppService,
@@ -66,27 +70,30 @@ export class HomePage implements OnInit {
 
 
 
-    this.platform.ready().then(() => {
-      // +++++++++++++ Envoked when Doctor recive Notification  ++++++++++++
-      this.fcm.onNotification().subscribe(data => {
-        if (data.wasTapped) {
-          // Notification was received on device tray and tapped by the user.
-          console.log('ok', JSON.stringify(data));
-          console.log('Nothing idDossier', JSON.stringify(data.idDossier));
-          console.log('Nothing page', JSON.stringify(data.etabName));
+    /* this.platform.ready().then(() => {
+       // +++++++++++++ Envoked when Doctor recive Notification  ++++++++++++
+       this.fcm.onNotification().subscribe(data => {
+         if (data.wasTapped) {
+           // Notification was received on device tray and tapped by the user.
+           console.log('ok', JSON.stringify(data));
+           console.log('Nothing idDossier', JSON.stringify(data.idDossier));
+           console.log('Nothing page', JSON.stringify(data.etabName));
+ 
+           this.onNotifReceived(data);
+         } else {
+           // Notification was received in foreground. Maybe the user needs to be notified.
+           console.log('Nothing data', JSON.stringify(data));
+           console.log('Nothing idDossier', JSON.stringify(data.idDossier));
+           console.log('Nothing page', JSON.stringify(data.etabName));
+ 
+           this.onNotifReceived(data);
+         }
+ 
+       });
+     });*/
 
-          this.onNotifReceived(data);
-        } else {
-          // Notification was received in foreground. Maybe the user needs to be notified.
-          console.log('Nothing data', JSON.stringify(data));
-          console.log('Nothing idDossier', JSON.stringify(data.idDossier));
-          console.log('Nothing page', JSON.stringify(data.etabName));
 
-          this.onNotifReceived(data);
-        }
-
-      });
-    });
+    //  this.initInt();
 
   }
 
@@ -104,10 +111,31 @@ export class HomePage implements OnInit {
   });
 
 
-
-
-
+  // -------- SIMULATE NOTIFICATON ----------
+  /*  initInt() {
+      const thisIs = this;
+      thisIs.intr = setInterval(
+        function () {
+          console.log('setInterval -> notif ::: ', thisIs.notif)
+          if (thisIs.notif < 10) {
+            thisIs.notif++;
+          } else {
+            thisIs.stopInit();
+          }
+        }, 2000
+      );
+  
+      return thisIs.intr;
+    }
+  
+    stopInit() {
+      this.notif = 0;
+      clearInterval(this.intr);
+      console.log('stopInit() ::: -> notif ', this.notif)
+    }
+  */
   // --------------------------------------------
+
   ionViewDidEnter() {
 
   }
@@ -281,41 +309,43 @@ export class HomePage implements OnInit {
   }
 
 
+  /*
+    async onNotifReceived(data: any) {
+      console.log('onNotifReceived data ==>', data);
+      console.log('onNotifReceived etabname  ==>', JSON.stringify(data.etabName));
+      const etabName = JSON.stringify(data.etabName);
+      // console.log("onNotifReceived etab name point ==>", data.etabName);
+      // -----------END  message dynamic ---------------
+      const alert = await this.alertCtrl.create({
+        header: 'Résultat d\'authentication',
+        message:
+          'vos avez reçu une demande d`avis medicale provenant du centre CUDT ' +
+          etabName,
+        cssClass: 'alert-css',
+        buttons: [
+          {
+            text: 'Annuler',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              console.log('Confirme Annuler');
+            }
+          },
+          {
+            text: 'Consulter le dossier',
+            handler: async () => {
+              this.router.navigate([
+                '/dossier-infos',
+                JSON.stringify(data.idDossier)
+              ]);
+            }
+          }
+        ]
+      });
+      await alert.present();
+    }*/
 
-  async onNotifReceived(data: any) {
-    console.log('onNotifReceived data ==>', data);
-    console.log('onNotifReceived etabname  ==>', JSON.stringify(data.etabName));
-    const etabName = JSON.stringify(data.etabName);
-    // console.log("onNotifReceived etab name point ==>", data.etabName);
-    // -----------END  message dynamic ---------------
-    const alert = await this.alertCtrl.create({
-      header: 'Résultat d\'authentication',
-      message:
-        'vos avez reçu une demande d`avis medicale provenant du centre CUDT ' +
-        etabName,
-      cssClass: 'alert-css',
-      buttons: [
-        {
-          text: 'Annuler',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirme Annuler');
-          }
-        },
-        {
-          text: 'Consulter le dossier',
-          handler: async () => {
-            this.router.navigate([
-              '/dossier-infos',
-              JSON.stringify(data.idDossier)
-            ]);
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
+  // -------------------------------
 }
 
 

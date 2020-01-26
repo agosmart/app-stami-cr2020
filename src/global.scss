@@ -76,6 +76,12 @@ ion-menu-button {
 //     --ion-color-step-550: white !important;
 // }
 //---------------------------------------
+
+// Ionic notification
+
+app-notification {
+  display: flex;
+}
 // Ionic Action Sheets
 
 .action-sheet {
@@ -461,7 +467,7 @@ h3.title-header {
   // background: linear-gradient(200deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
   // background: #516bf0;
   // background: linear-gradient(200deg, #6b36e4 0%, #3d96f1 60%, #00fcff);
- 
+
   background: #982c69;
   background: linear-gradient(500deg, #ff0001 0%, #982c69 50%, #00afff);
 }

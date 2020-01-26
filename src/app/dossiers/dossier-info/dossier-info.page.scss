@@ -30,8 +30,8 @@
     --border-width: 0;
   }
   ion-content {
-    // --background: #ecf0f4;
-    --background: #f7f9fb;
+    --background: #ffffff;
+    //--background: #f7f9fb;
   }
   .ion-bt-padding {
     --padding-start: 5px;
@@ -68,23 +68,24 @@
 
   ion-card {
     background-color: #ffffff;
-    margin: 16px 8px;
+    margin: 8px 0px 0 0;
+
     ion-col {
       padding: 2px 2px;
     }
   }
   ion-card-content {
-    ion-card-header{
+    ion-card-header {
       padding: 8px 0;
-      ion-card-title{
+      ion-card-title {
         font-size: 1rem;
       }
-      ion-card-subtitle{
+      ion-card-subtitle {
         margin-top: 0;
         color: #b6c7d8;
       }
     }
-    
+
     ion-badge {
       padding-left: 0;
       margin-right: 12px;
@@ -127,17 +128,16 @@
           // padding: 12px 0 0;
           padding: 4px 0 8px 0;
           width: 100%;
-
         }
       }
       ion-item {
         padding: 0;
         margin: 0;
         --padding-start: 20px;
-        --background: #ecf0f4;
+        --background: #f6f8fa;
         ion-label {
           //text-transform: uppercase;
-          font-size: 0.9rem;
+          font-size: 0.75rem;
           font-weight: 500;
           --padding-bottom: 0;
           --margine-top: 0;
@@ -154,17 +154,6 @@
       }
     }
   }
-
-  // ion-item-divider {
-  //   height: 62px;
-  //   border-bottom: 2px solid #4fccda;
-  //   margin-bottom: 5px;
-  //   background: #ecf0f4;
-  //   ion-label {
-  //     margin: 10px 0px;
-  //     //padding: 0 10px 10px 0;
-  //   }
-  // }
 
   .dossier-info {
     margin-top: 24px;
@@ -185,7 +174,7 @@
 // --------------------------------
 
 .pretreatment-infos {
-  background-color: #ecf0f4;
+  background-color: #f6f8fa;
 
   ion-list {
     --background: transparent;
@@ -195,11 +184,11 @@
     --padding-start: 5px !important;
 
     &.sign {
-      --background: #d3dde8!important;
-    --padding-start: 20px!important;
-    --inner-padding-bottom: 16px;
-    --inner-padding-top: 16px;
-    --inner-padding-end: 20px;
+      --background: #d3dde8 !important;
+      --padding-start: 20px !important;
+      --inner-padding-bottom: 16px;
+      --inner-padding-top: 16px;
+      --inner-padding-end: 20px;
     }
   }
 
@@ -223,7 +212,6 @@
         text-align: left;
         margin: 16px 0 4px 0;
         font-size: 14px;
-
       }
     }
   }
@@ -244,8 +232,11 @@
       color: #47525d;
       display: block;
 
-      &.note {
+      &.note-1 {
         padding: 16px 5px;
+      }
+      &.note-2 {
+        margin: 0;
       }
       small {
         display: block;

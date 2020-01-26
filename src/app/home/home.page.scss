@@ -13,6 +13,33 @@
     }
   }
 
+  em {
+    display: block;
+    position: absolute;
+    top: 56%;
+    right: -4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 16px;
+    border: 2px solid #ffffff;
+    background-color: #9d9d9d;
+  }
+  .icon-round {
+    position: relative;
+    /* border: 2px solid #ffffff36; */
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 100%;
+    padding: 12px;
+    font-size: 2rem;
+  }
+
+  .m-t {
+    margin-top: 8px;
+  }
+  .m-b {
+    margin-bottom: 8px;
+  }
+
   em.on {
     background-color: #2bc197 !important;
     -webkit-animation: ping 0.8s ease-in-out infinite both;

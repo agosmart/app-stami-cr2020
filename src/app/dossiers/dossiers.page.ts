@@ -45,6 +45,10 @@ export class DossiersPage implements OnInit {
   isRefresh = false;
   checkmarkColors = ['#f25454', '#02a1b3', '#516bf0'];
 
+
+  // data: any = { myToggle: true };
+
+
   constructor(
     private srv: ServiceAppService,
     private sglob: GlobalvarsService,
@@ -74,6 +78,12 @@ export class DossiersPage implements OnInit {
     this.menuCtrl.enable(false);
   }
   ngOnInit() { }
+
+  /*
+    isFilttred(data) {
+      this.data.myToggle = data;
+    }
+  */
 
   doRefresh(event: any) {
     console.log('Begin async operation');
@@ -111,7 +121,7 @@ export class DossiersPage implements OnInit {
     return (this.numDossier = Math.floor(100000 + Math.random() * 9000));
   }
 
-  initWaitingSendingDossiers(event: any) {
+  public initWaitingSendingDossiers(event: any) {
     console.log(
       'initWaitingSendingDossiers() ::::: waiting - Sending list ::::'
     );
@@ -150,8 +160,8 @@ export class DossiersPage implements OnInit {
 
               // this.numDossier = Math.floor(100000 + Math.random() * 9000);
               this.dataDossiers = resData.data;
-              this.dataDossiersSending = resData.data.sending;
-              this.dataDossiersPending = resData.data.pending;
+              this.dataDossiersSending = resData.data.sending.reverse();
+              this.dataDossiersPending = resData.data.pending.reverse();
 
               this.totalPending = this.dataDossiers.totalPending;
               this.totalSending = this.dataDossiers.totalSending;

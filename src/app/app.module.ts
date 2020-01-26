@@ -20,6 +20,8 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 
+
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -30,7 +32,8 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
     HttpModule,
     HttpClientModule,
     ReactiveFormsModule,
-  
+
+
 
 
   ],

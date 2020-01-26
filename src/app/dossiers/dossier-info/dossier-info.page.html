@@ -13,7 +13,7 @@
     <ion-col size="12" class="icon-header">
       <span class="icon-doss-patient text-white text20 no-margin"></span>
     </ion-col>
-    <ion-col size="12" class="title-header ion-no-padding">INFORMATISATIONS DU DOSSIER MEDICAL </ion-col>
+    <ion-col size="12" class="title-header ion-no-padding">DÉTAILS DU DOSSIER MEDICAL</ion-col>
   </ion-row>
 </ion-grid>
 
@@ -77,8 +77,8 @@
               <ion-avatar>
                 <span class="icon-cr text-white  text17 "></span>
               </ion-avatar>
-              <ion-card-title  class="ion-no-margin">{{dataDossier?.cudtName}} </ion-card-title>              
-              <ion-card-subtitle  class="ion-no-margin" >DOSSIER N°: 2001-00035</ion-card-subtitle>
+              <ion-card-title class="ion-no-margin">{{dataDossier?.cudtName}} </ion-card-title>
+              <ion-card-subtitle class="ion-no-margin">DOSSIER N°: 2001-00035</ion-card-subtitle>
             </ion-card-header>
 
             <div style="padding: 0 0 0 10px;">
@@ -180,7 +180,7 @@
                 <ion-text>{{ +informationsObj?.HTA === '1' ?'OUI' : 'NON' }}</ion-text>
               </ion-item>
               <ion-item lines="inset" class="ion-no-padding">
-                <ion-label class="ion-text-wrap">TABAC : </ion-label>
+                <ion-label class="ion-text-wrap">Tabac : </ion-label>
                 <ion-text>{{ informationsObj?.tobacco === '1' ? 'OUI' : 'NON'}}</ion-text>
               </ion-item>
               <ion-item lines="none" class="ion-no-padding">
@@ -250,39 +250,39 @@
             </ion-item>
 
             <div *ngIf=" !treatmentsObj?.open" class="bg bg-light">
-              <ion-list class=" ion-text-center ion-text-wrap " color="none">
-                <ion-item-divider>
-                  <h6 class="w100">Prétraitement bolus</h6>
-                </ion-item-divider>
 
-                <ion-list class="ion-no-margin ion-no-padding " *ngFor="let child of treatmentsObj" color="none">
-                  <ion-grid class="ion-no-margin ion-no-padding ">
-                    <ion-row>
-                      <ion-col size="12" class="ion-no-padding pretreatment-infos">
-                        <ion-card class="ion-no-margin" color="light">
-                          <ion-card-header>
-                            <ion-card-title>
-                              <ion-avatar>
-                                <span class="icon-drugs-2  text16"></span>
-                              </ion-avatar>
-                              <ion-text>
-                                <h6>{{ child.title}}</h6>
-                              </ion-text>
+              <ion-item-divider>
+                <h6 class="w100">Prétraitement bolus</h6>
+              </ion-item-divider>
 
-                            </ion-card-title>
-                          </ion-card-header>
-                          <ion-card-content class="text09 ">
-                            <ion-item lines="none">
-                              <ion-note slot="" class="note">{{ child.name}}</ion-note>
-                              <ion-note slot="end" class=" fsize-10em">{{ child.dose}}</ion-note>
-                            </ion-item>
-                          </ion-card-content>
-                        </ion-card>
-                      </ion-col>
-                    </ion-row>
-                  </ion-grid>
-                </ion-list>
+              <ion-list class="ion-no-margin ion-no-padding ">
+                <ion-grid class="ion-no-margin ion-no-padding ">
+                  <ion-row>
+                    <ion-col size="12" class="ion-no-padding pretreatment-infos" *ngFor="let child of treatmentsObj">
+                      <ion-card class="ion-no-margin" color="light">
+                        <ion-card-header>
+                          <ion-card-title>
+                            <ion-avatar>
+                              <span class="icon-drugs-2  text16"></span>
+                            </ion-avatar>
+                            <ion-text>
+                              <h6>{{ child.title}}</h6>
+                            </ion-text>
+
+                          </ion-card-title>
+                        </ion-card-header>
+                        <ion-card-content class="text09 ">
+                          <ion-item lines="none">
+                            <ion-note slot="" class="note-1">{{ child.name}}</ion-note>
+                            <ion-note slot="end" class=" fsize-10em note-2">{{ child.dose}}</ion-note>
+                          </ion-item>
+                        </ion-card-content>
+                      </ion-card>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
               </ion-list>
+
             </div>
           </ion-list>
         </ion-col>
@@ -295,7 +295,9 @@
     <ion-grid fixed>
       <ion-row>
         <ion-col size="12">
+
           <ion-list lines="full" detail="false" color="none">
+
             <ion-item tappable (click)='toggleSelectionItem()'
               [ngClass]="{'section-active':protocoleObj?.open, 'section': !protocoleObj?.open}" color="primary">
               <ion-icon slot="start" name="arrow-dropright" *ngIf="protocoleObj?.open"></ion-icon>
@@ -304,70 +306,73 @@
             </ion-item>
 
             <div *ngIf="!protocoleObj?.open" class="bg bg-light">
-              <ion-list class=" ion-text-center ion-text-wrap ">
-                <ion-list class="ion-no-margin ion-no-padding ">
-                  <ion-grid class="ion-no-margin ion-no-padding ">
-                    <ion-row>
-                      <ion-col size="12" class="ion-no-padding pretreatment-infos">
 
-                        <ion-card class="ion-no-margin" color="light">
-                          <ion-card-header>
-                            <ion-card-title>
-                              <ion-avatar>
-                                <span class="icon-drogs  text16"></span>
-                              </ion-avatar>
-                              <ion-text>
-                                <h6> Altéplase (TPA) actilyse</h6>
-                              </ion-text>
-                            </ion-card-title>
-                          </ion-card-header>
+              <ion-list class="ion-no-margin ion-no-padding ">
 
-                          <ion-card-content class="text09 ">
-                            <ion-item lines="none">
-                              <!-- <ion-note slot="" class="note">{{ protocoleObj.alteplase}}</ion-note> -->
-                              <ion-note slot="start" class=" fsize-10em">{{ protocoleObj[0].alteplase}}</ion-note>
-                            </ion-item>
-                          </ion-card-content>
-                        </ion-card>
-                        <!--- -->
-                        <ion-card class="ion-no-margin" color="light">
-                          <ion-card-header>
-                            <ion-card-title>
-                              <ion-avatar>
-                                <span class="icon-drogs  text16"></span>
-                              </ion-avatar>
-                              <ion-text>
-                                <h6> Ténectéplase (TNK-TPA)metalyse</h6>
-                              </ion-text>
-                            </ion-card-title>
-                          </ion-card-header>
+                <ion-grid class="ion-no-margin ion-no-padding ">
+                  <ion-row>
+                    <ion-col size="12" class="ion-no-padding pretreatment-infos">
 
-                          <ion-card-content class="text09 ">
-                            <ion-item lines="none">
-                              <!-- <ion-note slot="" class="note">{{ protocoleObj.alteplase}}</ion-note> -->
-                              <ion-note slot="start" class=" fsize-10em">{{ protocoleObj[0].tenecteplase}}</ion-note>
-                            </ion-item>
-                          </ion-card-content>
-                        </ion-card>
+                      <ion-card class="ion-no-margin" color="light">
+                        <ion-card-header>
+                          <ion-card-title>
+                            <ion-avatar>
+                              <span class="icon-drogs  text16"></span>
+                            </ion-avatar>
+                            <ion-text>
+                              <h6> Altéplase (TPA) actilyse</h6>
+                            </ion-text>
+                          </ion-card-title>
+                        </ion-card-header>
 
-                        <ion-item class="sign  ion-margin">
-                          <ion-avatar>
-                            <span class="icon-doss-edit  text16"></span>
-                          </ion-avatar>
+                        <ion-card-content class="text09 ">
+                          <ion-item lines="none">
+                            <!-- <ion-note slot="" class="note">{{ protocoleObj.alteplase}}</ion-note> -->
+                            <ion-note slot="start" class=" fsize-10em">{{ protocoleObj[0].alteplase}}</ion-note>
+                          </ion-item>
+                        </ion-card-content>
+                      </ion-card>
+                      <!--- -->
+                      <ion-card class="ion-no-margin" color="light">
+                        <ion-card-header>
+                          <ion-card-title>
+                            <ion-avatar>
+                              <span class="icon-drogs  text16"></span>
+                            </ion-avatar>
+                            <ion-text>
+                              <h6> Ténectéplase (TNK-TPA)metalyse</h6>
+                            </ion-text>
+                          </ion-card-title>
+                        </ion-card-header>
 
-                          <ion-label class="ion-text-wrap">Patient a signé le consentement</ion-label>
-                          <ion-text>
-                            {{ protocoleObj.document_signe == '0' ? 'NON' : 'OUI'}}
-                          </ion-text>
-                        </ion-item>
+                        <ion-card-content class="text09 ">
+                          <ion-item lines="none">
+                            <!-- <ion-note slot="" class="note">{{ protocoleObj.alteplase}}</ion-note> -->
+                            <ion-note slot="start" class=" fsize-10em">{{ protocoleObj[0].tenecteplase}}</ion-note>
+                          </ion-item>
+                        </ion-card-content>
+                      </ion-card>
 
+                    </ion-col>
+                    <ion-col>
+                      <ion-item class="sign  ion-margin">
+                        <ion-avatar>
+                          <span class="icon-doss-edit  text16"></span>
+                        </ion-avatar>
 
-                      </ion-col>
-                    </ion-row>
-                  </ion-grid>
-                </ion-list>
+                        <ion-label class="ion-text-wrap">Patient a signé le consentement</ion-label>
+                        <ion-text>
+                          {{ protocoleObj.document_signe == '0' ? 'NON' : 'OUI'}}
+                        </ion-text>
+                      </ion-item>
+
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+
               </ion-list>
             </div>
+
           </ion-list>
         </ion-col>
       </ion-row>

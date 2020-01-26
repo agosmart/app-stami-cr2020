@@ -90,7 +90,6 @@
     --padding-end: 5px;
   }
 
-  
   ion-grid {
     padding-top: 0;
     padding-bottom: 0;
@@ -107,7 +106,7 @@
   .register-init {
     // Bloc Header fixed
     .header-card-fix {
-      height: 104px;
+      height: 90px;
       padding-top: 16px;
       position: absolute;
       position: fixed;
@@ -138,7 +137,7 @@
   .list-form {
     padding: 0;
     margin-bottom: 0;
-    padding-top: 100px;
+    padding-top: 90px;
 
     ion-select {
       color: #ffe69e;
@@ -154,13 +153,10 @@
 
       --border-width: 0 0 2px 0;
       --ion-border-color: #fff;
-      ion-select{
-        color: rgb(255, 255, 255)!important;
+      ion-select {
+        color: rgb(255, 255, 255) !important;
         opacity: 1;
-        
-       }
-
-     
+      }
 
       &:first-child {
         border-top: none;

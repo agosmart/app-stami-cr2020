@@ -119,21 +119,21 @@ export class DossierInfoPage implements OnInit {
               this.dataDossier = resData.data;
               console.log(' dataDossier :::', this.dataDossier);
 
-              this.dataDossier.informations['open'] = false;            
+              // this.dataDossier.informations['open'] = false;            
 
               this.informationsObj = this.dataDossier.informations;
               this.treatmentsObj = this.dataDossier.treatments;
               this.protocoleObj = this.dataDossier.protocole;
 
               // this.dataDossier.ecgData['open'] = false;
-            
-              
+
+
               // this.informationsObj['open'] = false;
               console.log(' dataDossier + open :::', this.dataDossier);
               console.log(this.informationsObj, 'informationsObj ::::', this.informationsObj.open);
               console.log(this.treatmentsObj, 'treatmentsObj ::::');
               console.log(this.protocoleObj, 'this.protocoleObj ::::');
-            //  this.protocoleObj =[];
+              //  this.protocoleObj =[];
 
             } else {
               // ----- Hide loader ------

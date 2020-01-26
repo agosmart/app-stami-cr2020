@@ -6,6 +6,8 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
+
+    <app-notification slot="end"></app-notification>
   </ion-toolbar>
   <ion-toolbar class=" ion-margin-top">
 
@@ -20,17 +22,45 @@
         <ion-label class="ion-text-wrap">Demandes d'avis</ion-label>
         <!-- <ion-icon name=""><span class="icon-doctor-sos-21 text18"></span></ion-icon> -->
       </ion-segment-button>
-
     </ion-segment>
+
+    <ion-item lines="none" [ngClass]="{ 'item-empty':lnPending === 0 }">
+      <small class="cr-name"><b>{{totalPending}} </b>DOSSIERS EN COURS</small>
+      <!-- <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-col size="8">
+            <small class="cr-name"><b>{{totalPending}} </b>DOSSIERS EN COURS</small>
+          </ion-col>
+          <ion-col size='4'>
+            <ion-text>Filttrer</ion-text>
+            <ion-toggle (click)="isFilttred(data.myToggle)" [(ngModel)]="data.myToggle"></ion-toggle>
+          </ion-col>
+        </ion-row>
+      </ion-grid> -->
+
+    </ion-item>
+
   </ion-toolbar>
 </ion-header>
+<!-- 
+<div *ngIf="data.myToggle; then filtter else all "></div>
+<ng-template #filtter>
+  <p>Filttred Data</p>
+</ng-template>
+<ng-template #all>
+  <p>All Data</p>
+</ng-template>
+-->
+
+
+
 
 <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
   <ion-row class="ion-no-padding ">
     <ion-col size="12" class="icon-header">
       <span class="icon-cr text-white text22"></span>
     </ion-col>
-    <ion-col size="12" class="title-header " >{{nameEtab}}</ion-col>
+    <ion-col size="12" class="title-header ">{{nameEtab}} </ion-col>
   </ion-row>
 </ion-grid>
 
@@ -57,14 +87,8 @@
             <ion-card-content class="text09 ion-no-padding ">
               <ion-list class="ion-no-padding">
 
-                <ion-item [ngClass]="{ 'item-empty':lnSending === 0 }">
-                  <small class="cr-name"><b>{{totalSending}}</b> DOSSIERS ENVOYÉS</small>
-                </ion-item>
-
                 <ion-item detail lines="full" *ngFor="let item of dataDossiersSending" tappable
                   (click)="getDossier(item.dossierId)">
-
-
                   <ion-avatar slot="start">
                     <ion-icon name="checkmark-circle"></ion-icon>
                     <span class="icon-doss-patient text-dark  text15">
@@ -108,10 +132,6 @@
             <ion-card-content class="text09 ion-no-padding ">
               <ion-list class="ion-no-padding">
 
-                <ion-item [ngClass]="{ 'item-empty':lnPending === 0 }">
-                  <small class="cr-name"><b>{{totalPending}} </b>DOSSIERS EN COURS</small>
-                </ion-item>
-
 
                 <ion-item _detail lines="full" *ngFor="let item of listOfWaittingNotif" tappable>
 
@@ -124,26 +144,26 @@
                     <!-- <small>DOSSIER N°: <b>{{getRandomNumber()}}</b> </small> -->
                     <small>AGE : {{item.age}} Ans | {{item.gender === '2'  ? 'Homme' : 'Femme'}}</small>
                     <small>CUDT : <b>{{item.etabName}}</b> </small>
-                    <div>   
-                      
+                    <div>
+
                       <div *ngFor=" let item of item['prevNotif']; let i = index; let l = count">
                         <!-- i : {{ i }} - count :{{ l }} -->
 
                         <div *ngIf="item.motifId !== null ">
                           <div *ngIf="item.motifId === 1 ">
-                            <ion-icon name="checkmark-circle" [style.color]="'#f25454'"></ion-icon> 
+                            <ion-icon name="checkmark-circle" [style.color]="'#f25454'"></ion-icon>
                           </div>
                           <div *ngIf="item.motifId === 2 ">
-                            <ion-icon name="checkmark-circle" [style.color]="'#02a1b3'"></ion-icon> 
+                            <ion-icon name="checkmark-circle" [style.color]="'#02a1b3'"></ion-icon>
                           </div>
                           <div *ngIf="item.motifId === 3 ">
-                            <ion-icon name="checkmark-circle" [style.color]="'#516bf0'"></ion-icon> 
+                            <ion-icon name="checkmark-circle" [style.color]="'#516bf0'"></ion-icon>
                           </div>
                         </div>
-                        
+
                         <div *ngIf="item.motifId === null ">
                           <ion-icon name="checkmark-circle" [style.color]="'#bfced0'"></ion-icon>
-                        </div> 
+                        </div>
 
                       </div>
 
@@ -211,7 +231,8 @@
 
 
                   <!-- Boutton détails dossier   -->
-                  <ion-icon name="arrow-forward" mode='ios' slot="end" (click)="getDossier(item.dossierId)"></ion-icon>
+                  <ion-icon name="arrow-forward" class=" arrow" mode='ios' slot="end"
+                    (click)="getDossier(item.dossierId)"></ion-icon>
                   <!--  /////////////////  -->
 
                 </ion-item>
