@@ -13,7 +13,7 @@
     <ion-col size="12" class="icon-header">
       <span class="icon-doss-patient text-white text20 no-margin"></span>
     </ion-col>
-    <ion-col size="12" class="title-header ion-no-padding">DÉTAILS DOSSIER</ion-col>
+    <ion-col size="12" class="title-header ion-no-padding">INFORMATISATIONS DU DOSSIER MEDICAL </ion-col>
   </ion-row>
 </ion-grid>
 
@@ -70,83 +70,339 @@
       <ion-col size="12" class="ion-padding-top">
 
         <ion-card class="ion-margin ion-text-left" color="light">
-          <ion-card-content>
 
-            <ion-item class="ion-no-padding ion-text-center ">
-              <ion-note>
-                <span class="icon-cr text-dark  text17 "></span>
-              </ion-note>
-              <ion-text class="w100 ">
-                <b>CUDT HAI-ELBADRE </b>
-                <ion-label>
-                  <ion-badge class="  ajust p-6-16" slot="start" color="medium">DOSSIER N°: 2001-00035</ion-badge>
-                </ion-label>
-              </ion-text>
-            </ion-item>
+          <ion-card-content class="ion-no-margin ion-no-padding ">
 
-            <ion-item class="ion-no-padding">
-              <ion-badge slot="start" color="light"><span class="icon-man  text-dark  _text10"></span></ion-badge>
-              <ion-text> {{dataDossier['lastName']}} {{dataDossier['firstName']}}</ion-text>
-            </ion-item>
-            <ion-item class="ion-no-padding">
-              <ion-badge slot="start" color="light"> <span class="icon-calander  text-dark  _text10"></span></ion-badge>
-              <ion-text>{{dataDossier['birthDayFr']}}</ion-text>
-              <ion-badge class="ajust-age p-6-16" slot="end" color="none"> {{dataDossier['age']}} ans</ion-badge>
-            </ion-item>
-            <ion-item class="ion-no-padding">
-              <ion-badge slot="start" color="light"> <span class="icon-weight  text-dark  _text10"></span></ion-badge>
-              <ion-text>{{dataDossier['weight'] + ' KG'}}</ion-text>
-            </ion-item>
-            <ion-item class="ion-no-padding">
-              <ion-badge slot="start" color="light"> <span class="icon-ecg-outline-box   text-dark  _text10"></span>
-              </ion-badge>
-              <ion-text> <b>STATUS :</b> {{dataDossier['diagnostic']['diagnostique']}}</ion-text>
-            </ion-item>
+            <ion-card-header color="primary ion-text-center">
+              <ion-avatar>
+                <span class="icon-cr text-white  text17 "></span>
+              </ion-avatar>
+              <ion-card-title  class="ion-no-margin">{{dataDossier?.cudtName}} </ion-card-title>              
+              <ion-card-subtitle  class="ion-no-margin" >DOSSIER N°: 2001-00035</ion-card-subtitle>
+            </ion-card-header>
 
-            <ng-container *ngFor=" let ecg of dataDossier['ecgData']">
+            <div style="padding: 0 0 0 10px;">
               <ion-item class="ion-no-padding">
-                <ion-button (click)="openImageEcg(ecg['ecgImage'])" color="danger">
-                  <ion-icon slot="icon-only" name="pulse"></ion-icon>
-                </ion-button>
-                <ion-text class="p-6-16">
-                  {{ecg['createdAt']}}
-                </ion-text>
+                <ion-badge slot="start" color="light"><span class="icon-man  text-dark  _text10"></span></ion-badge>
+                <ion-text> {{dataDossier?.patient['lastName']}} {{dataDossier?.patient['firstName']}}</ion-text>
               </ion-item>
+              <ion-item class="ion-no-padding">
+                <ion-badge slot="start" color="light"> <span class="icon-calander  text-dark  _text10"></span>
+                </ion-badge>
+                <ion-text>{{dataDossier?.patient['birthDayFr']}}</ion-text>
+                <!-- <ion-badge class="ajust-age p-6-16" slot="end" color="none"> {{dataDossier['patient']['age']}} ans</ion-badge> -->
+              </ion-item>
+              <ion-item class="ion-no-padding">
+                <ion-badge slot="start" color="light"> <span class="icon-weight  text-dark  _text10"></span></ion-badge>
+                <ion-text>{{dataDossier?.weight + ' KG'}}</ion-text>
+              </ion-item>
+              <!-- <ion-item class="ion-no-padding">
+                <ion-badge slot="start" color="light"> <span class="icon-ecg-outline-box   text-dark  _text10"></span>
+                </ion-badge>
+                <ion-text> <b>STATUS :</b> {{dataDossier['diagnostic']['diagnostique']}}</ion-text>
+              </ion-item> -->
+
+              <!-- <ng-container *ngFor=" let ecg of dataDossier?.ecgData">
+                <ion-item class="ion-no-padding">
+                  <ion-button (click)="openImageEcg(ecg?.ecgImage)" color="danger">
+                    <ion-icon slot="icon-only" name="pulse"></ion-icon>
+                  </ion-button>
+                  <ion-text class="p-6-16">
+                    {{ecg.createdAt}}
+                  </ion-text>
+                </ion-item>
+              </ng-container> -->
 
 
+              <ng-container *ngFor=" let ecg of dataDossier?.ecgData">
+                <ion-item class="ion-no-padding">
+                  <ion-button (click)="openImageEcg(ecg.ecgImage)" color="danger">
+                    <!-- <ion-button (click)="openImagePreviewEcg(ecg.ecgImage)" color="danger"> -->
+                    <ion-icon slot="icon-only" name="pulse"></ion-icon>
+                  </ion-button>
+                  <ion-text class="p-6-16">
+                    {{ecg.createdAt}}
+                  </ion-text>
+                </ion-item>
+              </ng-container>
+            </div>
 
-            </ng-container>
 
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
-
+  <!-- =========== Informations complémentaires ===================== -->
   <ion-grid fixed>
     <ion-row>
       <ion-col size="12">
-        <ion-list *ngFor="let item of informations; let i = index " lines="full" detail="false">
-          <ion-item tappable (click)='toggleSelection(i)'
-            [ngClass]="{'section-active': item.open, 'section': !item.open}">
+        <ion-list lines="full" detail="false" color="none">
 
-            <ion-icon slot="start" name="arrow-dropright" *ngIf="item.open"></ion-icon>
-            <ion-icon slot="start" name="arrow-dropdown" *ngIf="!item.open"></ion-icon>
-            <ion-label>{{ item.name}}</ion-label>
+          <ion-item tappable (click)='toggleSelectionItem()'
+            [ngClass]="{'section-active':informationsObj?.open, 'section': !informationsObj?.open}" color="primary">
+            <ion-icon slot="start" name="arrow-dropright" *ngIf="informationsObj?.open"></ion-icon>
+            <ion-icon slot="start" name="arrow-dropdown" *ngIf="!informationsObj?.open"></ion-icon>
+            <ion-label> Informations complémentaires</ion-label>
           </ion-item>
-          <div *ngIf="item.children && item.open" class="bg-light">
 
-            <ion-list class="ion-no-margin ion-no-padding " color="none">
-              <ion-item *ngFor="let child of item.children" lines="none" class="ion-no-padding">
-                <ion-text>{{ child.name}}</ion-text>
+          <div *ngIf="informationsObj  && !informationsObj?.open" class="bg bg-light">
+            <ion-list class=" ion-text-center ion-text-wrap " color="none">
+              <ion-item-divider>
+                <h6 class="w100">Motifs de consultation</h6>
+              </ion-item-divider>
+
+              <ion-item lines="inset" class="ion-no-padding">
+                <ion-label class="ion-text-wrap">Douleurs Thoraciques au moment </ion-label>
+                <ion-text>
+                  {{ dataDossier?.dThorasic == '0' ? 'NON' : 'OUI'}}
+                </ion-text>
+              </ion-item>
+              <ion-item lines="none" class="ion-no-padding">
+                <ion-label class="ion-text-wrap">Heure de début</ion-label>
+                <ion-text>
+                  {{ dataDossier?.startAt}}
+                </ion-text>
               </ion-item>
 
+              <ion-item-divider>
+                <h6 class="w100"> Facteurs de risque </h6>
+              </ion-item-divider>
+
+              <ion-item lines="inset" class="ion-no-padding">
+                <ion-label class="ion-text-wrap">Diabète :</ion-label>
+                <ion-text>
+                  {{ informationsObj?.diabetes == '0' ? 'NON' : informationsObj?.diabetes === '1' ? 'TYPE 1' : 'TYPE 2'}}
+                </ion-text>
+              </ion-item>
+              <ion-item lines="inset" class="ion-no-padding">
+                <ion-label class="ion-text-wrap">Hypertension Altherielle :</ion-label>
+                <ion-text>{{ +informationsObj?.HTA === '1' ?'OUI' : 'NON' }}</ion-text>
+              </ion-item>
+              <ion-item lines="inset" class="ion-no-padding">
+                <ion-label class="ion-text-wrap">TABAC : </ion-label>
+                <ion-text>{{ informationsObj?.tobacco === '1' ? 'OUI' : 'NON'}}</ion-text>
+              </ion-item>
+              <ion-item lines="none" class="ion-no-padding">
+                <ion-label class="ion-text-wrap"> Dyslipidimie Altherielle :</ion-label>
+                <ion-text>
+                  {{ informationsObj?.dyslip === '0' ? AUCUNE : informationsObj?.dyslip === '1' ? 'POIDS' : 'TAILLE'}}
+                </ion-text>
+              </ion-item>
+
+              <ion-item-divider>
+                <h6 class="w100"> Antécédents cardiologiques </h6>
+              </ion-item-divider>
+
+              <ion-item lines="inset" class="ion-no-padding">
+                <ion-label class="ion-text-wrap">Insuffisance cardiaque :</ion-label>
+                <ion-text>{{ dataDossier?.informations['dyslip'] === '0' ? 'AUCUNE' : 'OUI'}}</ion-text>
+              </ion-item>
+              <ion-item lines="inset" class="ion-no-padding">
+                <ion-label class="ion-text-wrap">Cardiopathie ischémique stable :</ion-label>
+                <ion-text>{{ dataDossier?.informations['dyslip'] === '0' ? 'AUCUNE' : 'OUI'}}</ion-text>
+              </ion-item>
+              <ion-item lines="inset" class="ion-no-padding">
+                <ion-label class="ion-text-wrap"> Syndrome coronarien aigu (SCA) :</ion-label>
+                <ion-text>
+                  {{ dataDossier?.informations['SCA'] === '0' ? 'AUCUNE' : +dataDossier?.informations['SCA'] === '1' ? 'ST-' : 'ST+'}}
+                </ion-text>
+              </ion-item>
+              <ion-item lines="inset" class="ion-no-padding">
+                <ion-label class="ion-text-wrap"> Année de diagnostique :</ion-label>
+                <ion-text>
+                  {{ dataDossier?.informations['daignoDate'] === null ? '/ ':dataDossier?.informations['daignoDate']  }}
+                </ion-text>
+              </ion-item>
+              <ion-item lines="inset" class="ion-no-padding">
+                <ion-label class="ion-text-wrap"> Angioplastie coronair :</ion-label>
+                <ion-text>{{ dataDossier?.informations['angioCoran'] === '1'
+                    ? 'TCG-' : dataDossier?.informations['angioCoran'] === '2' 
+                    ? 'IVA' : dataDossier?.informations['angioCoran'] === '3'
+                    ? 'CX' : dataDossier?.informations['angioCoran'] === '4'
+                    ? 'CD' : 'AUCUNE'                  
+                   }}</ion-text>
+              </ion-item>
+              <ion-item lines="none" class="ion-no-padding">
+                <ion-label class="ion-text-wrap">Année de l’ATL :</ion-label>
+                <ion-text>
+                  {{ dataDossier?.informations['atlDate'] === null ? ' / ':dataDossier?.informations['atlDate']  }}
+                </ion-text>
+              </ion-item>
             </ion-list>
           </div>
         </ion-list>
       </ion-col>
     </ion-row>
+
   </ion-grid>
+  <!-- =========== Prétraitement ===================== -->
+  <ng-container *ngIf="treatmentsObj?.length > 0 ">
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="12">
+          <ion-list lines="full" detail="false" color="none">
+            <ion-item tappable (click)='toggleSelectionItem()'
+              [ngClass]="{'section-active':treatmentsObj?.open, 'section': !treatmentsObj?.open}" color="primary">
+              <ion-icon slot="start" name="arrow-dropright" *ngIf="treatmentsObj?.open"></ion-icon>
+              <ion-icon slot="start" name="arrow-dropdown" *ngIf="!treatmentsObj?.open"></ion-icon>
+              <ion-label> Prétraitement </ion-label>
+            </ion-item>
+
+            <div *ngIf=" !treatmentsObj?.open" class="bg bg-light">
+              <ion-list class=" ion-text-center ion-text-wrap " color="none">
+                <ion-item-divider>
+                  <h6 class="w100">Prétraitement bolus</h6>
+                </ion-item-divider>
+
+                <ion-list class="ion-no-margin ion-no-padding " *ngFor="let child of treatmentsObj" color="none">
+                  <ion-grid class="ion-no-margin ion-no-padding ">
+                    <ion-row>
+                      <ion-col size="12" class="ion-no-padding pretreatment-infos">
+                        <ion-card class="ion-no-margin" color="light">
+                          <ion-card-header>
+                            <ion-card-title>
+                              <ion-avatar>
+                                <span class="icon-drugs-2  text16"></span>
+                              </ion-avatar>
+                              <ion-text>
+                                <h6>{{ child.title}}</h6>
+                              </ion-text>
+
+                            </ion-card-title>
+                          </ion-card-header>
+                          <ion-card-content class="text09 ">
+                            <ion-item lines="none">
+                              <ion-note slot="" class="note">{{ child.name}}</ion-note>
+                              <ion-note slot="end" class=" fsize-10em">{{ child.dose}}</ion-note>
+                            </ion-item>
+                          </ion-card-content>
+                        </ion-card>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-list>
+              </ion-list>
+            </div>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ng-container>
+
+  <!-- =========== Protocole de thrombolyse ===================== -->
+  <ng-container *ngIf="protocoleObj?.length > 0 ">
+    <ion-grid fixed>
+      <ion-row>
+        <ion-col size="12">
+          <ion-list lines="full" detail="false" color="none">
+            <ion-item tappable (click)='toggleSelectionItem()'
+              [ngClass]="{'section-active':protocoleObj?.open, 'section': !protocoleObj?.open}" color="primary">
+              <ion-icon slot="start" name="arrow-dropright" *ngIf="protocoleObj?.open"></ion-icon>
+              <ion-icon slot="start" name="arrow-dropdown" *ngIf="!protocoleObj?.open"></ion-icon>
+              <ion-label> Protocole de thrombolyse </ion-label>
+            </ion-item>
+
+            <div *ngIf="!protocoleObj?.open" class="bg bg-light">
+              <ion-list class=" ion-text-center ion-text-wrap ">
+                <ion-list class="ion-no-margin ion-no-padding ">
+                  <ion-grid class="ion-no-margin ion-no-padding ">
+                    <ion-row>
+                      <ion-col size="12" class="ion-no-padding pretreatment-infos">
+
+                        <ion-card class="ion-no-margin" color="light">
+                          <ion-card-header>
+                            <ion-card-title>
+                              <ion-avatar>
+                                <span class="icon-drogs  text16"></span>
+                              </ion-avatar>
+                              <ion-text>
+                                <h6> Altéplase (TPA) actilyse</h6>
+                              </ion-text>
+                            </ion-card-title>
+                          </ion-card-header>
+
+                          <ion-card-content class="text09 ">
+                            <ion-item lines="none">
+                              <!-- <ion-note slot="" class="note">{{ protocoleObj.alteplase}}</ion-note> -->
+                              <ion-note slot="start" class=" fsize-10em">{{ protocoleObj[0].alteplase}}</ion-note>
+                            </ion-item>
+                          </ion-card-content>
+                        </ion-card>
+                        <!--- -->
+                        <ion-card class="ion-no-margin" color="light">
+                          <ion-card-header>
+                            <ion-card-title>
+                              <ion-avatar>
+                                <span class="icon-drogs  text16"></span>
+                              </ion-avatar>
+                              <ion-text>
+                                <h6> Ténectéplase (TNK-TPA)metalyse</h6>
+                              </ion-text>
+                            </ion-card-title>
+                          </ion-card-header>
+
+                          <ion-card-content class="text09 ">
+                            <ion-item lines="none">
+                              <!-- <ion-note slot="" class="note">{{ protocoleObj.alteplase}}</ion-note> -->
+                              <ion-note slot="start" class=" fsize-10em">{{ protocoleObj[0].tenecteplase}}</ion-note>
+                            </ion-item>
+                          </ion-card-content>
+                        </ion-card>
+
+                        <ion-item class="sign  ion-margin">
+                          <ion-avatar>
+                            <span class="icon-doss-edit  text16"></span>
+                          </ion-avatar>
+
+                          <ion-label class="ion-text-wrap">Patient a signé le consentement</ion-label>
+                          <ion-text>
+                            {{ protocoleObj.document_signe == '0' ? 'NON' : 'OUI'}}
+                          </ion-text>
+                        </ion-item>
+
+
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
+                </ion-list>
+              </ion-list>
+            </div>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <div style="height: 70px;"></div>
+  </ng-container>
+
+
+
+  <!--  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12">
+
+       <ion-list *ngFor="let item of informations; let i = index " lines="full" detail="false">
+         
+          <ion-item tappable (click)='toggleSelection(i)' [ngClass]="{'section-active': item.open, 'section': !item.open}">
+            <ion-icon slot="start" name="arrow-dropright" *ngIf="item.open"></ion-icon>
+            <ion-icon slot="start" name="arrow-dropdown" *ngIf="!item.open"></ion-icon>
+            <ion-label>{{ item.name}}</ion-label>
+          </ion-item>
+
+          <div *ngIf="item.children && item.open" class="bg-light">
+            <ion-list class="ion-no-margin ion-no-padding " color="none">
+              <ion-item *ngFor="let child of item.children" lines="none" class="ion-no-padding">
+                <ion-text>{{ child.name}}</ion-text>
+              </ion-item>
+            </ion-list>
+          </div>
+
+        </ion-list>
+
+
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
 
 
 

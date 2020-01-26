@@ -18,6 +18,7 @@ import { DossiersCudtCrResponseData } from '../models/dossies.cudt.cr.response';
 import { EtabResponseData } from '../models/etab.response';
 import { DoctorStatusResponse } from '../models/doctor.status.response';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { DossierGlobaleResponseData } from '../models/dossier.globale.response';
 
 interface ResponseEtab {
   code: number;
@@ -109,7 +110,25 @@ export class ServiceAppService {
   }
   // --------------------------------------------------------------------
 
+  public getDossierGlobale(idDossier: number, token: string): any {
 
+     // http://cardio.cooffa.shop/api/dossierGlobal/18
+    console.log('SERVICE:::::DOSSIER GLOBALE ::::');
+    const apiUrl = this.baseUrl + '/dossierGlobal/' + idDossier;
+    console.log('SERVICE:::::apiUrl ::::', apiUrl);
+
+   // return false;
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    });
+
+    return this.http.get<DossierGlobaleResponseData>(apiUrl, {
+      headers: myHeaders
+    });
+  }
+ // --------------------------------------------------------------------
 
 
 

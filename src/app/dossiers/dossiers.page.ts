@@ -102,9 +102,9 @@ export class DossiersPage implements OnInit {
     }
   }
 
-  getDossier(dossierId: number) {
-    console.log('get Dossier : dossierId ==== >', dossierId);
-    this.router.navigate(['/dossier-infos', dossierId]);
+  getDossier(idDossier: number) {
+    console.log('get Dossier : dossierId ==== >', idDossier);
+    this.router.navigate(['/dossier-infos', idDossier]);
   }
 
   getRandomNumber() {

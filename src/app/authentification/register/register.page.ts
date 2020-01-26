@@ -270,7 +270,7 @@ export class RegisterPage implements OnInit {
   private showAlert(message: string) {
     this.alertCtrl
       .create({
-        header: "Résultat d'authentication",
+        header: "Résultat d'authentification",
         message: message,
         cssClass: "alert-css",
         buttons: ["Okay"]

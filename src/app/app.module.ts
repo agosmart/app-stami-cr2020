@@ -19,6 +19,7 @@ import { File } from '@ionic-native/file/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -28,7 +29,11 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
     AppRoutingModule,
     HttpModule,
     HttpClientModule,
-    ReactiveFormsModule],
+    ReactiveFormsModule,
+  
+
+
+  ],
 
   providers: [
     StatusBar,
@@ -43,4 +48,4 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

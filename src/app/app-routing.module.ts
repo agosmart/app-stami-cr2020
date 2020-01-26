@@ -12,7 +12,7 @@ const routes: Routes = [
 ************************************************/
   {
     path: "",
-    redirectTo: "onboard",
+    redirectTo: "login",
     pathMatch: "full"
   },
   {
@@ -68,7 +68,8 @@ const routes: Routes = [
     path: "test-fcm",
     loadChildren: () =>
       import("./test-fcm/test-fcm.module").then(m => m.TestFcmPageModule)
-  }
+  },
+
 ];
 
 @NgModule({
