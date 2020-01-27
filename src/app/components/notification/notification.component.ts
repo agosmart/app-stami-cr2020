@@ -89,7 +89,7 @@ export class NotificationComponent implements OnInit {
         } else {
           thisIs.stopInit();
         }
-      }, 3000
+      }, 10000
     );
 
     return thisIs.intr;

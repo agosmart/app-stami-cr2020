@@ -38,6 +38,7 @@ export class DossiersPage implements OnInit {
   responseAvis: ReponseAvisResponseData;
 
   listOfWaittingNotif: any;
+  listNotifNotReaded: any;
   listOfWaittingNotifFinal: any;
 
   totalPending = 0;
@@ -46,7 +47,7 @@ export class DossiersPage implements OnInit {
   checkmarkColors = ['#f25454', '#02a1b3', '#516bf0'];
 
 
-  // data: any = { myToggle: true };
+  isToggleFiltter = false;
 
 
   constructor(
@@ -70,7 +71,7 @@ export class DossiersPage implements OnInit {
 
   ionViewDidEnter() {
     console.log('ionViewDidEnter => get idEtab :::', this.idEtab);
-    this.initWaitingSendingDossiers(event);
+    this.initWaitingSendingDossiers(event, this.isToggleFiltter);
   }
 
   ionViewWillEnter() {
@@ -79,22 +80,51 @@ export class DossiersPage implements OnInit {
   }
   ngOnInit() { }
 
-  /*
-    isFilttred(data) {
-      this.data.myToggle = data;
-    }
-  */
+  // --------- FILTTER WAITTING NOTIF-----------------------------
 
+  isFilttred(isToggled: boolean) {
+    this.isToggleFiltter = isToggled;
+
+    // if (this.isToggleFiltter) {
+    //   this.initWaitingSendingDossiers(event, true);
+    // } else {
+    //   this.initWaitingSendingDossiers(event, false);
+    // }
+
+    //  this.initWaitingSendingDossiers(event);
+    if (this.isToggleFiltter) {
+      this.listOfWaittingNotif = this.listOfWaittingNotifFinal;
+    } else {
+      this.listOfWaittingNotif = this.listNotifNotReaded;
+    }
+  }
+  // --------- PULL TO REFRESH DATA -----------------------------
+  doRefreshe(refresher) {
+    console.log('Begin async operation', refresher);
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      refresher.complete();
+    }, 2000);
+  }
   doRefresh(event: any) {
     console.log('Begin async operation');
     this.isRefresh = true;
-    this.initWaitingSendingDossiers(event);
+    if (this.isToggleFiltter) {
+      this.initWaitingSendingDossiers(event, true);
+    } else {
+      this.initWaitingSendingDossiers(event, false);
+    }
+
+    //this.isToggleFiltter = true;
+
     // setTimeout(() => {
     //   console.log('Async operation has ended');
     //   event.target.complete();
     // }, 2000);
   }
 
+  // --------- SELECT ' DOSSIERS LIST ' - [ sending -waitting ]---------
   segmentButtonClicked(value: string) {
     // console.log('Segment button clicked', value);
     if (value === 'dEnCours') {
@@ -121,11 +151,11 @@ export class DossiersPage implements OnInit {
     return (this.numDossier = Math.floor(100000 + Math.random() * 9000));
   }
 
-  public initWaitingSendingDossiers(event: any) {
+  async initWaitingSendingDossiers(event: any, filtered?: boolean) {
     console.log(
       'initWaitingSendingDossiers() ::::: waiting - Sending list ::::'
     );
-    this.loadingCtrl
+    await this.loadingCtrl
       .create({ keyboardClose: true, message: 'Chargement en cours...' })
       .then(loadingEl => {
         if (!this.isRefresh) {
@@ -170,7 +200,7 @@ export class DossiersPage implements OnInit {
 
               // =============== CREATE  A NEW DTAT OF WAITTING LIST===================================
 
-              this.listOfWaittingNotif = this.dataDossiersPending.map(data => {
+              const listOfWaittingNotifObj = this.dataDossiersPending.map(data => {
                 return {
                   dossierId: data.dossierId,
                   lastName: data.lastName,
@@ -201,17 +231,17 @@ export class DossiersPage implements OnInit {
                     })
                     .pop(),
                   // -------------------------------------
-                  prevNotif: data.demandes.map((dem, index) => {
+                  prevNotif: data.demandes.map((dem) => {
                     const myMotifId = dem.motifId;
                     let myReponse = null;
-                    const lenResp = dem.reponses.length;
+                    const lnResp = dem.reponses.length;
                     // ............................
                     const find = dem.reponses.find(f => {
                       myReponse = f.reponse;
                       return f.doctorId === this.idUser;
                     });
                     // ..............................
-                    if (find && lenResp !== 0) {
+                    if (find && lnResp !== 0) {
                       return {
                         pos: myMotifId,
                         motifId: myMotifId,
@@ -233,10 +263,10 @@ export class DossiersPage implements OnInit {
 
               // =============== FILL and STORE => prevMotif [Array values] ===================================
 
-              this.listOfWaittingNotif.map((item: any) => {
+              listOfWaittingNotifObj.map((item: any) => {
                 const poseArr = [];
                 //  const not = item.prevNotif
-                item.prevNotif.map(p => {
+                item.prevNotif.map((p: any) => {
                   const pos = p.pos;
                   poseArr.push(pos);
                   // console.log(pos, ' - ', poseArr);
@@ -255,20 +285,38 @@ export class DossiersPage implements OnInit {
                 }
               });
 
-              this.listOfWaittingNotif.filter(item =>
+              listOfWaittingNotifObj.filter((item: any) =>
                 item.prevNotif.sort((a: any, b: any) => a.pos - b.pos)
               );
+
+              // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+              this.listOfWaittingNotifFinal = listOfWaittingNotifObj;
+              this.listNotifNotReaded = listOfWaittingNotifObj.filter((item: any) => item.lastMotifId !== 0);
+
+              // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+              if (!filtered) {
+                // - Return a list of Notif in waitting
+                this.listOfWaittingNotif = this.listOfWaittingNotifFinal;
+
+              } else {
+                // - Return a list of Notif not readed
+                this.listOfWaittingNotif = this.listNotifNotReaded;
+
+              }
+              // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
               // -------------------------------------------------------------------------------------------
 
               loadingEl.dismiss();
 
               // console.log('listOfResult::::', listOfResult);
-              console.log('*****************************');
-              console.log(
-                'list Of Waitting Notifications::::',
-                this.listOfWaittingNotif
-              );
+              console.group('*********** LIST OF NOTIF ******************');
+              console.log('list Of Waitting Notifications::::', this.listOfWaittingNotif);
+              console.log(' ++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+              console.log('list Of Waitting Notifications not Readed::::', this.listNotifNotReaded);
+              console.log('list Of Waitting Notifications not Readed::::', this.listOfWaittingNotifFinal);
+              console.groupEnd();
               // console.log(' demandeId ::::', demandeId);
               console.log('*****************************');
               // console.log('listOfDemandes :::', listOfDemandes);
@@ -310,8 +358,13 @@ export class DossiersPage implements OnInit {
       .then(() => {
         console.log('isRefresh::::>', this.isRefresh);
         if (this.isRefresh) {
-          event.target.complete();
-          this.isRefresh = !this.isRefresh;
+          setTimeout(() => {
+            console.log('Async operation has ended');
+            event.target.complete();
+            this.isRefresh = !this.isRefresh;
+          }, 1000);
+          // event.target.complete();
+          // this.isRefresh = !this.isRefresh;
         }
       });
   }
@@ -505,7 +558,7 @@ export class DossiersPage implements OnInit {
               console.log('this.response : ', res.message);
               this.showAlert(res.message);
               // tslint:disable-next-line: deprecation
-              this.initWaitingSendingDossiers(event);
+              this.initWaitingSendingDossiers(event, this.isToggleFiltter);
             } else {
               console.log('Erreur interne !');
             }

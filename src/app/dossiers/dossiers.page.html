@@ -26,6 +26,15 @@
 
     <ion-item lines="none" [ngClass]="{ 'item-empty':lnPending === 0 }">
       <small class="cr-name"><b>{{totalPending}} </b>DOSSIERS EN COURS</small>
+      <!-- toogle-->
+      <ng-container *ngIf='this.dossiersEnCours'>
+        <ion-note slot="end" class="ion-no-margin toggle-note ion-text-nowrap">
+          <small class="cr-name">NON LUS</small>
+          <ion-toggle mode="md" (click)="isFilttred(isToggleFiltter)" [(ngModel)]="isToggleFiltter"></ion-toggle>
+        </ion-note>
+      </ng-container>
+
+
       <!-- <ion-grid class="ion-no-padding">
         <ion-row>
           <ion-col size="8">
@@ -75,7 +84,7 @@
     <!-- REFRESH-->
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
       <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Tirer pour rafraîchir"
-        refreshingSpinner="circles" refreshingText="Rafraîchir la liste...">
+        refreshingSpinner="bubbles" refreshingText="Rafraîchir la liste...">
       </ion-refresher-content>
     </ion-refresher>
     <!-- REFRESH-->
@@ -117,13 +126,16 @@
   <ng-container *ngIf="dossiersEnCours">
 
     <!-- REFRESH-->
-    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+   
+     <ion-refresher slot="fixed"  (ionRefresh)="doRefresh($event)">
       <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Tirer pour rafraîchir"
-        refreshingSpinner="circles" refreshingText="Rafraîchir la liste...">
+        refreshingSpinner="bubbles" refreshingText="Rafraîchir la liste...">
       </ion-refresher-content>
-    </ion-refresher>
-    <!-- REFRESH-->
+    </ion-refresher> 
+ 
 
+    <!-- REFRESH-->
+  
 
     <ion-grid class="ion-no-padding">
       <ion-row>
@@ -167,54 +179,7 @@
 
                       </div>
 
-                      <!-- <div *ngFor=" let item of item['prevNotif']; let i = index; let l = count">
-                        i : {{ i }} - count :{{ l }}
-
-                        <div *ngIf="item?.motifId ">
-
-                          <div [ngSwitch]="item?.motifId">
-                            <div *ngSwitchCase="1">
-                              <ion-icon name="checkmark-circle" [style.color]="'#f25454'"></ion-icon>
-                            </div>
-                            <div *ngSwitchCase="2">
-                              <ion-icon name="checkmark-circle" [style.color]="'#02a1b3'"></ion-icon>
-                            </div>
-                            <div *ngSwitchCase="3">
-                              <ion-icon name="checkmark-circle" [style.color]="'#516bf0'"></ion-icon>
-                            </div>
-                            <div *ngSwitchDefault>
-                              <ion-icon name="checkmark-circle" [style.color]="'#bfced0'"></ion-icon>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        <div *ngIf="item.motifId === null ">
-                          <ion-icon name="checkmark-circle" [style.color]="'#bfced0'"></ion-icon>
-                        </div>
-
-                      </div> -->
-
-
-
-
-
-
-                      <!-- checkmarkColors[i] -->
-
-                      <!-- 
-                      <ion-icon name="checkmark-circle"
-                        [style.color]="item['prevNotif'][0] !== undefined && item['prevNotif'][0]['motifId'] === 1 ? '#f25454': '#bfced0'">
-                      </ion-icon>
-                      
-                      <ion-icon name="checkmark-circle"
-                        [style.color]="item['prevNotif'][1] !== undefined && item['prevNotif'][1]['motifId'] === 2 ? '#02a1b3': '#bfced0'">
-
-                      </ion-icon>
-                      
-                      <ion-icon name="checkmark-circle"
-                        [style.color]="item['prevNotif'][2] !== undefined && item['prevNotif'][2]['motifId'] === 3 ? '#516bf0': '#bfced0'">
-                      </ion-icon>
-                        -->
+                   
                     </div>
                   </ion-label>
                   <!-- <p>{{item['motifId'].length}}</p> -->

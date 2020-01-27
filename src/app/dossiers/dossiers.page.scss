@@ -1,4 +1,9 @@
 :host {
+  ion-refresher{
+     background: #f7f9fb;
+  }
+ 
+ 
   ion-toolbar {
     --background: transparent;
     --ion-color-base: transparent !important;
@@ -11,16 +16,33 @@
   .header-ios ion-toolbar:last-child {
     --border-width: 0;
   }
-
+  
   ion-toolbar {
     ion-item {
       border-bottom: 1px solid #d9d9d9;
       --background: #fdfeff;
+      ion-note{
+
+      &.toggle-note{
+        padding-left: 0;
+        text-align: center!important;
+        width: 50%;
+        display: inherit;
+      }
+      ion-toggle {
+        --handle-background-checked: #0f98c4;
+        --background-checked: #b5e0e4;
+      }
+      }
+
+     
     }
     ion-segment {
       padding-top: 0;
       margin-top: 18px;
       background: #fff;
+
+     
 
       ion-segment-button {
         --margin-top: 0px !important;
@@ -66,8 +88,8 @@
     text-transform: uppercase;
     border-radius: 10px;
     margin: 0;
-    letter-spacing: 0.75px;
-    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    font-size: 0.8rem;
     display: block;
     color: #7a839e;
     b {
