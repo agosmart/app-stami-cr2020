@@ -68,13 +68,16 @@
 
   ion-card {
     background-color: #ffffff;
-    margin: 8px 0px 0 0;
+    margin: 16px 0px 0 0;
 
     ion-col {
       padding: 2px 2px;
     }
   }
   ion-card-content {
+    ion-button {
+      height: 32px;
+    }
     ion-card-header {
       padding: 8px 0;
       ion-card-title {

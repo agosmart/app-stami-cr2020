@@ -12,7 +12,7 @@ const routes: Routes = [
 ************************************************/
   {
     path: "",
-    redirectTo: "login",
+    redirectTo: "onboard",
     pathMatch: "full"
   },
   {
@@ -23,11 +23,18 @@ const routes: Routes = [
       )
   },
 
+
   {
     path: "onboard",
     loadChildren: () =>
       import("./onboard/onboard.module").then(m => m.OnboardPageModule)
   },
+
+  {
+    path: 'onboard-demo',
+    loadChildren: () => import('./onboard-demo/onboard-demo.module').then(m => m.OnboardDemoPageModule)
+  },
+
 
   {
     path: "home/:dataDoctorObj",
@@ -70,6 +77,8 @@ const routes: Routes = [
       import("./test-fcm/test-fcm.module").then(m => m.TestFcmPageModule)
   },
 
+
+
 ];
 
 @NgModule({
@@ -78,4 +87,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

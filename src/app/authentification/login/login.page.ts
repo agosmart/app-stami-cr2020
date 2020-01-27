@@ -31,8 +31,8 @@ export class LoginPage implements OnInit {
   nameEtab: string;
   mobile: string;
   uid: string;
-  isSos : boolean;
-  isActive :boolean ;
+  isSos: boolean;
+  isActive: boolean;
   showEye = false;
   loginForm: FormGroup;
   isLogin = true;
@@ -166,8 +166,8 @@ export class LoginPage implements OnInit {
               this.token = dataResponse.apiToken;
               this.idEtab = dataResponse.etablissment[0].etabId;
               this.nameEtab = dataResponse.etablissment[0].name;
-              this.isActive  = dataResponse.enFonction ==='1' ? true : false ;
-              this.isSos = dataResponse.disponibleAvis === '1' ? true : false ;
+              this.isActive = dataResponse.enFonction === '1' ? true : false;
+              this.isSos = dataResponse.disponibleAvis === '1' ? true : false;
 
               console.group(':::::::  LOGIN :::::: ');
               console.log('RESPONSE LOGIN >>>>> ', dataResponse);
@@ -217,12 +217,19 @@ export class LoginPage implements OnInit {
             // ----- Hide loader ------
             loadingEl.dismiss();
             // --------- Show Alert --------
-            if (errRes.error.errors != null) {
-              this.sglob.showAlert('Erreur!', errRes.error.message);
-            } else {
-              this.sglob.showAlert('Erreur!', 'Prblème d\'accès au réseau, veillez vérifier votre connexion'
+            if (errRes.status === 422) {
+              this.sglob.showAlert('Erreur!', 'Les données d\'identification fournis sont invalides.'
               );
+            } else {
+              if (errRes.error.errors != null) {
+                this.sglob.showAlert('Erreur!', errRes.error.message);
+              } else {
+                this.sglob.showAlert('Erreur!', 'Prblème d\'accès au réseau, veillez vérifier votre connexion.'
+                );
+              }
+
             }
+
           }
         );
       });

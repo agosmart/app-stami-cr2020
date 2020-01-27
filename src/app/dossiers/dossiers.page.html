@@ -25,7 +25,8 @@
     </ion-segment>
 
     <ion-item lines="none" [ngClass]="{ 'item-empty':lnPending === 0 }">
-      <small class="cr-name"><b>{{totalPending}} </b>DOSSIERS EN COURS</small>
+
+      <small class="cr-name"><b>{{ dossiersEnCours ? totalPending : totalSending}} </b>DOSSIERS EN COURS</small>
       <!-- toogle-->
       <ng-container *ngIf='this.dossiersEnCours'>
         <ion-note slot="end" class="ion-no-margin toggle-note ion-text-nowrap">
@@ -126,16 +127,16 @@
   <ng-container *ngIf="dossiersEnCours">
 
     <!-- REFRESH-->
-   
-     <ion-refresher slot="fixed"  (ionRefresh)="doRefresh($event)">
+
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
       <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Tirer pour rafraîchir"
         refreshingSpinner="bubbles" refreshingText="Rafraîchir la liste...">
       </ion-refresher-content>
-    </ion-refresher> 
- 
+    </ion-refresher>
+
 
     <!-- REFRESH-->
-  
+
 
     <ion-grid class="ion-no-padding">
       <ion-row>
@@ -179,7 +180,7 @@
 
                       </div>
 
-                   
+
                     </div>
                   </ion-label>
                   <!-- <p>{{item['motifId'].length}}</p> -->

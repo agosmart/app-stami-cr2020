@@ -26,7 +26,7 @@ export class AppComponent {
     },
     {
       title: 'Intro app',
-      url: '/onboard',
+      url: '/onboard-demo',
       // direct: 'forward',
       icon: 'information-circle-outline'
     },
@@ -39,8 +39,8 @@ export class AppComponent {
       // icon: 'cog'
     },
     {
-      title: 'Deconexion',
-      url: '/',
+      title: 'Deconnexion',
+      url: '/login',
       // direct: 'root',
       icon: 'log-out'
     },
@@ -82,7 +82,7 @@ export class AppComponent {
       console.log('AppComponent :::::::', user);
       this.doctorName = user.fullName;
       this.gender = user.gender;
-      +this.gender === 2 ? this.avatar = 'men.png' : this.avatar ='women.png' ;
+      +this.gender === 2 ? this.avatar = 'men.png' : this.avatar = 'women.png';
     });
   }
 
