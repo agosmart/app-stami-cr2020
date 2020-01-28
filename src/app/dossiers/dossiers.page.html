@@ -24,31 +24,68 @@
       </ion-segment-button>
     </ion-segment>
 
-    <ion-item lines="none" [ngClass]="{ 'item-empty':lnPending === 0 }">
+    <!-- Aucun dossiers-->
 
-      <small class="cr-name"><b>{{ dossiersEnCours ? totalPending : totalSending}} </b>DOSSIERS EN COURS</small>
-      <!-- toogle-->
-      <ng-container *ngIf='this.dossiersEnCours'>
-        <ion-note slot="end" class="ion-no-margin toggle-note ion-text-nowrap">
-          <small class="cr-name">NON LUS</small>
-          <ion-toggle mode="md" (click)="isFilttred(isToggleFiltter)" [(ngModel)]="isToggleFiltter"></ion-toggle>
-        </ion-note>
-      </ng-container>
+    <!-- <ion-list lines="none">
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="assets/images/hand-pull.png" alt="pull down">
+        </ion-avatar>
+
+        <ion-label>
+          <h2>Vous n'avez reçu acun dossier pour le moment.</h2>
+          <p>Tirer pour rafraîchir la liste</p>
+        </ion-label>
+      </ion-item>
+    </ion-list> -->
 
 
-      <!-- <ion-grid class="ion-no-padding">
-        <ion-row>
-          <ion-col size="8">
-            <small class="cr-name"><b>{{totalPending}} </b>DOSSIERS EN COURS</small>
-          </ion-col>
-          <ion-col size='4'>
-            <ion-text>Filttrer</ion-text>
-            <ion-toggle (click)="isFilttred(data.myToggle)" [(ngModel)]="data.myToggle"></ion-toggle>
-          </ion-col>
-        </ion-row>
-      </ion-grid> -->
+    <ng-container *ngIf='totalSending === 0'>
+      <ion-list>
+        <ion-item lines="none" class="item-empty ion-margin-top">
+          <ion-avatar slot="end">
+            <img src="assets/images/hand-pull.png" alt="pull down">
+          </ion-avatar>
+          <ion-text>
+            Vous n'avez reçu acun dossier pour le moment,Tirer pour rafraîchir la liste
+          </ion-text>
 
-    </ion-item>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+
+
+    <!-- -->
+    <ng-container *ngIf='totalPending > 0'>
+
+      <ion-item lines="none">
+
+        <small class="cr-name"><b>{{ dossiersEnCours ? totalPending : totalSending}} </b>DOSSIERS EN COURS</small>
+        <!-- toogle-->
+        <ng-container *ngIf='this.dossiersEnCours'>
+          <ion-note slot="end" class="ion-no-margin toggle-note ion-text-nowrap">
+            <small class="cr-name">NON LUS</small>
+            <ion-toggle mode="md" (click)="isFilttred(isToggleFiltter)" [(ngModel)]="isToggleFiltter"></ion-toggle>
+          </ion-note>
+        </ng-container>
+
+
+        <!-- <ion-grid class="ion-no-padding">
+              <ion-row>
+                <ion-col size="8">
+                  <small class="cr-name"><b>{{totalPending}} </b>DOSSIERS EN COURS</small>
+                </ion-col>
+                <ion-col size='4'>
+                  <ion-text>Filttrer</ion-text>
+                  <ion-toggle (click)="isFilttred(data.myToggle)" [(ngModel)]="data.myToggle"></ion-toggle>
+                </ion-col>
+              </ion-row>
+            </ion-grid> -->
+
+      </ion-item>
+
+
+    </ng-container>
 
   </ion-toolbar>
 </ion-header>
@@ -83,7 +120,7 @@
   <ng-container *ngIf="dossiersEnvoyes">
 
     <!-- REFRESH-->
-    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefreshSending($event)">
       <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Tirer pour rafraîchir"
         refreshingSpinner="bubbles" refreshingText="Rafraîchir la liste...">
       </ion-refresher-content>
@@ -98,7 +135,7 @@
               <ion-list class="ion-no-padding">
 
                 <ion-item detail lines="full" *ngFor="let item of dataDossiersSending" tappable
-                  (click)="getDossier(item.dossierId)">
+                  (click)="getDossier(item?.dossierId)">
                   <ion-avatar slot="start">
                     <ion-icon name="checkmark-circle"></ion-icon>
                     <span class="icon-doss-patient text-dark  text15">
@@ -106,10 +143,10 @@
                     </span>
                   </ion-avatar>
                   <ion-label class="ion-text-wrap">
-                    <h2> {{item.lastName}} {{item.firstName}}</h2>
+                    <h2> {{item?.lastName}} {{item?.firstName}}</h2>
                     <!-- <small>DOSSIER N°: <b>{{getRandomNumber()}}</b> </small> -->
-                    <small>AGE : {{item.age}} Ans | {{item.gender === '2'  ? 'Homme' : 'Femme'}}</small>
-                    <small>CUDT : <b>{{item.etabName}}</b> </small>
+                    <small>AGE : {{item?.age}} Ans | {{item?.gender === '2'  ? 'Homme' : 'Femme'}}</small>
+                    <small>CUDT : <b>{{item?.etabName}}</b> </small>
                   </ion-label>
 
                 </ion-item>
@@ -128,7 +165,7 @@
 
     <!-- REFRESH-->
 
-    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefreshPending($event)">
       <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Tirer pour rafraîchir"
         refreshingSpinner="bubbles" refreshingText="Rafraîchir la liste...">
       </ion-refresher-content>
@@ -153,28 +190,28 @@
 
                   <ion-avatar slot="start"> <span class="icon-doss-patient text-dark  text15"></span></ion-avatar>
                   <ion-label class="ion-text-wrap">
-                    <h2> {{item.lastName}} {{item.firstName}}</h2>
+                    <h2> {{item?.lastName}} {{item?.firstName}}</h2>
                     <!-- <small>DOSSIER N°: <b>{{getRandomNumber()}}</b> </small> -->
-                    <small>AGE : {{item.age}} Ans | {{item.gender === '2'  ? 'Homme' : 'Femme'}}</small>
-                    <small>CUDT : <b>{{item.etabName}}</b> </small>
+                    <small>AGE : {{item?.age}} Ans | {{item?.gender === '2'  ? 'Homme' : 'Femme'}}</small>
+                    <small>CUDT : <b>{{item?.etabName}}</b> </small>
                     <div>
 
                       <div *ngFor=" let item of item['prevNotif']; let i = index; let l = count">
                         <!-- i : {{ i }} - count :{{ l }} -->
 
-                        <div *ngIf="item.motifId !== null ">
-                          <div *ngIf="item.motifId === 1 ">
+                        <div *ngIf="item?.motifId !== null ">
+                          <div *ngIf="item?.motifId === 1 ">
                             <ion-icon name="checkmark-circle" [style.color]="'#f25454'"></ion-icon>
                           </div>
-                          <div *ngIf="item.motifId === 2 ">
+                          <div *ngIf="item?.motifId === 2 ">
                             <ion-icon name="checkmark-circle" [style.color]="'#02a1b3'"></ion-icon>
                           </div>
-                          <div *ngIf="item.motifId === 3 ">
+                          <div *ngIf="item?.motifId === 3 ">
                             <ion-icon name="checkmark-circle" [style.color]="'#516bf0'"></ion-icon>
                           </div>
                         </div>
 
-                        <div *ngIf="item.motifId === null ">
+                        <div *ngIf="item?.motifId === null ">
                           <ion-icon name="checkmark-circle" [style.color]="'#bfced0'"></ion-icon>
                         </div>
 
@@ -186,19 +223,19 @@
                   <!-- <p>{{item['motifId'].length}}</p> -->
                   <!-- Boutton Avis doctor  -->
                   <ion-button Fill='clear' shape='round' slot="end" class="icon-avis" tappable
-                    (click)="actionSheetSetDoctorReview(item['lastDemandeId'] ,  item['lastMotifId'])" type="button"
-                    disabled="{{item['lastMotifId'] === 0 ? true : false }}">
+                    (click)="actionSheetSetDoctorReview(item?.lastDemandeId ,  item?.lastMotifId )" type="button"
+                    disabled="{{item?.lastMotifId === 0 ? true : false }}">
                     <span class="icon-doctor-sos-2 status-avis" [ngClass]="{ 
-                    'notif-none':item['lastMotifId'] === 0,
-                    'notif-sos':item['lastMotifId']=== 1,
-                    'notif-thrombolyse':item['lastMotifId'] === 2,
-                    'notif-sendding':item['lastMotifId'] === 3 }" tappable></span>
+                    'notif-none':item?.lastMotifId === 0,
+                    'notif-sos':item?.lastMotifId=== 1,
+                    'notif-thrombolyse':item?.lastMotifId === 2,
+                    'notif-sendding':item?.lastMotifId === 3 }" tappable></span>
                   </ion-button>
 
 
                   <!-- Boutton détails dossier   -->
                   <ion-icon name="arrow-forward" class=" arrow" mode='ios' slot="end"
-                    (click)="getDossier(item.dossierId)"></ion-icon>
+                    (click)="getDossier(item?.dossierId)"></ion-icon>
                   <!--  /////////////////  -->
 
                 </ion-item>

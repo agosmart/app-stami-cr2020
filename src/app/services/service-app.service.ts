@@ -47,7 +47,7 @@ export class ServiceAppService {
 
   // --------------------------------------------------
 
-  constructor(public http: HttpClient ) { }
+  constructor(public http: HttpClient) { }
 
   // --------------------------------------------------
   public loginDoctor(params: object) {
@@ -94,6 +94,38 @@ export class ServiceAppService {
    }
  */
 
+
+
+  getDossiersCrSending(crId: number, token: string): any {
+    //   http://cardio.cooffa.shop/api/dossiersCrSending/2
+    console.log('SERVICE::::: waiting - Sending list ::::');
+    const apiUrl = this.baseUrl + '/dossiersCrSending/' + crId;
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    });
+
+    return this.http.get<DossiersCudtCrResponseData>(apiUrl, {
+      headers: myHeaders
+    });
+  }
+
+  getDossiersCrPending(crId: number, token: string): any {
+    //   http://cardio.cooffa.shop/api/dossiersCrPending/2
+    console.log('SERVICE::::: waiting - Sending list ::::');
+    const apiUrl = this.baseUrl + '/dossiersCrPending/' + crId;
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    });
+
+    return this.http.get<DossiersCudtCrResponseData>(apiUrl, {
+      headers: myHeaders
+    });
+  }
+
   // get pending list /  sending list of the given CR 
   getDossiersCudtCr(crId: number, token: string): any {
     console.log('SERVICE::::: waiting - Sending list ::::');
@@ -112,12 +144,12 @@ export class ServiceAppService {
 
   public getDossierGlobale(idDossier: number, token: string): any {
 
-     // http://cardio.cooffa.shop/api/dossierGlobal/18
+    // http://cardio.cooffa.shop/api/dossierGlobal/18
     console.log('SERVICE:::::DOSSIER GLOBALE ::::');
     const apiUrl = this.baseUrl + '/dossierGlobal/' + idDossier;
     console.log('SERVICE:::::apiUrl ::::', apiUrl);
 
-   // return false;
+    // return false;
     const myHeaders: HttpHeaders = new HttpHeaders({
       Accept: 'application/json',
       'Content-Type': 'application/json',
@@ -128,7 +160,7 @@ export class ServiceAppService {
       headers: myHeaders
     });
   }
- // --------------------------------------------------------------------
+  // --------------------------------------------------------------------
 
 
 
@@ -226,7 +258,7 @@ export class ServiceAppService {
   public updateDoctorState(params: any, idDoctor: number, token: string) {
 
     const apiUrl = this.baseUrl + '/medecin/' + idDoctor;
-    
+
 
     console.group('::::::: DATA updateDoctorState Service :::::: ');
     console.log('updateDoctorState() =>idDoctor ::::::::', idDoctor);

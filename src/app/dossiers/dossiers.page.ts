@@ -71,7 +71,7 @@ export class DossiersPage implements OnInit {
 
   ionViewDidEnter() {
     console.log('ionViewDidEnter => get idEtab :::', this.idEtab);
-    this.initWaitingSendingDossiers(event, this.isToggleFiltter);
+    this.initSendingDossiers(event, this.isToggleFiltter);
   }
 
   ionViewWillEnter() {
@@ -99,22 +99,28 @@ export class DossiersPage implements OnInit {
     }
   }
   // --------- PULL TO REFRESH DATA -----------------------------
-  doRefreshe(refresher) {
-    console.log('Begin async operation', refresher);
 
-    setTimeout(() => {
-      console.log('Async operation has ended');
-      refresher.complete();
-    }, 2000);
-  }
-  doRefresh(event: any) {
+  doRefreshPending(event: any) {
     console.log('Begin async operation');
     this.isRefresh = true;
     if (this.isToggleFiltter) {
-      this.initWaitingSendingDossiers(event, true);
+      this.initPendingDossiers(event, true);
     } else {
-      this.initWaitingSendingDossiers(event, false);
+      this.initPendingDossiers(event, false);
     }
+
+    //this.isToggleFiltter = true;
+
+    // setTimeout(() => {
+    //   console.log('Async operation has ended');
+    //   event.target.complete();
+    // }, 2000);
+  }
+  doRefreshSending(event: any) {
+    console.log('Begin async operation');
+    this.isRefresh = true;
+    this.initSendingDossiers(event, false);
+
 
     //this.isToggleFiltter = true;
 
@@ -131,14 +137,16 @@ export class DossiersPage implements OnInit {
       this.dossiersEnCours = true;
       this.dossiersEnvoyes = false;
 
-      // console.log('dossiersEnCours 1:::', this.dossiersEnCours);
-      // console.log('dossiersEnvoyes 1:::', this.dossiersEnvoyes);
+      this.initPendingDossiers(event, this.isToggleFiltter)
+
+
     } else {
       this.dossiersEnCours = false;
       this.dossiersEnvoyes = true;
 
-      // console.log('dossiersEnCours 2 :::', this.dossiersEnCours);
-      // console.log('dossiersEnvoyes 2:::', this.dossiersEnvoyes);
+      this.initSendingDossiers(event, this.isToggleFiltter);
+
+
     }
   }
 
@@ -151,7 +159,96 @@ export class DossiersPage implements OnInit {
     return (this.numDossier = Math.floor(100000 + Math.random() * 9000));
   }
 
-  async initWaitingSendingDossiers(event: any, filtered?: boolean) {
+
+  // ---------------------- SENDIG DATA------------------------------
+
+  async initSendingDossiers(event: any, filtered?: boolean) {
+    console.log(
+      'initWaitingSendingDossiers() ::::: waiting - Sending list ::::'
+    );
+    await this.loadingCtrl
+      .create({ keyboardClose: true, message: 'Chargement en cours...' })
+      .then(loadingEl => {
+        if (!this.isRefresh) {
+          loadingEl.present();
+        }
+        // ----------- END PARAMS  ---------------
+        // const crId = this.idEtab;
+        /**********************************
+         * STATIC DATA*
+         * ******************************* */
+        // this.token = "Hv9PjmEb8slbxiwwxKjNy3TKc0dSQ6cd1bdh3XbemJWuPaWWfbVmMZeZiZw6";
+        // this.idEtab = 1;
+        // this.idUser = 92;
+
+        /*********************************** */
+        // const authObs: Observable<any> = this.http.get<any>('assets/dossiers-cudt.json');
+        const authObs: Observable<DossiersCudtCrResponseData> = this.srv.getDossiersCrSending(
+          this.idEtab,
+          this.token,
+        );
+
+        authObs.subscribe(
+          resData => {
+            if (+resData.code === 200) {
+              // ---------- Mesuring time of exection ----------
+              // tslint:disable-next-line: no-console
+              console.time('execution-time');
+              // --------------------------------------------
+
+              // this.numDossier = Math.floor(100000 + Math.random() * 9000);
+              this.dataDossiers = resData.data;
+              this.dataDossiersSending = resData.data.sending.reverse();
+              this.totalSending = this.dataDossiers.totalSending;
+
+              console.group(':::::: Data Dossiers Sending ::::::');
+              console.log('- TotalSending', this.totalSending);
+              console.log('- dataDossiersPending [envoyee]  === : ', this.dataDossiersSending);
+              console.groupEnd()
+              // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+              loadingEl.dismiss();
+              // ---------- Mesuring time of exection ----------
+              // tslint:disable-next-line: no-console
+              console.timeEnd('execution-time');
+              // -------------------------------------
+            } else {
+              // ----- Hide loader ------
+              loadingEl.dismiss();
+              // --------- Show Alert --------
+              this.sglob.showAlert('Erreur!', resData.message);
+            }
+          },
+          errData => {
+            console.log(errData);
+            // ----- Hide loader ------
+            loadingEl.dismiss();
+
+            // --------- Show Alert --------
+            if (errData.error.errors != null) {
+              this.sglob.showAlert('Erreur!', errData.error.errors.email);
+            } else {
+              this.sglob.showAlert('Erreur!', 'Problème d\'accès au réseau, veillez vérifier votre connexion'
+              );
+            }
+          }
+        );
+      })
+      .then(() => {
+        console.log('isRefresh::::>', this.isRefresh);
+        if (this.isRefresh) {
+          setTimeout(() => {
+            console.log('Async operation has ended');
+            event.target.complete();
+            this.isRefresh = !this.isRefresh;
+          }, 1000);
+          // event.target.complete();
+          // this.isRefresh = !this.isRefresh;
+        }
+      });
+  }
+
+  // ---------------------- PENDING DATA [ Waiting Notifications ]------------------------------
+  async initPendingDossiers(event: any, filtered?: boolean) {
     console.log(
       'initWaitingSendingDossiers() ::::: waiting - Sending list ::::'
     );
@@ -168,35 +265,36 @@ export class DossiersPage implements OnInit {
          * STATIC DATA*
          * ******************************* */
 
-        // this.token = 's2LTdKGqPxwl4atfVql2bE2O3Mde1XmwgrrcqDQzlROTHF0tINhHeSKgdo5z';
+        // this.token = "Hv9PjmEb8slbxiwwxKjNy3TKc0dSQ6cd1bdh3XbemJWuPaWWfbVmMZeZiZw6";
         // this.idEtab = 1;
         // this.idUser = 92;
 
         /*********************************** */
 
         // const authObs: Observable<any> = this.http.get<any>('assets/dossiers-cudt.json');
-        const authObs: Observable<DossiersCudtCrResponseData> = this.srv.getDossiersCudtCr(
+        const authObs: Observable<DossiersCudtCrResponseData> = this.srv.getDossiersCrPending(
           this.idEtab,
-          this.token
+          this.token,
         );
 
         authObs.subscribe(
           resData => {
             if (+resData.code === 200) {
-              // ---------- Mesuring time of exection ----------
-              // tslint:disable-next-line: no-console
+              // ---------- Mesuring time of exection ----------   
               console.time('execution-time');
               // --------------------------------------------
 
               // this.numDossier = Math.floor(100000 + Math.random() * 9000);
               this.dataDossiers = resData.data;
-              this.dataDossiersSending = resData.data.sending.reverse();
+
               this.dataDossiersPending = resData.data.pending.reverse();
-
               this.totalPending = this.dataDossiers.totalPending;
-              this.totalSending = this.dataDossiers.totalSending;
 
-              console.log('dataDossiersPending::', this.dataDossiersPending);
+              console.group(':::::: Data Dossiers Pending ::::::');
+              console.log('- TotalPending', this.totalPending);
+              console.log('- dataDossiersPending [en cours]  === : ', this.dataDossiersPending);
+              console.groupEnd()
+              // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
               // =============== CREATE  A NEW DTAT OF WAITTING LIST===================================
 
@@ -290,10 +388,8 @@ export class DossiersPage implements OnInit {
               );
 
               // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
               this.listOfWaittingNotifFinal = listOfWaittingNotifObj;
               this.listNotifNotReaded = listOfWaittingNotifObj.filter((item: any) => item.lastMotifId !== 0);
-
               // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
               if (!filtered) {
                 // - Return a list of Notif in waitting
@@ -302,14 +398,10 @@ export class DossiersPage implements OnInit {
               } else {
                 // - Return a list of Notif not readed
                 this.listOfWaittingNotif = this.listNotifNotReaded;
-
               }
               // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-              // -------------------------------------------------------------------------------------------
-
               loadingEl.dismiss();
-
+              /*
               // console.log('listOfResult::::', listOfResult);
               console.group('*********** LIST OF NOTIF ******************');
               console.log('list Of Waitting Notifications::::', this.listOfWaittingNotif);
@@ -320,14 +412,9 @@ export class DossiersPage implements OnInit {
               // console.log(' demandeId ::::', demandeId);
               console.log('*****************************');
               // console.log('listOfDemandes :::', listOfDemandes);
-              console.log('*****************************');
-              // console.log('listOfResponses :::', listOfResponses);
+              console.log('*****************************');  
+              */
 
-              // console.log('this.dataDossiers : ', this.dataDossiers);
-              // console.log('this.dataDossiers[encours] : ', this.dataDossiersSending);
-              // console.log('this.dataDossiers[envoyee] : ', this.dataDossiersPending);
-
-              console.log('totalPending : ', this.totalPending, '/ totalSending', this.totalPending);
 
               // ---------- Mesuring time of exection ----------
               // tslint:disable-next-line: no-console
@@ -558,7 +645,8 @@ export class DossiersPage implements OnInit {
               console.log('this.response : ', res.message);
               this.showAlert(res.message);
               // tslint:disable-next-line: deprecation
-              this.initWaitingSendingDossiers(event, this.isToggleFiltter);
+              this.initSendingDossiers(event, this.isToggleFiltter);
+              // this.initWaitingSendingDossiers(event, this.isToggleFiltter);
             } else {
               console.log('Erreur interne !');
             }

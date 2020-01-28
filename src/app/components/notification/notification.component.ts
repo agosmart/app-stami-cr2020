@@ -72,7 +72,7 @@ export class NotificationComponent implements OnInit {
   }
 
 
-  waitingSendingDossiers() {
+  waitingSendingDossiers(event: any) {
 
     console.log(' :::::::::: waitingSendingDossiers :::::::')
     //#TODO: this.srv.initWaitingSendingDossiers(); 

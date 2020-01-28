@@ -139,14 +139,13 @@
       <ion-col size="12">
         <ion-list lines="full" detail="false" color="none">
 
-          <ion-item tappable (click)='toggleSelectionItem()'
-            [ngClass]="{'section-active':informationsObj?.open, 'section': !informationsObj?.open}" color="primary">
-            <ion-icon slot="start" name="arrow-dropright" *ngIf="informationsObj?.open"></ion-icon>
-            <ion-icon slot="start" name="arrow-dropdown" *ngIf="!informationsObj?.open"></ion-icon>
+          <ion-item tappable (click)='toggleSelectionItem()' class="section-active" color="primary">
+            <ion-icon slot="start" name="arrow-dropright"></ion-icon>
+            <ion-icon slot="start" name="arrow-dropdown"></ion-icon>
             <ion-label> Informations complémentaires</ion-label>
           </ion-item>
 
-          <div *ngIf="informationsObj  && !informationsObj?.open" class="bg bg-light">
+          <div *ngIf="informationsObj " class="bg bg-light">
             <ion-list class=" ion-text-center ion-text-wrap " color="none">
               <ion-item-divider>
                 <h6 class="w100">Motifs de consultation</h6>
@@ -177,7 +176,7 @@
               </ion-item>
               <ion-item lines="inset" class="ion-no-padding">
                 <ion-label class="ion-text-wrap">Hypertension Altherielle :</ion-label>
-                <ion-text>{{ +informationsObj?.HTA === '1' ?'OUI' : 'NON' }}</ion-text>
+                <ion-text>{{ informationsObj?.HTA === '1' ?'OUI' : 'NON' }}</ion-text>
               </ion-item>
               <ion-item lines="inset" class="ion-no-padding">
                 <ion-label class="ion-text-wrap">Tabac : </ion-label>
@@ -186,7 +185,7 @@
               <ion-item lines="none" class="ion-no-padding">
                 <ion-label class="ion-text-wrap"> Dyslipidimie Altherielle :</ion-label>
                 <ion-text>
-                  {{ informationsObj?.dyslip === '0' ? AUCUNE : informationsObj?.dyslip === '1' ? 'POIDS' : 'TAILLE'}}
+                  {{ informationsObj?.dyslip === '0' ? 'AUCUNE' : informationsObj?.dyslip === '1' ? 'POIDS' : 'TAILLE'}}
                 </ion-text>
               </ion-item>
 
@@ -205,7 +204,7 @@
               <ion-item lines="inset" class="ion-no-padding">
                 <ion-label class="ion-text-wrap"> Syndrome coronarien aigu (SCA) :</ion-label>
                 <ion-text>
-                  {{ dataDossier?.informations['SCA'] === '0' ? 'AUCUNE' : +dataDossier?.informations['SCA'] === '1' ? 'ST-' : 'ST+'}}
+                  {{ dataDossier?.informations['SCA'] === '0' ? 'AUCUNE' : dataDossier?.informations['SCA'] === '1' ? 'ST-' : 'ST+'}}
                 </ion-text>
               </ion-item>
               <ion-item lines="inset" class="ion-no-padding">
@@ -242,14 +241,13 @@
       <ion-row>
         <ion-col size="12">
           <ion-list lines="full" detail="false" color="none">
-            <ion-item tappable (click)='toggleSelectionItem()'
-              [ngClass]="{'section-active':treatmentsObj?.open, 'section': !treatmentsObj?.open}" color="primary">
-              <ion-icon slot="start" name="arrow-dropright" *ngIf="treatmentsObj?.open"></ion-icon>
-              <ion-icon slot="start" name="arrow-dropdown" *ngIf="!treatmentsObj?.open"></ion-icon>
+            <ion-item tappable (click)='toggleSelectionItem()' color="primary">
+              <ion-icon slot="start" name="arrow-dropright"></ion-icon>
+              <ion-icon slot="start" name="arrow-dropdown"></ion-icon>
               <ion-label> Prétraitement </ion-label>
             </ion-item>
 
-            <div *ngIf=" !treatmentsObj?.open" class="bg bg-light">
+            <div class="bg bg-light">
 
               <ion-item-divider>
                 <h6 class="w100">Prétraitement bolus</h6>
@@ -298,14 +296,13 @@
 
           <ion-list lines="full" detail="false" color="none">
 
-            <ion-item tappable (click)='toggleSelectionItem()'
-              [ngClass]="{'section-active':protocoleObj?.open, 'section': !protocoleObj?.open}" color="primary">
-              <ion-icon slot="start" name="arrow-dropright" *ngIf="protocoleObj?.open"></ion-icon>
-              <ion-icon slot="start" name="arrow-dropdown" *ngIf="!protocoleObj?.open"></ion-icon>
+            <ion-item tappable (click)='toggleSelectionItem()' class="section-active" color="primary">
+              <ion-icon slot="start" name="arrow-dropright"></ion-icon>
+              <ion-icon slot="start" name="arrow-dropdown"></ion-icon>
               <ion-label> Protocole de thrombolyse </ion-label>
             </ion-item>
 
-            <div *ngIf="!protocoleObj?.open" class="bg bg-light">
+            <div class="bg bg-light">
 
               <ion-list class="ion-no-margin ion-no-padding ">
 
@@ -362,7 +359,7 @@
 
                         <ion-label class="ion-text-wrap">Patient a signé le consentement</ion-label>
                         <ion-text>
-                          {{ protocoleObj.document_signe == '0' ? 'NON' : 'OUI'}}
+                          {{ protocoleObj[0].document_signe == '0' ? 'NON' : 'OUI'}}
                         </ion-text>
                       </ion-item>
 
