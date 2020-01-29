@@ -174,6 +174,7 @@ export class DossiersPage implements OnInit {
         if (!this.isRefresh) {
           loadingEl.present();
         }
+        loadingEl.dismiss();
 
         const authObs: Observable<NotifrResponseData> = this.srv.getNotifNumber(
           this.idUser,
@@ -200,7 +201,7 @@ export class DossiersPage implements OnInit {
               console.log('- notifData  === : ', this.notifData);
               console.groupEnd()
               // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-              loadingEl.dismiss();
+              //loadingEl.dismiss();
               // ---------- Mesuring time of exection ----------             
               console.timeEnd('execution-time-NOTIF');
               // -------------------------------------
@@ -246,9 +247,9 @@ export class DossiersPage implements OnInit {
         /**********************************
          * STATIC DATA*
          * ******************************* */
-        this.token = "Hv9PjmEb8slbxiwwxKjNy3TKc0dSQ6cd1bdh3XbemJWuPaWWfbVmMZeZiZw6";
-        this.idEtab = 1;
-        this.idUser = 92;
+        // this.token = "Hv9PjmEb8slbxiwwxKjNy3TKc0dSQ6cd1bdh3XbemJWuPaWWfbVmMZeZiZw6";
+        // this.idEtab = 1;
+        // this.idUser = 92;
 
         /*********************************** */
         // const authObs: Observable<any> = this.http.get<any>('assets/dossiers-cudt.json');
