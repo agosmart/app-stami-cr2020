@@ -9,8 +9,9 @@
 
     <app-notification slot="end"></app-notification>
   </ion-toolbar>
-  <ion-toolbar class=" ion-margin-top">
 
+  <ion-toolbar class=" ion-margin-top">
+    <!-- +++ SEGMENT +++ -->
     <ion-segment class="ion-padding-top ion-padding-top" mode='md'>
       <ion-segment-button (ionSelect)="segmentButtonClicked('dEnvoyes')" checked="true" value=''>
         <span class="icon-dos-sent _text-dark  text15 "></span>
@@ -24,84 +25,22 @@
       </ion-segment-button>
     </ion-segment>
 
-    <!-- Aucun dossiers-->
+    <!-- TOGGLE -->
+    <ion-item lines="none">
+      <small class="cr-name"><b>{{ dossiersEnCours ? totalPending : 0 }} </b>DOSSIERS EN COURS</small>
+      <ng-container *ngIf='dossiersEnCours'>
+        <ion-note slot="end" class="ion-no-margin toggle-note ion-text-nowrap">
+          <small class="cr-name">NON LUS</small>
+          <ion-toggle mode="md" (click)="isFilttred(isToggleFiltter)" [(ngModel)]="isToggleFiltter"></ion-toggle>
+        </ion-note>
+      </ng-container>
+    </ion-item>
 
-    <!-- <ion-list lines="none">
-      <ion-item>
-        <ion-avatar slot="start">
-          <img src="assets/images/hand-pull.png" alt="pull down">
-        </ion-avatar>
-
-        <ion-label>
-          <h2>Vous n'avez reçu acun dossier pour le moment.</h2>
-          <p>Tirer pour rafraîchir la liste</p>
-        </ion-label>
-      </ion-item>
-    </ion-list> -->
-
-
-    <ng-container *ngIf='totalSending === 0'>
-      <ion-list>
-        <ion-item lines="none" class="item-empty ion-margin-top">
-          <ion-avatar slot="end">
-            <img src="assets/images/hand-pull.png" alt="pull down">
-          </ion-avatar>
-          <ion-text>
-            Vous n'avez reçu acun dossier pour le moment,Tirer pour rafraîchir la liste
-          </ion-text>
-
-        </ion-item>
-      </ion-list>
-    </ng-container>
-
-
-    <!-- -->
-    <ng-container *ngIf='totalPending > 0'>
-
-      <ion-item lines="none">
-
-        <small class="cr-name"><b>{{ dossiersEnCours ? totalPending : totalSending}} </b>DOSSIERS EN COURS</small>
-        <!-- toogle-->
-        <ng-container *ngIf='this.dossiersEnCours'>
-          <ion-note slot="end" class="ion-no-margin toggle-note ion-text-nowrap">
-            <small class="cr-name">NON LUS</small>
-            <ion-toggle mode="md" (click)="isFilttred(isToggleFiltter)" [(ngModel)]="isToggleFiltter"></ion-toggle>
-          </ion-note>
-        </ng-container>
-
-
-        <!-- <ion-grid class="ion-no-padding">
-              <ion-row>
-                <ion-col size="8">
-                  <small class="cr-name"><b>{{totalPending}} </b>DOSSIERS EN COURS</small>
-                </ion-col>
-                <ion-col size='4'>
-                  <ion-text>Filttrer</ion-text>
-                  <ion-toggle (click)="isFilttred(data.myToggle)" [(ngModel)]="data.myToggle"></ion-toggle>
-                </ion-col>
-              </ion-row>
-            </ion-grid> -->
-
-      </ion-item>
-
-
-    </ng-container>
-
+    <!-- +++ SEGMENT +++ -->
   </ion-toolbar>
 </ion-header>
-<!-- 
-<div *ngIf="data.myToggle; then filtter else all "></div>
-<ng-template #filtter>
-  <p>Filttred Data</p>
-</ng-template>
-<ng-template #all>
-  <p>All Data</p>
-</ng-template>
--->
 
-
-
-
+<!-- BLOC :::::::: TITLE HEADER   :::::::: -->
 <ion-grid fixed class="ion-no-padding  header-card-fix box-shadow">
   <ion-row class="ion-no-padding ">
     <ion-col size="12" class="icon-header">
@@ -112,59 +51,92 @@
 </ion-grid>
 
 
+<!-- CONTENT BLOC :::::::: SENDING  dossier :::::::: -->
 
-
-<ion-content _fullscreen class="cudt-info ion-no-padding">
-
+<ion-content class="cudt-info ion-no-padding">
 
   <ng-container *ngIf="dossiersEnvoyes">
-
     <!-- REFRESH-->
     <ion-refresher slot="fixed" (ionRefresh)="doRefreshSending($event)">
       <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Tirer pour rafraîchir"
         refreshingSpinner="bubbles" refreshingText="Rafraîchir la liste...">
       </ion-refresher-content>
     </ion-refresher>
-    <!-- REFRESH-->
+
+
+
+
 
     <ion-grid class="ion-no-padding">
       <ion-row>
         <ion-col size="12" class="ion-no-padding">
-          <ion-card class="list-CR">
+
+
+          <!-- INFO EMPTY DOSSIER-->
+          <ion-card *ngIf='totalSending === 0'>
             <ion-card-content class="text09 ion-no-padding ">
-              <ion-list class="ion-no-padding">
+              <ion-list lines="none" class="info-empty-dossier">
 
-                <ion-item detail lines="full" *ngFor="let item of dataDossiersSending" tappable
-                  (click)="getDossier(item?.dossierId)">
+                <ion-item>
+                  <ion-chip color="primary">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      <ion-text>
+                        <h2>Pour l'instant, vous n'avez reçu aucun dossier.</h2>
+                      </ion-text>
+                    </ion-label>
+                  </ion-chip>
+                </ion-item>
+
+                <ion-item>
                   <ion-avatar slot="start">
-                    <ion-icon name="checkmark-circle"></ion-icon>
-                    <span class="icon-doss-patient text-dark  text15">
-
-                    </span>
+                    <img src="assets/images/hand-pull.png" alt="pull down">
                   </ion-avatar>
                   <ion-label class="ion-text-wrap">
-                    <h2> {{item?.lastName}} {{item?.firstName}}</h2>
+                    <ion-text color="secondary">
+                      <p class="error-message"> Veuillez rafraîchir pour actualiser les données</p>
+                    </ion-text>
+                  </ion-label>
+                </ion-item>
+
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+
+          <!-- DISPLAY DOSSIER-->
+          <ion-card *ngIf='totalSending > 0'>
+            <ion-card-content class="text09 ion-no-padding ">
+              <ion-list class="ion-no-padding ">
+                <ion-item detail lines="full" *ngFor="let item of dataDossiersSending" tappable class='penddig-list'
+                  (click)="getDossier(item?.dossierId)">
+
+                  <ion-avatar slot="start">
+                    <ion-icon name="checkmark-circle"></ion-icon>
+                    <span class="icon-doss-patient text-dark  text15"> </span>
+                  </ion-avatar>
+
+                  <ion-label class="ion-text-wrap">
+                    <h3> {{item?.lastName}} {{item?.firstName}}</h3>
                     <!-- <small>DOSSIER N°: <b>{{getRandomNumber()}}</b> </small> -->
                     <small>AGE : {{item?.age}} Ans | {{item?.gender === '2'  ? 'Homme' : 'Femme'}}</small>
                     <small>CUDT : <b>{{item?.etabName}}</b> </small>
                   </ion-label>
 
                 </ion-item>
-
               </ion-list>
             </ion-card-content>
           </ion-card>
+
         </ion-col>
       </ion-row>
     </ion-grid>
 
   </ng-container>
 
-
+  <!-- CONTENT BLOC :::::::: PENDING dossier ::::::::-->
   <ng-container *ngIf="dossiersEnCours">
 
     <!-- REFRESH-->
-
     <ion-refresher slot="fixed" (ionRefresh)="doRefreshPending($event)">
       <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Tirer pour rafraîchir"
         refreshingSpinner="bubbles" refreshingText="Rafraîchir la liste...">
@@ -172,25 +144,52 @@
     </ion-refresher>
 
 
-    <!-- REFRESH-->
 
 
     <ion-grid class="ion-no-padding">
       <ion-row>
         <ion-col size="12" class="ion-no-padding">
-          <ion-card class="list-CR">
+
+          <!-- INFO EMPTY DOSSIER-->
+          <ion-card *ngIf='totalPending === 0'>
             <ion-card-content class="text09 ion-no-padding ">
+              <ion-list lines="none" class="info-empty-dossier">
+
+                <ion-item>
+                  <ion-chip color="primary">
+                    <ion-icon name="information-circle-outline"></ion-icon>
+                    <ion-label class="ion-text-wrap">
+                      <ion-text>
+                        <h2>Pour l'instant, vous n'avez reçu aucune notification.</h2>
+                      </ion-text>
+                    </ion-label>
+                  </ion-chip>
+                </ion-item>
+
+                <ion-item>
+                  <ion-avatar slot="start">
+                    <img src="assets/images/hand-pull.png" alt="pull down">
+                  </ion-avatar>
+                  <ion-label class="ion-text-wrap">
+                    <ion-text color="secondary">
+                      <p class="error-message"> Veuillez rafraîchir pour actualiser les données</p>
+                    </ion-text>
+                  </ion-label>
+                </ion-item>
+
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+          <!-- DISPLAY DOSSIER-->
+          <ion-card *ngIf='totalPending > 0'>
+            <ion-card-content class="text09 ion-no-padding ">
+
               <ion-list class="ion-no-padding">
-
-
-                <ion-item _detail lines="full" *ngFor="let item of listOfWaittingNotif" tappable>
-
-                  <!-- <ion-item detail lines="full" *ngFor="let item of dataDossiersPending" tappable
-                    (click)="getDossier(item.dossierId)"> -->
+                <ion-item  lines="full"  *ngFor="let item of listOfWaittingNotif" tappable>
 
                   <ion-avatar slot="start"> <span class="icon-doss-patient text-dark  text15"></span></ion-avatar>
                   <ion-label class="ion-text-wrap">
-                    <h2> {{item?.lastName}} {{item?.firstName}}</h2>
+                    <h3> {{item?.lastName}} {{item?.firstName}}</h3>
                     <!-- <small>DOSSIER N°: <b>{{getRandomNumber()}}</b> </small> -->
                     <small>AGE : {{item?.age}} Ans | {{item?.gender === '2'  ? 'Homme' : 'Femme'}}</small>
                     <small>CUDT : <b>{{item?.etabName}}</b> </small>
@@ -217,12 +216,11 @@
 
                       </div>
 
-
                     </div>
                   </ion-label>
                   <!-- <p>{{item['motifId'].length}}</p> -->
                   <!-- Boutton Avis doctor  -->
-                  <ion-button Fill='clear' shape='round' slot="end" class="icon-avis" tappable
+                  <ion-button Fill='clear' shape='round'  class="icon-avis" tappable
                     (click)="actionSheetSetDoctorReview(item?.lastDemandeId ,  item?.lastMotifId )" type="button"
                     disabled="{{item?.lastMotifId === 0 ? true : false }}">
                     <span class="icon-doctor-sos-2 status-avis" [ngClass]="{ 
@@ -232,25 +230,27 @@
                     'notif-sendding':item?.lastMotifId === 3 }" tappable></span>
                   </ion-button>
 
+               
+
+                <ion-button Fill='solid' shape='round' tappable  class="icon-detail"
+                (click)="getDossier(item?.dossierId)" type="button" >
+                  <ion-icon slot="icon-only" name="arrow-forward" mode='ios'></ion-icon>
+                </ion-button>
 
                   <!-- Boutton détails dossier   -->
-                  <ion-icon name="arrow-forward" class=" arrow" mode='ios' slot="end"
-                    (click)="getDossier(item?.dossierId)"></ion-icon>
-                  <!--  /////////////////  -->
+                  <!-- <ion-icon name="arrow-forward" class=" arrow" mode='ios' slot="end"
+                    (click)="getDossier(item?.dossierId)"></ion-icon> -->
 
                 </ion-item>
-
               </ion-list>
+
             </ion-card-content>
           </ion-card>
+
         </ion-col>
       </ion-row>
     </ion-grid>
 
-
   </ng-container>
-
-
-
 
 </ion-content>

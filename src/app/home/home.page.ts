@@ -14,7 +14,9 @@ import { GlobalvarsService } from '../services/globalvars.service';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { ServiceAppService } from '../services/service-app.service';
 import { Observable } from 'rxjs';
+
 import { DoctorStatusResponse, DoctorStatusModel } from '../models/doctor.status.response';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -32,6 +34,8 @@ export class HomePage implements OnInit {
   fullName: string;
   dataDoctor: UserModel;
   gender: number;
+  authObs: Observable<DoctorStatusResponse>;
+
 
 
   // intr: any;
@@ -70,27 +74,27 @@ export class HomePage implements OnInit {
 
 
 
-    /* this.platform.ready().then(() => {
-       // +++++++++++++ Envoked when Doctor recive Notification  ++++++++++++
-       this.fcm.onNotification().subscribe(data => {
-         if (data.wasTapped) {
-           // Notification was received on device tray and tapped by the user.
-           console.log('ok', JSON.stringify(data));
-           console.log('Nothing idDossier', JSON.stringify(data.idDossier));
-           console.log('Nothing page', JSON.stringify(data.etabName));
- 
-           this.onNotifReceived(data);
-         } else {
-           // Notification was received in foreground. Maybe the user needs to be notified.
-           console.log('Nothing data', JSON.stringify(data));
-           console.log('Nothing idDossier', JSON.stringify(data.idDossier));
-           console.log('Nothing page', JSON.stringify(data.etabName));
- 
-           this.onNotifReceived(data);
-         }
- 
-       });
-     });*/
+    this.platform.ready().then(() => {
+      // +++++++++++++ Envoked when Doctor recive Notification  ++++++++++++
+      this.fcm.onNotification().subscribe(data => {
+        if (data.wasTapped) {
+          // Notification was received on device tray and tapped by the user.
+          console.log('ok', JSON.stringify(data));
+          console.log('Nothing idDossier', JSON.stringify(data.idDossier));
+          console.log('Nothing page', JSON.stringify(data.etabName));
+
+          this.onNotifReceived(data);
+        } else {
+          // Notification was received in foreground. Maybe the user needs to be notified.
+          console.log('Nothing data', JSON.stringify(data));
+          console.log('Nothing idDossier', JSON.stringify(data.idDossier));
+          console.log('Nothing page', JSON.stringify(data.etabName));
+
+          this.onNotifReceived(data);
+        }
+
+      });
+    });
 
 
     //  this.initInt();
@@ -124,10 +128,10 @@ export class HomePage implements OnInit {
           }
         }, 2000
       );
-  
+
       return thisIs.intr;
     }
-  
+
     stopInit() {
       this.notif = 0;
       clearInterval(this.intr);
@@ -175,6 +179,7 @@ export class HomePage implements OnInit {
       }
     });
   }
+
 
   /** ++++++++++++++++++ SUBMIT FORM ++++++++++++++++++++++++
    * submitform
@@ -256,14 +261,14 @@ export class HomePage implements OnInit {
         console.log('params >>>>> ', params);
         console.groupEnd();
 
-        const authObs: Observable<DoctorStatusResponse> = this.srv.updateDoctorState(
+        this.authObs = this.srv.updateDoctorState(
           params,
           idDoctor,
           this.token,
         );
 
 
-        authObs.subscribe(
+        this.authObs.subscribe(
           resData => {
             const dataResponse: DoctorStatusModel = resData.data;
             if (+resData.code === 200) {
@@ -309,41 +314,42 @@ export class HomePage implements OnInit {
   }
 
 
-  /*
-    async onNotifReceived(data: any) {
-      console.log('onNotifReceived data ==>', data);
-      console.log('onNotifReceived etabname  ==>', JSON.stringify(data.etabName));
-      const etabName = JSON.stringify(data.etabName);
-      // console.log("onNotifReceived etab name point ==>", data.etabName);
-      // -----------END  message dynamic ---------------
-      const alert = await this.alertCtrl.create({
-        header: 'Résultat d\'authentication',
-        message:
-          'vos avez reçu une demande d`avis medicale provenant du centre CUDT ' +
-          etabName,
-        cssClass: 'alert-css',
-        buttons: [
-          {
-            text: 'Annuler',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: () => {
-              console.log('Confirme Annuler');
-            }
-          },
-          {
-            text: 'Consulter le dossier',
-            handler: async () => {
-              this.router.navigate([
-                '/dossier-infos',
-                JSON.stringify(data.idDossier)
-              ]);
-            }
+
+
+  async onNotifReceived(data: any) {
+    console.log('onNotifReceived data ==>', data);
+    console.log('onNotifReceived etabname  ==>', JSON.stringify(data.etabName));
+    const etabName = JSON.stringify(data.etabName);
+    // console.log("onNotifReceived etab name point ==>", data.etabName);
+    // -----------END  message dynamic ---------------
+    const alert = await this.alertCtrl.create({
+      header: 'Résultat d\'authentication',
+      message:
+        'vos avez reçu une demande d`avis medicale provenant du centre CUDT ' +
+        etabName,
+      cssClass: 'alert-css',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirme Annuler');
           }
-        ]
-      });
-      await alert.present();
-    }*/
+        },
+        {
+          text: 'Consulter le dossier',
+          handler: async () => {
+            this.router.navigate([
+              '/dossier-infos',
+              JSON.stringify(data.idDossier)
+            ]);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
 
   // -------------------------------
 }

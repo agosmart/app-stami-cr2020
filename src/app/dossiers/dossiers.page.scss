@@ -2,7 +2,6 @@
   ion-refresher {
     background: #f7f9fb;
   }
-
   ion-toolbar {
     --background: transparent;
     --ion-color-base: transparent !important;
@@ -15,7 +14,6 @@
   .header-ios ion-toolbar:last-child {
     --border-width: 0;
   }
-
   ion-toolbar {
     ion-item {
       border-bottom: 1px solid #d9d9d9;
@@ -114,45 +112,65 @@
   ion-card {
     margin: 0;
     background-color: #ffffff;
+    margin: 0 0 20px 0;
 
     ion-col {
       padding: 2px 2px;
     }
   }
 
-  ion-item {
-    padding: 0;
-    &.item-empty {
-      margin: 24px 32px;
-      color: #4f5968;
-      _height: 150px;
-    }
-
-    ion-avatar {
-      margin: 0;
-      position: relative;
-      ion-icon {
-        position: absolute;
-        color: #516bf0;
-        background: #fff;
-        border-radius: 100%;
-        bottom: 10px;
-        right: 10px;
-      }
-    }
-
-    ion-button {
-      margin: 8px;
+  ion-list {
+    ion-item {
       padding: 0;
-      width: 48px;
-      height: 48px;
-      text-align: center;
-      span {
-        line-height: inherit;
-        padding: 8px;
+      --inner-padding-end: 0;
+      &.penddig-list {
+        padding: 0;
+        --inner-padding-end: 16px;
+      }
+      &.item-empty {
+        margin: 24px 32px;
+        color: #4f5968;
+        _height: 150px;
+      }
+
+      ion-avatar {
         margin: 0;
-        font-size: 1.8rem;
-        border-radius: 100%;
+        position: relative;
+        ion-icon {
+          position: absolute;
+          color: #516bf0;
+          background: #fff;
+          border-radius: 100%;
+          bottom: 10px;
+          right: 10px;
+        }
+      }
+
+      ion-button {
+        margin: 8px;
+        padding: 0;
+        text-align: center;
+        width: 42px;
+        height: 42px;
+
+        &.icon-detail {
+          --background: #fff;
+          ion-icon {
+            padding: 0;
+          }
+        }
+
+        &.icon-avis {
+          width: 48px;
+          height: 48px;
+          span {
+            line-height: inherit;
+            padding: 8px;
+            margin: 0;
+            font-size: 1.8rem;
+            border-radius: 100%;
+          }
+        }
       }
     }
   }
@@ -229,5 +247,25 @@
   .notif-sendding {
     background-color: #516bf0 !important;
     color: #fff;
+  }
+}
+
+.info-empty-dossier {
+  padding: 16px 16px 16px 0;
+  ion-card-content {
+    padding: 16px 0;
+  }
+  ion-chip {
+    height: 62px;
+    ion-icon {
+      width: 42px;
+      height: 42px;
+      color: #95a5a7;
+    }
+  }
+  ion-item {
+    ion-label {
+      margin: 0;
+    }
   }
 }
