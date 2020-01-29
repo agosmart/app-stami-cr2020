@@ -7,7 +7,7 @@
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
 
-    <app-notification slot="end"></app-notification>
+    <app-notification [notif]='totalNotif' slot="end"></app-notification>
   </ion-toolbar>
 
   <ion-toolbar class=" ion-margin-top">
@@ -185,7 +185,7 @@
             <ion-card-content class="text09 ion-no-padding ">
 
               <ion-list class="ion-no-padding">
-                <ion-item  lines="full"  *ngFor="let item of listOfWaittingNotif" tappable>
+                <ion-item lines="full" *ngFor="let item of listOfWaittingNotif" tappable>
 
                   <ion-avatar slot="start"> <span class="icon-doss-patient text-dark  text15"></span></ion-avatar>
                   <ion-label class="ion-text-wrap">
@@ -220,7 +220,7 @@
                   </ion-label>
                   <!-- <p>{{item['motifId'].length}}</p> -->
                   <!-- Boutton Avis doctor  -->
-                  <ion-button Fill='clear' shape='round'  class="icon-avis" tappable
+                  <ion-button Fill='clear' shape='round' class="icon-avis" tappable
                     (click)="actionSheetSetDoctorReview(item?.lastDemandeId ,  item?.lastMotifId )" type="button"
                     disabled="{{item?.lastMotifId === 0 ? true : false }}">
                     <span class="icon-doctor-sos-2 status-avis" [ngClass]="{ 
@@ -230,12 +230,12 @@
                     'notif-sendding':item?.lastMotifId === 3 }" tappable></span>
                   </ion-button>
 
-               
 
-                <ion-button Fill='solid' shape='round' tappable  class="icon-detail"
-                (click)="getDossier(item?.dossierId)" type="button" >
-                  <ion-icon slot="icon-only" name="arrow-forward" mode='ios'></ion-icon>
-                </ion-button>
+
+                  <ion-button Fill='solid' shape='round' tappable class="icon-detail"
+                    (click)="getDossier(item?.dossierId)" type="button">
+                    <ion-icon slot="icon-only" name="arrow-forward" mode='ios'></ion-icon>
+                  </ion-button>
 
                   <!-- Boutton détails dossier   -->
                   <!-- <ion-icon name="arrow-forward" class=" arrow" mode='ios' slot="end"

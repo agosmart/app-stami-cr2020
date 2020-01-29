@@ -6,3 +6,4 @@ export interface InfoDossierResponseData {
   message: string;
   data: InfoDossierModel;
 }
+

@@ -15,6 +15,7 @@ import {
 } from '../models/dossies.cudt.cr.response';
 import { DossierModel } from '../models/dossier.model';
 import { ReponseAvisResponseData } from '../models/reponseAvis.response';
+import { NotifrResponseData } from '../models/notif.response';
 
 @Component({
   selector: 'app-dossiers',
@@ -45,10 +46,10 @@ export class DossiersPage implements OnInit {
   totalSending = 0;
   isRefresh = false;
   checkmarkColors = ['#f25454', '#02a1b3', '#516bf0'];
-
+  notifData: NotifrResponseData;
 
   isToggleFiltter = false;
-
+  totalNotif: number;
 
   constructor(
     private srv: ServiceAppService,
@@ -77,6 +78,8 @@ export class DossiersPage implements OnInit {
   ionViewWillEnter() {
     // disable side-menu
     this.menuCtrl.enable(false);
+    this.onCheckNotificNumber();
+    this.totalNotif = this.sglob.getNotif();
   }
   ngOnInit() { }
 
@@ -160,6 +163,72 @@ export class DossiersPage implements OnInit {
   }
 
 
+
+  async onCheckNotificNumber() {
+    console.log(
+      ' Check notif number ::::: waiting - Notif number ::::'
+    );
+    await this.loadingCtrl
+      .create({ message: 'Chargement en cours...' })
+      .then(loadingEl => {
+        if (!this.isRefresh) {
+          loadingEl.present();
+        }
+
+        const authObs: Observable<NotifrResponseData> = this.srv.getNotifNumber(
+          this.idUser,
+          this.token,
+        );
+
+        authObs.subscribe(
+          resData => {
+            if (+resData.code === 200) {
+              // ---------- Mesuring time of exection ----------
+              // tslint:disable-next-line: no-console
+              console.time('execution-time-NOTIF');
+              // --------------------------------------------
+
+              // this.numDossier = Math.floor(100000 + Math.random() * 9000);
+              this.notifData = resData;
+              this.totalNotif = resData.total;
+              // ++++++++++++++++++ SET NOTIF NUMBER ++++++++++++++++++++++++
+              this.sglob.setNotif(this.totalNotif);
+              // ++++++++++++++++++++++++++++++++++++++++++ 
+
+              console.group(':::::: Data Dossiers Sending ::::::');
+              console.log('- totalNotif', this.totalNotif);
+              console.log('- notifData  === : ', this.notifData);
+              console.groupEnd()
+              // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+              loadingEl.dismiss();
+              // ---------- Mesuring time of exection ----------             
+              console.timeEnd('execution-time-NOTIF');
+              // -------------------------------------
+            } else {
+              // ----- Hide loader ------
+              loadingEl.dismiss();
+              // --------- Show Alert --------
+              this.sglob.showAlert('Erreur!', resData.message);
+            }
+          },
+          errData => {
+            console.log(errData);
+            // ----- Hide loader ------
+            loadingEl.dismiss();
+
+            // --------- Show Alert --------
+            if (errData.error.errors != null) {
+              this.sglob.showAlert('Erreur!', errData.error.errors.email);
+            } else {
+              this.sglob.showAlert('Erreur!', 'Problème d\'accès au réseau, veillez vérifier votre connexion'
+              );
+            }
+          }
+        );
+      });
+  }
+
+
   // ---------------------- SENDIG DATA------------------------------
 
   async initSendingDossiers(event: any, filtered?: boolean) {
@@ -177,9 +246,9 @@ export class DossiersPage implements OnInit {
         /**********************************
          * STATIC DATA*
          * ******************************* */
-        // this.token = "Hv9PjmEb8slbxiwwxKjNy3TKc0dSQ6cd1bdh3XbemJWuPaWWfbVmMZeZiZw6";
-        // this.idEtab = 1;
-        // this.idUser = 92;
+        this.token = "Hv9PjmEb8slbxiwwxKjNy3TKc0dSQ6cd1bdh3XbemJWuPaWWfbVmMZeZiZw6";
+        this.idEtab = 1;
+        this.idUser = 92;
 
         /*********************************** */
         // const authObs: Observable<any> = this.http.get<any>('assets/dossiers-cudt.json');
@@ -244,7 +313,7 @@ export class DossiersPage implements OnInit {
           // event.target.complete();
           // this.isRefresh = !this.isRefresh;
         }
-      });
+      }).then(() => { this.onCheckNotificNumber() });
   }
 
   // ---------------------- PENDING DATA [ Waiting Notifications ]------------------------------
@@ -453,7 +522,7 @@ export class DossiersPage implements OnInit {
           // event.target.complete();
           // this.isRefresh = !this.isRefresh;
         }
-      });
+      }).then(() => { this.onCheckNotificNumber() });
   }
 
   async actionSheetSetDoctorReview(lastDemandeId: number, lastMotifId: number) {

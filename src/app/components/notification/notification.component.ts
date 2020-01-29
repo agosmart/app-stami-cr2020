@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { MenuController, AlertController, NavController, Events, Platform } from '@ionic/angular';
 import { GlobalvarsService } from 'src/app/services/globalvars.service';
@@ -14,7 +14,9 @@ export class NotificationComponent implements OnInit {
 
 
   intr: any;
-  notif = 0;
+  //notif = 0;
+
+  @Input() notif: number;
 
 
   constructor(
@@ -67,7 +69,7 @@ export class NotificationComponent implements OnInit {
 
   }
   ngOnInit() {
-    this.notif = 0;
+
     /*
     this.initInt();
 

@@ -19,6 +19,7 @@ import { EtabResponseData } from '../models/etab.response';
 import { DoctorStatusResponse } from '../models/doctor.status.response';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { DossierGlobaleResponseData } from '../models/dossier.globale.response';
+import { NotifrResponseData } from '../models/notif.response';
 
 interface ResponseEtab {
   code: number;
@@ -125,6 +126,26 @@ export class ServiceAppService {
       headers: myHeaders
     });
   }
+
+  getNotifNumber(doctorCrId: number, token: string): any {
+    //   http://cardio.cooffa.shop/api/notifications/92
+    console.log('SERVICE::::: waiting - Sending list ::::');
+    const apiUrl = this.baseUrl + '/notifications/' + doctorCrId;
+    const myHeaders: HttpHeaders = new HttpHeaders({
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    });
+
+    return this.http.get<NotifrResponseData>(apiUrl, {
+      headers: myHeaders
+    });
+  }
+
+
+
+
+
 
   // get pending list /  sending list of the given CR 
   getDossiersCudtCr(crId: number, token: string): any {

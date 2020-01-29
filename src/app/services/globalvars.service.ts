@@ -14,6 +14,7 @@ export class GlobalvarsService {
   private isActive: boolean;
   private urlEcg = 'http://cooffa.shop/';
   private initFetch = false;
+  private notif: number;
 
 
 
@@ -84,6 +85,15 @@ export class GlobalvarsService {
     return this.urlEcg;
   }
 
+  public setNotif(amountNotif: number) {
+    return this.notif = amountNotif
+  }
+  public getNotif() {
+    return this.notif
+  }
+
+
+
   async presentToast(text) {
     const toast = await this.toastController.create({
       showCloseButton: true,
@@ -104,6 +114,9 @@ export class GlobalvarsService {
       return converted;
     }
   }
+
+
+
 
   public showAlert(headerAlert: string, messageAlert: string) {
     this.alertCtrl

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import {
@@ -23,6 +23,8 @@ import { DoctorStatusResponse, DoctorStatusModel } from '../models/doctor.status
   styleUrls: ['home.page.scss']
 })
 export class HomePage implements OnInit {
+
+
   isSos: boolean;
   isActive: boolean;
 
@@ -36,7 +38,7 @@ export class HomePage implements OnInit {
   gender: number;
   authObs: Observable<DoctorStatusResponse>;
 
-
+  getNotif: number;
 
   // intr: any;
   // notif = 0;
@@ -101,6 +103,8 @@ export class HomePage implements OnInit {
 
   }
 
+
+
   // ++++++++++++++++++ START DTATA FORM ++++++++++++++++++++++++
   get activity() {
     return this.formDoctor.get('activity');
@@ -148,10 +152,13 @@ export class HomePage implements OnInit {
     // ----- ENABLE MenuSide ----------
     this.menuCtrl.enable(true);
 
+    this.getNotif = this.sglob.getNotif();
+    this.sglob.setNotif(this.getNotif);
 
   }
 
   ngOnInit() {
+
 
 
     this.activatedroute.paramMap.subscribe(paramMap => {

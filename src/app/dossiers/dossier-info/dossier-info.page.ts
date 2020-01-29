@@ -130,7 +130,7 @@ export class DossierInfoPage implements OnInit {
 
               // this.informationsObj['open'] = false;
               console.log(' dataDossier + open :::', this.dataDossier);
-              console.log(this.informationsObj, 'informationsObj ::::', this.informationsObj.open);
+              // console.log(this.informationsObj, 'informationsObj ::::', this.informationsObj.open);
               console.log(this.treatmentsObj, 'treatmentsObj ::::');
               console.log(this.protocoleObj, 'this.protocoleObj ::::');
               //  this.protocoleObj =[];
