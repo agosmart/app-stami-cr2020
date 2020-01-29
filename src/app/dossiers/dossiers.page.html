@@ -27,7 +27,7 @@
 
     <!-- TOGGLE -->
     <ion-item lines="none">
-      <small class="cr-name"><b>{{ dossiersEnCours ? totalPending : 0 }} </b>DOSSIERS EN COURS</small>
+      <small class="cr-name"><b>{{ dossiersEnCours ? totalPending : totalSending }} </b>DOSSIERS EN COURS</small>
       <ng-container *ngIf='dossiersEnCours'>
         <ion-note slot="end" class="ion-no-margin toggle-note ion-text-nowrap">
           <small class="cr-name">NON LUS</small>

@@ -234,7 +234,7 @@ export class DossiersPage implements OnInit {
 
   async initSendingDossiers(event: any, filtered?: boolean) {
     console.log(
-      'initWaitingSendingDossiers() ::::: waiting - Sending list ::::'
+      ':::initSendingDossiers() ::::: waiting - Sending list ::::'
     );
     await this.loadingCtrl
       .create({ keyboardClose: true, message: 'Chargement en cours...' })
@@ -263,7 +263,7 @@ export class DossiersPage implements OnInit {
             if (+resData.code === 200) {
               // ---------- Mesuring time of exection ----------
               // tslint:disable-next-line: no-console
-              console.time('execution-time');
+              // console.time('execution-time');
               // --------------------------------------------
 
               // this.numDossier = Math.floor(100000 + Math.random() * 9000);
@@ -279,7 +279,7 @@ export class DossiersPage implements OnInit {
               loadingEl.dismiss();
               // ---------- Mesuring time of exection ----------
               // tslint:disable-next-line: no-console
-              console.timeEnd('execution-time');
+              // console.timeEnd('execution-time');
               // -------------------------------------
             } else {
               // ----- Hide loader ------
@@ -682,7 +682,7 @@ export class DossiersPage implements OnInit {
 
   // -------------- SEND YOUR REVIEW  -----------------------------------
 
-  private onResponseToNotifReview(
+  public onResponseToNotifReview(
     lastDemandeId: number,
     responseReview: string
   ) {
@@ -691,7 +691,7 @@ export class DossiersPage implements OnInit {
       lastDemandeId
     );
     this.loadingCtrl
-      .create({ keyboardClose: true, message: 'Envoie en cours...' })
+      .create({ message: 'Envoie en cours...' })
       .then(loadingEl => {
         loadingEl.present();
         // ----------- END PARAMS  ---------------
@@ -714,8 +714,9 @@ export class DossiersPage implements OnInit {
               loadingEl.dismiss();
               console.log('this.response : ', res.message);
               this.showAlert(res.message);
+              this.initSendingDossiers(event, this.isToggleFiltter)
               // tslint:disable-next-line: deprecation
-              this.initSendingDossiers(event, this.isToggleFiltter);
+
               // this.initWaitingSendingDossiers(event, this.isToggleFiltter);
             } else {
               console.log('Erreur interne !');

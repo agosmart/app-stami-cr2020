@@ -38,7 +38,7 @@ export class HomePage implements OnInit {
   gender: number;
   authObs: Observable<DoctorStatusResponse>;
 
-  getNotif: number;
+  totalNotif: number;
 
   // intr: any;
   // notif = 0;
@@ -152,8 +152,8 @@ export class HomePage implements OnInit {
     // ----- ENABLE MenuSide ----------
     this.menuCtrl.enable(true);
 
-    this.getNotif = this.sglob.getNotif();
-    this.sglob.setNotif(this.getNotif);
+    this.totalNotif = this.sglob.getNotif();
+    this.sglob.setNotif(this.totalNotif);
 
   }
 
