@@ -714,7 +714,7 @@ export class DossiersPage implements OnInit {
               loadingEl.dismiss();
               console.log('this.response : ', res.message);
               this.showAlert(res.message);
-              this.initSendingDossiers(event, this.isToggleFiltter)
+              this.initPendingDossiers(event, this.isToggleFiltter)
               // tslint:disable-next-line: deprecation
 
               // this.initWaitingSendingDossiers(event, this.isToggleFiltter);

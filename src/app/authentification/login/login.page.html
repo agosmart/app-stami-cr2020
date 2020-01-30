@@ -27,8 +27,7 @@
                 <span class="icon-user"></span>
                 Nom utilisateur</ion-label>
 
-              <ion-input inputmode="text" placeholder="email@domaine.com" formControlName="username"
-                value="flashing99@gmail.co">
+              <ion-input inputmode="text" placeholder="email@domaine.com" formControlName="username" value="">
               </ion-input>
             </ion-item>
             <div *ngFor="let error of errorMessages.username">
@@ -54,7 +53,7 @@
                 Mot de passe
               </ion-label>
 
-              <ion-input type="{{showEye?'text': 'password'}}" formControlName="password" value="1234567"></ion-input>
+              <ion-input type="{{showEye?'text': 'password'}}" formControlName="password" value=""></ion-input>
             </ion-item>
             <div *ngFor="let error of errorMessages.password">
               <ng-container *ngIf="password.hasError(error.type) && (password.dirty || password.touched)">
