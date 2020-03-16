@@ -1,0 +1,506 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+@import "./assets/css/style.css";
+@font-face {
+  font-family: "icomoon-cardio";
+  src: url("./assets/fonts/icomoon-cardio.eot");
+  src: url("./assets/fonts/icomoon-cardio.eot") format("embedded-opentype"),
+    url("./assets/fonts/icomoon-cardio.ttf") format("truetype"),
+    url("./assets/fonts/icomoon-cardio.woff") format("woff"), url("./assets/fonts/icomoon-cardio.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  border-radius: 100%;
+  background: #8193af;
+  //opacity: 0.2;
+}
+.swiper-pagination-bullet-active {
+  background: #d84457 !important;
+}
+
+//---- css class for alert compounent
+.alert-css {
+  .alert-title.sc-ion-alert-ios,
+  .alert-title.sc-ion-alert-md {
+    color: #fd5f60;
+    font-weight: 500;
+    font-size: 1.3em;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+  }
+  div#alert-2-msg {
+    font-size: 1.2em;
+  }
+}
+
+ion-menu-button {
+  color: #fff;
+}
+
+// ion-alert
+// {
+//     --background        : #2c3e50 !important;
+//     --ion-text-color    : white !important;
+//     --ion-color-step-550: white !important;
+// }
+//---------------------------------------
+
+// Ionic notification
+
+app-notification {
+  display: flex;
+}
+// Ionic Action Sheets
+
+.action-sheet {
+  .action-sheet-button.sc-ion-action-sheet-ios,
+  .action-sheet-button.sc-ion-action-sheet-md {
+    display: flex;
+    flex-direction: row;
+    text-align: initial;
+  }
+  .action-sheet-title.sc-ion-action-sheet-md,
+  .action-sheet-title.sc-ion-action-sheet-ios {
+    color: #fd5f60;
+    font-weight: 500;
+    font-size: 1em;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    text-transform: uppercase;
+    height: auto;
+  }
+  .action-sheet-sub-title.sc-ion-action-sheet-md,
+  .action-sheet-sub-title.sc-ion-action-sheet-ios {
+    color: #2b2f36;
+    font-size: 0.8rem;
+    text-transform: none;
+  }
+
+  // display the icon at the right size
+  .actionSheet_withIcomoon {
+    font-size: 1.6rem !important;
+    font-weight: 500;
+    border-bottom: 1px solid #e7e8ea;
+    /* height: 62px; */
+  }
+  .non,
+  .st {
+    color: #d33939;
+  }
+  .oui,
+  .ras {
+    color: #0f7e34;
+  }
+  .thromb {
+    color: #0f98c4;
+  }
+  .send {
+    color: #516bf0;
+  }
+  .cancel {
+    background-color: #ffe8e8;
+  }
+
+  span.action-sheet-button-inner.sc-ion-action-sheet-ios,
+  span.action-sheet-button-inner.sc-ion-action-sheet-md {
+    margin-left: 24px;
+    font-family: "Roboto", "Helvetica Neue", sans-serif;
+    font-size: 1rem !important;
+    line-height: initial;
+    display: inline;
+  }
+}
+
+//---------------------------------------
+
+.logo-header {
+  // width: 40%;
+  // margin: 6px auto;
+  // text-align: center!important;
+
+  width: 140px;
+  margin: 5px auto;
+  text-align: center !important;
+  padding: 0;
+}
+
+ion-button.btn {
+  height: 48px;
+  font-size: 0.9em;
+  //font-size: 1.4rem;
+  --border-radius: 24px;
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+.bg-light {
+  //background-color: #dce3ea;
+  background-color: #ecf0f4;
+}
+
+// .bg-dark {
+//   background-color: var(--ion-color-dark);
+// }
+
+// .bg-primary {
+//   background-color: var(--ion-color-primary);
+// }
+
+// .bg-secondary {
+//   background-color: var(--ion-color-secondary);
+// }
+
+// .bg-tertiary {
+//   background-color: var(--ion-color-tertiary);
+// }
+
+// .bg-profile {
+//   background-image: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
+// }
+
+// .bg-main {
+//   background-image: linear-gradient(-135deg, var(--ion-color-medium), var(--ion-color-light));
+// }
+// Helpers //
+.no-margin {
+  margin: 0;
+}
+.w100 {
+  display: block;
+  width: 100%;
+}
+.p-8-0 {
+  padding: 8px 0;
+}
+.pr-8 {
+  padding-right: 8px;
+}
+.pr-16 {
+  padding-right: 16px;
+}
+.p-2 {
+  padding: 2px 2px;
+}
+.p-10 {
+  padding: 10px;
+}
+.p-0-10 {
+  padding: 0 10px;
+}
+.p-10-0 {
+  padding: 10px 0;
+}
+.p-0-16 {
+  padding: 0px 16px;
+}
+.p-16-0 {
+  padding: 16px 0px;
+}
+.p-6-16 {
+  padding: 6px 16px;
+}
+.w100 {
+  width: 100%;
+}
+.fw400 {
+  font-weight: 400 !important;
+}
+.bold,
+.fw500 {
+  font-weight: 500 !important;
+}
+
+.fw700 {
+  font-weight: 700 !important;
+}
+
+// ---- Font size vlue => em
+.fsize-08em {
+  font-size: 0.8em !important;
+}
+.fsize-10em {
+  font-size: 1em !important;
+}
+.fsize-12em {
+  font-size: 1.2em !important;
+}
+.fsize-14em {
+  font-size: 1.4em !important;
+}
+.fsize-15em {
+  font-size: 1.5em !important;
+}
+.fsize-16em {
+  font-size: 1.6em !important;
+}
+.fsize-18em {
+  font-size: 1.8em !important;
+}
+
+.fsize-18rem {
+  font-size: 1.8rem !important;
+}
+
+.fsize-20em {
+  font-size: 2em !important;
+}
+.fsize-22em {
+  font-size: 2.2em !important;
+}
+.fsize-24em {
+  font-size: 2.4em !important;
+}
+.fsize-25em {
+  font-size: 2.5em !important;
+}
+.fsize-28em {
+  font-size: 2.8em !important;
+}
+.fsize-30em {
+  font-size: 3em !important;
+}
+.fsize-40em {
+  font-size: 4em !important;
+}
+
+.fsize-50em {
+  font-size: 5em !important;
+}
+
+// ---- Font size vlue => rem
+.text08 {
+  font-size: 0.8rem;
+}
+.text09 {
+  font-size: 0.9rem;
+}
+
+.text10 {
+  font-size: 1rem !important;
+}
+
+.text12 {
+  font-size: 1.2rem;
+}
+
+.text14 {
+  font-size: 1.4rem;
+}
+.text15 {
+  font-size: 1.5rem;
+}
+.text16 {
+  font-size: 1.6rem;
+}
+.text17 {
+  font-size: 1.7rem;
+}
+.text19 {
+  font-size: 1.9rem;
+}
+.text20 {
+  font-size: 2rem;
+}
+.text21 {
+  font-size: 2.1rem;
+}
+.text22 {
+  font-size: 2.2rem;
+}
+.text24 {
+  font-size: 2.4rem;
+}
+.text26 {
+  font-size: 2.6rem;
+}
+.text-white {
+  color: #fff;
+}
+.text-gray50 {
+  color: #d1d4d6;
+}
+.text-gray300 {
+  color: #768188;
+}
+
+.text-gray400 {
+  color: #4f606e;
+}
+.text-gray500 {
+  color: #4e5967;
+}
+.text-teal {
+  color: #034e70;
+}
+
+.text-primary {
+  color: var(--ion-color-primary);
+}
+
+.text-secondary {
+  color: var(--ion-color-secondary);
+}
+
+.text-dark {
+  color: var(--ion-color-dark);
+}
+
+.border-dotted-top {
+  // border-top: 2px dotted #58bbfdb7;
+  border-top: 2px dotted rgba(255, 255, 255, 0.3);
+}
+.text-shadow {
+  text-shadow: 1px 1px 3px #051f5675;
+}
+.box-shadow {
+  box-shadow: 1px 1px 3px #051f5675;
+}
+
+.back-light {
+  background-color: #eff2f7;
+  color: #435667;
+  display: block;
+  font-weight: 600;
+  font-size: 0.95em;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 12px 0 0;
+  width: 100%;
+}
+.small-border {
+  width: auto;
+  border-top: 5px solid #bbc3cc;
+  display: block;
+  //margin: 10px 45% 0px 45%;
+  margin: 5px 45% 0px 45%;
+}
+
+.color-num-dossier {
+  background-color: #7a839e;
+}
+/* -------- Bloc Header --------*/
+.form-bloc {
+  margin-top: 92px;
+}
+// Toolbar transparent
+.icon-header {
+  text-align: center;
+  //margin-top: 10px;
+  font-size: 1.8rem;
+  color: #fff;
+}
+.title-header {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.85em;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+  // color: #ffffff;
+  // font-weight: 700;
+  // font-size: 1em;
+  // letter-spacing: 0.15rem;
+  // padding-top: 3px;
+  // text-align: center;
+}
+h3.title-header {
+  padding: 0;
+  margin: 0;
+  font-size: 1em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+// Bloc Header fixed
+.header-card-fix {
+  //height: 215px;
+  position: absolute;
+  position: fixed;
+  width: 100%;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  top: 0;
+  z-index: 8;
+  // background: #01258e;
+  // background: linear-gradient(
+  //   236deg,
+  //   rgba(1, 37, 142, 0.9) 0%,
+  //   rgba(7, 133, 239, 0.75) 70%,
+  //   rgba(4, 230, 247, 0.3)
+  // );
+
+  // background: #516bf0;
+  // background: linear-gradient(200deg, #e40002f2 0%, #516bf0e8 70%, rgba(4, 230, 247, 0.6));
+  // background: #516bf0;
+  // background: linear-gradient(200deg, #6b36e4 0%, #3d96f1 60%, #00fcff);
+
+  background: #982c69;
+  background: linear-gradient(500deg, #ff0001 0%, #982c69 50%, #00afff);
+}
+
+.bg-teal {
+  background-color: #0f98c4;
+}
+
+.error-message {
+  color: #f32051; //white;
+  background: #fff; // #f32051;
+  border-radius: 8px;
+  width: 100%;
+  display: inline-flex;
+  margin-top: 5px;
+  padding: 8px 10px;
+  height: 24px;
+  vertical-align: middle;
+  line-height: 20px;
+  font-size: 0.9em;
+  height: auto;
+}
+.error-message-inverse {
+  background: #f32051; //white;
+  color: #fff; // #f32051;
+  border-radius: 8px;
+  width: 100%;
+  display: inline-flex;
+  margin-top: 5px;
+  padding: 8px 10px;
+  height: 24px;
+  vertical-align: middle;
+  line-height: 20px;
+  font-size: 0.9em;
+  height: auto;
+}

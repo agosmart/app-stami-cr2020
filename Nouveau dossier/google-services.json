@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "133083360425",
+    "firebase_url": "https://cardio-cr.firebaseio.com",
+    "project_id": "cardio-cr",
+    "storage_bucket": "cardio-cr.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133083360425:android:b83e79a98c9b4bdc308db8",
+        "android_client_info": {
+          "package_name": "com.cardio.cr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "133083360425-32fshu2f544ei02eaa0jvgc08e5k4i6l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8p0rvCDjDOeHopnLyDa6Xg6rmMQ3LukI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "133083360425-32fshu2f544ei02eaa0jvgc08e5k4i6l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

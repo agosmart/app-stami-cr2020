@@ -1,0 +1,66 @@
+:host {
+  p {
+    position: relative;
+    em {
+      background: #f04141;
+      padding: 6px;
+      margin: 0;
+      border-radius: 100%;
+      display: block;
+      position: absolute;
+      top: -4px;
+      left: -10px;
+      width: 24px;
+      height: 24px;
+      min-width: 10px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1;
+      text-align: center;
+      white-space: nowrap;
+      contain: content;
+      vertical-align: baseline;
+    }
+  }
+
+  //    div {
+  //     position: relative;
+  //     ion-button {
+  //       --background: transprent;
+  //       --color: #666666;
+  //       --padding-start: 0;
+  //       --padding-end: 0;
+  //       position: relative;
+  //       width: 46px;
+  //       margin-right: 16px;
+  //       height: 46px;
+  //     }
+  //     span {
+  //       padding: 0;
+  //       margin: 0;
+  //       font-size: 1rem;
+  //     }
+  //     em {
+  //       background: #f04141;
+  //       padding: 6px;
+  //       margin: 0;
+  //       border-radius: 100%;
+  //       display: block;
+  //       position: absolute;
+  //       top: -4px;
+  //       left: -10px;
+  //       width: 24px;
+  //       height: 24px;
+  //       min-width: 10px;
+  //       color: #fff;
+  //       font-size: 12px;
+  //       font-weight: 700;
+  //       line-height: 1;
+  //       text-align: center;
+  //       white-space: nowrap;
+  //       contain: content;
+  //       vertical-align: baseline;
+  //     }
+  //   }
+}

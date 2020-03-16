@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="">
+    <ion-buttons slot="start">
+      <ion-button fill="clear" color="light" (click)="close()">
+        <ion-icon slot="start" name="close"></ion-icon>
+        Fermer
+      </ion-button>
+
+      <ion-button fill="clear" color="light" (click)="zoom(true)">
+        <ion-icon slot="start" name="add"></ion-icon>
+        In
+      </ion-button>
+
+      <ion-button fill="clear" color="light" (click)="zoom(false)">
+        <ion-icon slot="start" name="remove"></ion-icon>
+        Out
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="slider-image">
+  <ion-slides [options]="sliderOpts" #slider>
+    <ion-slide>
+      <div class="swiper-zoom-container">
+        <!-- <img src="{{img}}" /> -->
+        <img src="{{'http://cardio.cooffa.shop/show/ecg/' + img }}" (load)="onLoaded()" />
+      </div>
+    </ion-slide>
+  </ion-slides>
+</ion-content>

@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">
+      <div class="logo-header">
+        <ion-img type="image/svg+xml" src="../../../assets/images/logo-color.svg"></ion-img>
+      </div>
+    </ion-title>
+    <ion-note slot="end">
+      <!-- <span class='icon-man fsize-18rem pr-8'>
+        <em [ngClass]="{ 'off':isActive === false, 'on':isActive  === true }">&nbsp;</em>
+      </span> -->
+    </ion-note>
+
+    <app-notification [notif]='totalNotif' slot="end"></app-notification>
+
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-no-padding  home-page ion-no-margin ion-text-center home-page">
+
+
+  <ion-grid class="  header-card-fix box-shadow">
+    <!-- <div class="overly-gradian">&nbsp;</div> -->
+    <ion-row>
+      <ion-col size="12" class="icon-header m-t m-b">
+        <span class="icon-doctor-men3 icon-round text-white text20">
+          <em [ngClass]="{ 'off':isActive === false, 'on':isActive  === true }">&nbsp;</em>
+        </span>
+
+      </ion-col>
+      <ion-col size="12">
+
+        <!-- <small class="welcom">BIENVENUE DOCTEUR </small> -->
+        <small class="fullname box-shadow">Dr. {{fullName}}</small>
+      </ion-col>
+      <ion-col size="12" class="title-header ">{{nameEtab}}</ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- -->
+  <form [formGroup]="formDoctor" (ngSubmit)="submitform()">
+    <ion-grid class=" ion-no-padding">
+      <ion-row>
+
+        <!-- <ion-col size="12">
+          <ion-item lines="full">
+            <ion-text>Je suis en activité</ion-text>
+            <ion-toggle slot="end" checked='{{isActive}}' formControlName="activity" tappable (ionChange)='onActiveStateChange(isActive)'></ion-toggle>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="12">
+          <ion-item lines="full">
+            <ion-text>Je suis disponible pour recevoir des demandes</ion-text>
+            <ion-toggle slot="end" checked='{{isSos}}' formControlName="sos"   value="" (ionChange)='onSosStateChange(isSos)'  ></ion-toggle>
+          </ion-item>
+        </ion-col> -->
+
+
+
+
+        <ion-col size="12">
+          <ion-item lines="full">
+            <ion-text>Je suis en activité</ion-text>
+            <ion-toggle slot="end" [(ngModel)]='isActive' formControlName="activity" tappable
+              (click)='onActiveStateChange(isActive,$event)'></ion-toggle>
+          </ion-item>
+        </ion-col>
+
+        <!-- <ion-col size="12">
+          <ion-item lines="full">
+            <ion-text>Je suis en activité</ion-text>
+            <ion-toggle slot="end"  formControlName="activity" [ngModel]="isActive" (click)="changeFuncWorking($event)"></ion-toggle>           
+          </ion-item>
+        </ion-col> -->
+
+        <ion-col size="12">
+          <ion-item lines="full">
+            <ion-text>Je suis disponible pour recevoir des demandes</ion-text>
+            <ion-toggle slot="end" [(ngModel)]='isSos' [disabled]="isActive" formControlName="sos" tappable
+              (click)='onSosStateChange(isSos ,$event)'></ion-toggle>
+          </ion-item>
+        </ion-col>
+
+      </ion-row>
+
+
+      <ion-row>
+        <ion-col size="12">
+          <div class="ion-padding">
+            <ion-button type="submit" expand="block" class="ion-margin-top btn">
+              Accèder <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+            </ion-button>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+  <!-- -->
+
+
+
+
+
+</ion-content>
